@@ -35,14 +35,26 @@
 # Authors
 # -------
 #
-# Author Name <author@domain.com>
+# Jordan Conway  <jconway@linuxfoundation.org>
 #
 # Copyright
 # ---------
 #
-# Copyright 2016 Your name here, unless otherwise noted.
+# Copyright 2016 Jordan Conway.
 #
-class rdiff_backup {
+class rdiff_backup (
+  $package = rdiff_backup::params::package,
+) inherits rdiff_backup::params {
+  validate_string($package)
 
+  # Anchors
+  anchor { 'rdiff_backup::begin': }
+  anchor { 'rdiff_backup::end': }
+
+  Anchor['rdiff_backup::begin'] ->
+    Class['rdiff_backup::install'] ->
+    Class['rdiff_backup::config'] ~>
+    Class['rdiff_backup::cron'] ->
+  Anchor['rdiff_backup::end']
 
 }
