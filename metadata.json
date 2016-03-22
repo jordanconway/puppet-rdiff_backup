@@ -1,0 +1,15 @@
+{
+  "name": "jconway-rdiff_backup",
+  "version": "0.1.0",
+  "author": "Jordan Conway",
+  "summary": "Puppet Module to manage rdiff_backup",
+  "license": "Apache-2.0",
+  "source": "https://github.com/jordanconway/puppet-rdiff_backup",
+  "project_page": "https://github.com/jordanconway/puppet-rdiff_backup",
+  "issues_url": "https://github.com/jordanconway/puppet-rdiff_backup/issues",
+  "dependencies": [
+    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"}
+  ],
+  "data_provider": null
+}
+
