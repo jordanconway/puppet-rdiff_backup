@@ -42,18 +42,14 @@
 #
 # Copyright 2016 Jordan Conway.
 #
-class rdiff_backup (
-  $package = rdiff_backup::params::package,
-) inherits rdiff_backup::params {
-  validate_string($package)
+class rdiff_backup::server::init {
 
   # Anchors
-  anchor { 'rdiff_backup::begin': }
-  anchor { 'rdiff_backup::end': }
+  anchor { 'rdiff_backup::server::begin': }
+  anchor { 'rdiff_backup::server::end': }
 
-  Anchor['rdiff_backup::begin'] ->
-    Class['rdiff_backup::install'] ->
-    Class['rdiff_backup::cron'] ->
-  Anchor['rdiff_backup::end']
+  Anchor['rdiff_backup::server::begin'] ->
+    Class['rdiff_backup::server::install'] ->
+  Anchor['rdiff_backup::server:end']
 
 }

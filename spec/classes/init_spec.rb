@@ -18,7 +18,6 @@ describe 'rdiff_backup' do
           it { should contain_class('rdiff_backup') }
           it { should contain_anchor('rdiff_backup::begin') }
           it { should contain_class('rdiff_backup::install') }
-          it { should contain_class('rdiff_backup::config') }
           it { should contain_class('rdiff_backup::cron') }
           it { should contain_anchor('rdiff_backup::end') }
         end
@@ -27,7 +26,6 @@ describe 'rdiff_backup' do
           it { should contain_class('rdiff_backup') }
           it { should contain_anchor('rdiff_backup::begin') }
           it { should contain_class('rdiff_backup::install') }
-          it { should contain_class('rdiff_backup::config') }
           it { should contain_class('rdiff_backup::cron') }
           it { should contain_anchor('rdiff_backup::end') }
         end
