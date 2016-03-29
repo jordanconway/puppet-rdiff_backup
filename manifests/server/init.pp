@@ -48,6 +48,9 @@ class rdiff_backup::server::init {
   anchor { 'rdiff_backup::server::begin': }
   anchor { 'rdiff_backup::server::end': }
 
+  class { 'rdiff_backup::server::install':
+  }
+
   Anchor['rdiff_backup::server::begin'] ->
     Class['rdiff_backup::server::install'] ->
   Anchor['rdiff_backup::server:end']
