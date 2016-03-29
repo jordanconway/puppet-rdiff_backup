@@ -55,6 +55,9 @@ class rdiff_backup (
     package => $package,
   }
 
+  class {'rdiff_backup::cron':
+  }
+
   Anchor['rdiff_backup::begin'] ->
     Class['rdiff_backup::install'] ->
     Class['rdiff_backup::cron'] ->
