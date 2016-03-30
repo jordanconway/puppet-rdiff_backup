@@ -44,8 +44,36 @@
 #
 class rdiff_backup (
   $package = rdiff_backup::params::package,
+  $rsyncd_export_ensure = $rdiff_backup::params::rsyncd_export_ensure,
+  $rsyncd_export_chroot = $rdiff_backup::params::rsyncd_export_chroot,
+  $rsyncd_export_readonly = $rdiff_backup::params::rsyncd_export_readonly,
+  #lintignore:80chars
+  $rsyncd_export_mungesymlinks = $rdiff_backup::params::rsyncd_export_mungesymlinks,
+  #lint:endignore
+  $rsyncd_export_path = $rdiff_backup::params::rsyncd_export_path,
+  $rsyncd_export_uid = $rdiff_backup::params::rsyncd_export_uid,
+  $rsyncd_export_gid = $rdiff_backup::params::rsyncd_export_gid,
+  $rsyncd_export_users = $rdiff_backup::params::rsyncd_export_users,
+  $rsyncd_export_secrets = $rdiff_backup::params::rsyncd_export_secrets,
+  $rsyncd_export_allow = $rdiff_backup::params::rsyncd_export_allow,
+  $rsyncd_export_deny = $rdiff_backup::params::rsyncd_export_deny,
+  $rsyncd_export_prexferexec = $rdiff_backup::params::rsyncd_export_prexferexec,
+  $rsyncd_export_postxferexec = $rdiff_backup::params::rsyncd_export_postxferexec,
 ) inherits rdiff_backup::params {
   validate_string($package)
+  validate_string($rsyncd_export_ensure)
+  validate_string($rsyncd_export_chroot)
+  validate_string($rsyncd_export_readonly)
+  validate_string($rsyncd_export_mungesymlinks)
+  validate_string($rsyncd_export_path)
+  validate_string($rsyncd_export_uid)
+  validate_string($rsyncd_export_gid)
+  validate_string($rsyncd_export_users)
+  validate_string($rsyncd_export_secrets)
+  validate_string($rsyncd_export_allow)
+  validate_string($rsyncd_export_deny)
+  validate_string($rsyncd_export_prexferexec)
+  validate_string($rsyncd_export_postxferexec)
 
   # Anchors
   anchor { 'rdiff_backup::begin': }
