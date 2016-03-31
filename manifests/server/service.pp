@@ -6,7 +6,7 @@ class rdiff_backup::server::service (
   # Setup xinetd service
   service { $rsyncd_xinetd_service:
     ensure     => running,
-    enabled    => true,
+    enable     => true,
     hasrestart => true,
   }
 
