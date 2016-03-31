@@ -2,7 +2,6 @@
 class rdiff_backup::install(
   $package,
   $rsyncd_rsync_package,
-  $rsyncd_xinetd_package,
 ) {
   validate_string($package)
   validate_string($rsyncd_rsync_package)

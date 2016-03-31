@@ -104,6 +104,7 @@ class rdiff_backup (
 
   class {'rdiff_backup::install':
     package => $package,
+    rsyncd_rsync_package => $rsyncd_rsync_package,
   }
 
   class {'rdiff_backup::cron':

@@ -42,7 +42,9 @@ class rdiff_backup::server::init (
   anchor { 'rdiff_backup::server::end': }
 
   class { 'rdiff_backup::server::install': }
-  class { 'rdiff_backup::server::service': }
+  class { 'rdiff_backup::server::service':
+    rsyncd_xinetd_service => $rsyncd_xinetd_service
+  }
 
   Anchor['rdiff_backup::server::begin'] ->
   Class['rdiff_backup::server::install'] ->
