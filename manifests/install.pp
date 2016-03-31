@@ -1,6 +1,9 @@
 # rdiff_backup::install class
 class rdiff_backup::install(
   $package,
+  $rsyncd_rsync_package,
+  $rsyncd_xinetd_package,
+  $rsyncd_xinetd_service,
   $rsyncd_export_ensure,
   $rsyncd_export_chroot,
   $rsyncd_export_readonly,
@@ -16,6 +19,9 @@ class rdiff_backup::install(
   $rsyncd_export_postxferexec,
 ) {
   validate_string($package)
+  validate_string($rsyncd_rsync_package)
+  validate_string($rsyncd_xinetd_package)
+  validate_string($rsyncd_xinetd_service)
   validate_string($rsyncd_export_ensure)
   validate_string($rsyncd_export_chroot)
   validate_string($rsyncd_export_readonly)
@@ -33,10 +39,8 @@ class rdiff_backup::install(
   # We need some variables out of rdiff_backup::params
   include rdiff_backup::params
 
-  # Install rdiff_backup
-  package { $rdiff_backup::params::package:
-    ensure => present,
-  }
+  # Install rdiff_backup and rsync
+  ensure_packages( [$package,$rsyncd_rsync_package] )
 
 
 }

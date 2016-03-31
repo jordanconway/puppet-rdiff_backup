@@ -43,7 +43,10 @@
 # Copyright 2016 Jordan Conway.
 #
 class rdiff_backup (
-  $package = rdiff_backup::params::package,
+  $package = $rdiff_backup::params::package,
+  $rsyncd_rsync_package = $rdiff_backup::params::rsyncd_rsync_package,
+  $rsyncd_xinetd_package = $ridff_backup::params::rsyncd_xinetd_package,
+  $rsyncd_xinetd_service = $ridff_backup::params::rsyncd_xinetd_service,
   $rsyncd_export_ensure = $rdiff_backup::params::rsyncd_export_ensure,
   $rsyncd_export_chroot = $rdiff_backup::params::rsyncd_export_chroot,
   $rsyncd_export_readonly = $rdiff_backup::params::rsyncd_export_readonly,
@@ -61,6 +64,8 @@ class rdiff_backup (
   $rsyncd_export_postxferexec = $rdiff_backup::params::rsyncd_export_postxferexec,
 ) inherits rdiff_backup::params {
   validate_string($package)
+  validate_string($rsyncd_rsync_package)
+  validate_string($rsyncd_xinetd_package)
   validate_string($rsyncd_export_ensure)
   validate_string($rsyncd_export_chroot)
   validate_string($rsyncd_export_readonly)
