@@ -33,7 +33,7 @@
 # Copyright 2016 Jordan Conway.
 #
 class rdiff_backup::server::init (
-  $rsyncd_xinetd_service = $rdiff_backup::rsyncd_xinetd_service,
+  $rsyncd_xinetd_service = $rdiff_backup::params::rsyncd_xinetd_service,
 ) inherits rdiff_backup::params{
   validate_string($rsyncd_xinetd_service)
 
