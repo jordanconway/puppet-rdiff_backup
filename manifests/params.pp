@@ -4,7 +4,7 @@ class rdiff_backup::params {
   $rsyncd_rsync_package = 'rsync'
   $rsyncd_xinetd_package = 'xinetd'
   $rsyncd_xinetd_service = 'xinetd'
-  $rsyncd_export_ensure = present
+  $rsyncd_export_ensure = 'present'
   $rsyncd_export_chroot = true
   $rsyncd_export_readonly = true
   $rsyncd_export_mungesymlinks = true

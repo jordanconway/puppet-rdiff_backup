@@ -35,6 +35,7 @@
 class rdiff_backup::server::init (
   $rsyncd_xinetd_service = $rdiff_backup::rsyncd_xinetd_service,
 ){
+  validate_string($rsyncd_xinetd_service)
 
   # Anchors
   anchor { 'rdiff_backup::server::begin': }

@@ -21,20 +21,37 @@ class rdiff_backup::install(
   validate_string($package)
   validate_string($rsyncd_rsync_package)
   validate_string($rsyncd_xinetd_package)
-  validate_string($rsyncd_xinetd_service)
   validate_string($rsyncd_export_ensure)
-  validate_string($rsyncd_export_chroot)
-  validate_string($rsyncd_export_readonly)
-  validate_string($rsyncd_export_mungesymlinks)
-  validate_string($rsyncd_export_path)
-  validate_string($rsyncd_export_uid)
-  validate_string($rsyncd_export_gid)
-  validate_string($rsyncd_export_users)
-  validate_string($rsyncd_export_secrets)
-  validate_string($rsyncd_export_allow)
-  validate_string($rsyncd_export_deny)
-  validate_string($rsyncd_export_prexferexec)
-  validate_string($rsyncd_export_postxferexec)
+  validate_bool($rsyncd_export_chroot)
+  validate_bool($rsyncd_export_readonly)
+  validate_bool($rsyncd_export_mungesymlinks)
+  if ($rsyncd_export_path){
+    validate_absolute_path($rsyncd_export_path)
+  }
+  if ($rsyncd_export_uid){
+    validate_string($rsyncd_export_uid)
+  }
+  if ($rsyncd_export_gid){
+    validate_string($rsyncd_export_gid)
+  }
+  if ($rsyncd_export_users){
+    validate_string($rsyncd_export_users)
+  }
+  if ($rsyncd_export_secrets){
+    validate_string($rsyncd_export_secrets)
+  }
+  if ($rsyncd_export_allow){
+    validate_ip_address($rsyncd_export_allow)
+  }
+  if ($rsyncd_export_deny){
+    validate_ip_address($rsyncd_export_deny)
+  }
+  if ($rsyncd_export_prexferexec){
+    validate_absolute_path($rsyncd_export_prexferexec)
+  }
+  if ($rsyncd_export_postxferexec){
+    validate_string($rsyncd_export_postxferexec)
+  }
 
   # We need some variables out of rdiff_backup::params
   include rdiff_backup::params
