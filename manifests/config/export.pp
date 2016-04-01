@@ -13,7 +13,6 @@ class rdiff_backup::config::export (
   $rsyncd_export_deny,
   $rsyncd_export_prexferexec,
   $rsyncd_export_postxferexec,
-  $rdiffbackuptag,
 ){
   validate_string($rsyncd_export_ensure)
   validate_bool($rsyncd_export_chroot)
