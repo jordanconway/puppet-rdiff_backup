@@ -17,6 +17,7 @@ class rdiff_backup::params {
   $rsyncd_export_deny = undef
   $rsyncd_export_prexferexec = undef
   $rsyncd_export_postxferexec = undef
+  $rdiffbackuptag = 'rdiffbackuptag'
 
   case $::osfamily {
     'RedHat': {
