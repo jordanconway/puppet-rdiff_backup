@@ -62,6 +62,7 @@ class rdiff_backup (
   $rsyncd_export_deny = $rdiff_backup::params::rsyncd_export_deny,
   $rsyncd_export_prexferexec = $rdiff_backup::params::rsyncd_export_prexferexec,
   $rsyncd_export_postxferexec = $rdiff_backup::params::rsyncd_export_postxferexec,
+  $rdiffbackuptag = $rdiff_backup::params::rdiffbackuptag
 ) inherits rdiff_backup::params {
   validate_string($package)
   validate_string($rsyncd_rsync_package)
@@ -97,6 +98,7 @@ class rdiff_backup (
   if ($rsyncd_export_postxferexec){
     validate_string($rsyncd_export_postxferexec)
   }
+  validate_string($rdiffbackuptag)
 
   # Anchors
   anchor { 'rdiff_backup::begin': }
@@ -107,11 +109,29 @@ class rdiff_backup (
     rsyncd_rsync_package => $rsyncd_rsync_package,
   }
 
+  class {'rdiff_backup::config':
+    rsyncd_export_ensure => $rsyncd_export_ensure,
+    rsyncd_export_chroot => $rsyncd_export_chroot,
+    rsyncd_export_readonly => $rsyncd_export_readonly,
+    rsyncd_export_mungesymlinks => $rsyncd_export_mungesymlinks,
+    rsyncd_export_path => $rsyncd_export_path,
+    rsyncd_export_uid => $rsyncd_export_uid,
+    rsyncd_export_gid => $rsyncd_export_gid,
+    rsyncd_export_users => $rsyncd_export_users,
+    rsyncd_export_secrets => $rsyncd_export_secrets,
+    rsyncd_export_allow => $rsyncd_export_allow,
+    rsyncd_export_deny => $rsyncd_export_deny,
+    rsyncd_export_prexferexec => $rsyncd_export_prexferexec,
+    rsyncd_export_postxferexec => $rsyncd_export_postxferexec,
+    rdiffbackuptag => $rdiffbackuptag,
+  }
+
   class {'rdiff_backup::cron':
   }
 
   Anchor['rdiff_backup::begin'] ->
     Class['rdiff_backup::install'] ->
+    Class['rdiff_backup::config'] ->
     Class['rdiff_backup::cron'] ->
   Anchor['rdiff_backup::end']
 
