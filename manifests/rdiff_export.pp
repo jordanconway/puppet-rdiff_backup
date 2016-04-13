@@ -18,7 +18,7 @@ define rdiff_backup::rdiff_export (
 
   include rsyncd
 
-  rsyncd::export{ $title:
+  @@rsyncd::export{ $title:
     ensure        => $ensure,
     chroot        => $chroot,
     readonly      => $readonly,
@@ -34,4 +34,9 @@ define rdiff_backup::rdiff_export (
     postxferexec  => $postxferexec,
   }
 
+  cron{ $title:
+    command => '',
+    user    => '',
+    hour    => '',
+  }
 }
