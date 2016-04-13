@@ -96,19 +96,20 @@ class rdiff_backup::config (
   anchor { 'rdiff_backup::config::end': }
 
   class {'rdiff_backup::config::export':
-    ensure        => $ensure,
-    chroot        => $chroot,
-    readonly      => $readonly,
-    mungesymlinks => $mungesymlinks,
-    path          => $path,
-    uid           => $uid,
-    gid           => $gid,
-    users         => $users,
-    secrets       => $secrets,
-    allow         => $allow,
-    deny          => $deny,
-    prexferexec   => $prexferexec,
-    postxferexec  => $postxferexec,
+    ensure         => $ensure,
+    chroot         => $chroot,
+    readonly       => $readonly,
+    mungesymlinks  => $mungesymlinks,
+    path           => $path,
+    uid            => $uid,
+    gid            => $gid,
+    users          => $users,
+    secrets        => $secrets,
+    allow          => $allow,
+    deny           => $deny,
+    prexferexec    => $prexferexec,
+    postxferexec   => $postxferexec,
+    rdiffbackuptag => $rdiffbackuptag
   }
 
   class {'rdiff_backup::config::import':
