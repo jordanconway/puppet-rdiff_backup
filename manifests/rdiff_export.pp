@@ -1,3 +1,4 @@
+#new rdiff_export
 define rdiff_backup::rdiff_export (
   $ensure=present,
   $chroot=true,
@@ -16,5 +17,21 @@ define rdiff_backup::rdiff_export (
 ){
 
   include rsyncd
+
+  rsyncd::export{ $title:
+    ensure        => $ensure,
+    chroot        => $chroot,
+    readonly      => $readonly,
+    mungesymlinks => $mungesymlinks,
+    path          => $path,
+    uid           => $uid,
+    gid           => $gid,
+    users         => $users,
+    secrets       => $secrets,
+    allow         => $allow,
+    deny          => $deny,
+    prexferexec   => $prexferexec,
+    postxferexec  => $postxferexec,
+  }
 
 }

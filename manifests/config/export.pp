@@ -13,6 +13,7 @@ class rdiff_backup::config::export (
   $deny,
   $prexferexec,
   $postxferexec,
+  $rdiffbackuptag
 ){
   validate_string($ensure)
   validate_bool($chroot)
@@ -45,21 +46,25 @@ class rdiff_backup::config::export (
   if ($postxferexec){
     validate_string($postxferexec)
   }
+  if ($rdiffbackuptag){
+    validate_string($rdiffbackuptag)
 
-  create_resource('@@rsyncd::export', "${::fqdn}_${path}", {
-    ensure        => $ensure,
-    chroot        => $chroot,
-    readonly      => $readonly,
-    mungesymlinks => $mungesymlinks,
-    path          => $path,
-    uid           => $uid,
-    gid           => $gid,
-    users         => $users,
-    secrets       => $secrets,
-    allow         => $allow,
-    deny          => $deny,
-    prexferexec   => $prexferexec,
-    postxferexec  => $postxferexec,
+  create_resource('@@rdiff_backup::rdiff_export', "${::fqdn}_${path}", {
+    ensure         => $ensure,
+    chroot         => $chroot,
+    readonly       => $readonly,
+    mungesymlinks  => $mungesymlinks,
+    path           => $path,
+    uid            => $uid,
+    gid            => $gid,
+    users          => $users,
+    secrets        => $secrets,
+    allow          => $allow,
+    deny           => $deny,
+    prexferexec    => $prexferexec,
+    postxferexec   => $postxferexec,
+    rdiffbackuptag => $rdiffbackuptag,
+
   })
 
 }
