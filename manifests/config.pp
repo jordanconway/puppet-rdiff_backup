@@ -43,51 +43,51 @@
 # Copyright 2016 Jordan Conway.
 #
 class rdiff_backup::config (
-  $rsyncd_export_ensure,
-  $rsyncd_export_chroot,
-  $rsyncd_export_readonly,
-  $rsyncd_export_mungesymlinks,
-  $rsyncd_export_path,
-  $rsyncd_export_uid,
-  $rsyncd_export_gid,
-  $rsyncd_export_users,
-  $rsyncd_export_secrets,
-  $rsyncd_export_allow,
-  $rsyncd_export_deny,
-  $rsyncd_export_prexferexec,
-  $rsyncd_export_postxferexec,
+  $ensure,
+  $chroot,
+  $readonly,
+  $mungesymlinks,
+  $path,
+  $uid,
+  $gid,
+  $users,
+  $secrets,
+  $allow,
+  $deny,
+  $prexferexec,
+  $postxferexec,
   $rdiffbackuptag,
 ) inherits rdiff_backup::params {
-  validate_string($rsyncd_export_ensure)
-  validate_bool($rsyncd_export_chroot)
-  validate_bool($rsyncd_export_readonly)
-  validate_bool($rsyncd_export_mungesymlinks)
-  if ($rsyncd_export_path){
-    validate_absolute_path($rsyncd_export_path)
+  validate_string($ensure)
+  validate_bool($chroot)
+  validate_bool($readonly)
+  validate_bool($mungesymlinks)
+  if ($path){
+    validate_absolute_path($path)
   }
-  if ($rsyncd_export_uid){
-    validate_string($rsyncd_export_uid)
+  if ($uid){
+    validate_string($uid)
   }
-  if ($rsyncd_export_gid){
-    validate_string($rsyncd_export_gid)
+  if ($gid){
+    validate_string($gid)
   }
-  if ($rsyncd_export_users){
-    validate_string($rsyncd_export_users)
+  if ($users){
+    validate_string($users)
   }
-  if ($rsyncd_export_secrets){
-    validate_string($rsyncd_export_secrets)
+  if ($secrets){
+    validate_string($secrets)
   }
-  if ($rsyncd_export_allow){
-    validate_ip_address($rsyncd_export_allow)
+  if ($allow){
+    validate_ip_address($allow)
   }
-  if ($rsyncd_export_deny){
-    validate_ip_address($rsyncd_export_deny)
+  if ($deny){
+    validate_ip_address($deny)
   }
-  if ($rsyncd_export_prexferexec){
-    validate_absolute_path($rsyncd_export_prexferexec)
+  if ($prexferexec){
+    validate_absolute_path($prexferexec)
   }
-  if ($rsyncd_export_postxferexec){
-    validate_string($rsyncd_export_postxferexec)
+  if ($postxferexec){
+    validate_string($postxferexec)
   }
   validate_string($rdiffbackuptag)
 
@@ -96,19 +96,19 @@ class rdiff_backup::config (
   anchor { 'rdiff_backup::config::end': }
 
   class {'rdiff_backup::config::export':
-    rsyncd_export_ensure        => $rsyncd_export_ensure,
-    rsyncd_export_chroot        => $rsyncd_export_chroot,
-    rsyncd_export_readonly      => $rsyncd_export_readonly,
-    rsyncd_export_mungesymlinks => $rsyncd_export_mungesymlinks,
-    rsyncd_export_path          => $rsyncd_export_path,
-    rsyncd_export_uid           => $rsyncd_export_uid,
-    rsyncd_export_gid           => $rsyncd_export_gid,
-    rsyncd_export_users         => $rsyncd_export_users,
-    rsyncd_export_secrets       => $rsyncd_export_secrets,
-    rsyncd_export_allow         => $rsyncd_export_allow,
-    rsyncd_export_deny          => $rsyncd_export_deny,
-    rsyncd_export_prexferexec   => $rsyncd_export_prexferexec,
-    rsyncd_export_postxferexec  => $rsyncd_export_postxferexec,
+    ensure        => $ensure,
+    chroot        => $chroot,
+    readonly      => $readonly,
+    mungesymlinks => $mungesymlinks,
+    path          => $path,
+    uid           => $uid,
+    gid           => $gid,
+    users         => $users,
+    secrets       => $secrets,
+    allow         => $allow,
+    deny          => $deny,
+    prexferexec   => $prexferexec,
+    postxferexec  => $postxferexec,
   }
 
   class {'rdiff_backup::config::import':
