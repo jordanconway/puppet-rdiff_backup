@@ -13,7 +13,7 @@ define rdiff_backup::rdiff_export (
   $deny=undef,
   $prexferexec=undef,
   $postxferexec=undef,
-  $rdiffbackuptag=undef,
+  $rdiffbackuptag=rdiffbackuptag,
 ){
 
   include rsyncd
