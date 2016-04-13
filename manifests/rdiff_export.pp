@@ -1,4 +1,4 @@
-define rdiff_backup::rsyncd_export (
+define rdiff_backup::rdiff_export (
   $ensure=present,
   $chroot=true,
   $readonly=true,
