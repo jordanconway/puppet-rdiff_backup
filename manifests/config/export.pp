@@ -49,7 +49,8 @@ class rdiff_backup::config::export (
   if ($rdiffbackuptag){
     validate_string($rdiffbackuptag)
   }
-  create_resources('@@rdiff_backup::rdiff_export', "${::fqdn}_${path}", {
+
+  @@rdiff_backup::rdiff_export { "${::fqdn}_${path}":
     ensure         => $ensure,
     chroot         => $chroot,
     readonly       => $readonly,
@@ -65,5 +66,5 @@ class rdiff_backup::config::export (
     postxferexec   => $postxferexec,
     rdiffbackuptag => $rdiffbackuptag,
 
-  })
+  }
 }
