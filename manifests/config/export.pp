@@ -50,7 +50,7 @@ class rdiff_backup::config::export (
     validate_string($rdiffbackuptag)
   }
 
-  @@rdiff_backup::rdiff_export { "${::fqdn}_${path}":
+  @@rdiff_export { "${::fqdn}_${path}":
     ensure         => $ensure,
     chroot         => $chroot,
     readonly       => $readonly,
