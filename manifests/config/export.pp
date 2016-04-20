@@ -50,8 +50,12 @@ class rdiff_backup::config::export (
     validate_string($rdiffbackuptag)
   }
 
+  # We need some variables out of rdiff_backup::params
+  include rdiff_backup::params
+
+
   create_resources('rdiff_export', {
-    title          => "${::fqdn}_${path}",
+    title          => "\${::fqdn}_\${path}",
     ensure         => $ensure,
     chroot         => $chroot,
     readonly       => $readonly,
@@ -66,6 +70,5 @@ class rdiff_backup::config::export (
     prexferexec    => $prexferexec,
     postxferexec   => $postxferexec,
     rdiffbackuptag => $rdiffbackuptag,
-
   })
 }
