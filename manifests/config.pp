@@ -56,6 +56,8 @@ class rdiff_backup::config (
   $deny,
   $prexferexec,
   $postxferexec,
+  $rdiff_server,
+  $remote_path,
   $rdiffbackuptag,
 ) inherits rdiff_backup::params {
   validate_string($ensure)
@@ -89,6 +91,12 @@ class rdiff_backup::config (
   if ($postxferexec){
     validate_string($postxferexec)
   }
+  if ($rdiff_server){
+    validate_string($rdiff_server)
+  }
+  if ($remote_path){
+    validate_string($remote_path)
+  }
   validate_string($rdiffbackuptag)
 
   # Anchors
@@ -109,6 +117,8 @@ class rdiff_backup::config (
     deny           => $deny,
     prexferexec    => $prexferexec,
     postxferexec   => $postxferexec,
+    rdiff_server   => $rdiff_server,
+    remote_path    => $remote_path,
     rdiffbackuptag => $rdiffbackuptag
   }
 

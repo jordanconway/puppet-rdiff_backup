@@ -13,6 +13,8 @@ class rdiff_backup::config::export (
   $deny,
   $prexferexec,
   $postxferexec,
+  $remote_path,
+  $rdiff_server,
   $rdiffbackuptag
 ){
   validate_string($ensure)
@@ -46,6 +48,16 @@ class rdiff_backup::config::export (
   if ($postxferexec){
     validate_string($postxferexec)
   }
+  if ($rdiff_server){
+    validate_string($rdiff_server)
+  }
+  if ($remote_path){
+    validate_string($remote_path)
+    $_remote_path = $remote_path
+  }
+  else {
+    $_remote_path = "/rdiff_backups/${path}"
+  }
   if ($rdiffbackuptag){
     validate_string($rdiffbackuptag)
   }
@@ -69,6 +81,8 @@ class rdiff_backup::config::export (
     deny           => $deny,
     prexferexec    => $prexferexec,
     postxferexec   => $postxferexec,
+    rdiff_server   => $rdiff_server,
+    remote_path    => $_remote_path,
     rdiffbackuptag => $rdiffbackuptag,
   })
 }

@@ -13,6 +13,8 @@ define rdiff_backup::rdiff_export (
   $deny=undef,
   $prexferexec=undef,
   $postxferexec=undef,
+  $remote_path=undef,
+  $rdiff_server=undef,
   $rdiffbackuptag=rdiffbackuptag,
 ){
 
@@ -23,7 +25,7 @@ define rdiff_backup::rdiff_export (
     chroot        => $chroot,
     readonly      => $readonly,
     mungesymlinks => $mungesymlinks,
-    path          => $path,
+    path          => $remote_path,
     uid           => $uid,
     gid           => $gid,
     users         => $users,
@@ -35,8 +37,8 @@ define rdiff_backup::rdiff_export (
   }
 
   cron{ $title:
-    command => '',
-    user    => '',
-    hour    => '',
+    command => "rdiff-backup ${path} ${gid}@${rdiff_server}::${remote_path}",
+    user    => $uid,
+    hour    => 1,
   }
 }

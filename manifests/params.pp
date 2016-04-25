@@ -17,6 +17,8 @@ class rdiff_backup::params {
   $deny = undef
   $prexferexec = undef
   $postxferexec = undef
+  $remote_path = undef
+  $rdiff_server = undef
   $rdiffbackuptag = 'rdiffbackuptag'
 
   case $::osfamily {

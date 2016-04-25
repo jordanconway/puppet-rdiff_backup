@@ -62,6 +62,8 @@ class rdiff_backup (
   $deny = $rdiff_backup::params::deny,
   $prexferexec = $rdiff_backup::params::prexferexec,
   $postxferexec = $rdiff_backup::params::postxferexec,
+  $remote_path = $rdiff_backup::params::remote_path,
+  $rdiff_server = $rdiff_backup::params::rdiff_server,
   $rdiffbackuptag = $rdiff_backup::params::rdiffbackuptag
 ) inherits rdiff_backup::params {
   validate_string($package)
@@ -98,6 +100,12 @@ class rdiff_backup (
   if ($postxferexec){
     validate_string($postxferexec)
   }
+  if ($rdiff_server){
+    validate_string($rdiff_server)
+  }
+  if ($remote_path){
+    validate_string($remote_path)
+  }
   validate_string($rdiffbackuptag)
 
   # Anchors
@@ -123,6 +131,8 @@ class rdiff_backup (
     deny => $deny,
     prexferexec => $prexferexec,
     postxferexec => $postxferexec,
+    rdiff_server => $rdiff_server,
+    remote_path => $remote_path,
     rdiffbackuptag => $rdiffbackuptag,
   }
 
