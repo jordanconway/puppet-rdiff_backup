@@ -15,12 +15,13 @@ define rdiff_backup::rdiff_export (
   $postxferexec=undef,
   $remote_path=undef,
   $rdiff_server=undef,
+  $rdiff_name=$title,
   $rdiffbackuptag=rdiffbackuptag,
 ){
 
   include rsyncd
 
-  @@rsyncd::export{ $title:
+  @@rsyncd::export{ $rdiff_name:
     ensure        => $ensure,
     chroot        => $chroot,
     readonly      => $readonly,
@@ -36,7 +37,7 @@ define rdiff_backup::rdiff_export (
     postxferexec  => $postxferexec,
   }
 
-  cron{ $title:
+  cron{ $rdiff_name:
     command => "rdiff-backup ${path} ${gid}@${rdiff_server}::${remote_path}",
     user    => $uid,
     hour    => 1,
