@@ -39,6 +39,7 @@ class rdiff_backup::server::init (
 ) inherits rdiff_backup::params{
   validate_string($rsyncd_xinetd_service)
   validate_string($rsyncd_xinetd_package)
+  validate_string($rdiffbackuptag)
 
   # Anchors
   anchor { 'rdiff_backup::server::begin': }
@@ -52,8 +53,6 @@ class rdiff_backup::server::init (
   }
 
   class {'rdiff_backup::server::import':
-  }
-  class {'rdiff_backup::config::import':
     rdiffbackuptag => $rdiffbackuptag
   }
 
