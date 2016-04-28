@@ -38,6 +38,8 @@ class rdiff_backup::server::init (
 ) inherits rdiff_backup::params{
   validate_string($rsyncd_xinetd_service)
 
+  include rdiff_backup::config
+
   # Anchors
   anchor { 'rdiff_backup::server::begin': }
   anchor { 'rdiff_backup::server::end': }
@@ -49,9 +51,13 @@ class rdiff_backup::server::init (
     rsyncd_xinetd_service => $rsyncd_xinetd_service
   }
 
+  class { 'rdiff_backup::config':
+  }
+
   Anchor['rdiff_backup::server::begin'] ->
   Class['rdiff_backup::server::install'] ->
   Class['rdiff_backup::server::service'] ->
+  Class['rdiff_backup::config'] ->
   Anchor['rdiff_backup::server::end']
 
 }

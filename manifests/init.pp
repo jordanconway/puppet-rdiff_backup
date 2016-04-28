@@ -141,7 +141,7 @@ class rdiff_backup (
 
   Anchor['rdiff_backup::begin'] ->
     Class['rdiff_backup::install'] ->
-    Class['rdiff_backup::config'] ->
+    Class['rdiff_backup::config::export'] ->
     Class['rdiff_backup::cron'] ->
   Anchor['rdiff_backup::end']
 
