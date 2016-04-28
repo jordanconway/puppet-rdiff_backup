@@ -117,7 +117,7 @@ class rdiff_backup (
     rsyncd_rsync_package => $rsyncd_rsync_package,
   }
 
-  class {'rdiff_backup::config':
+  class {'rdiff_backup::config::export':
     ensure => $ensure,
     chroot => $chroot,
     readonly => $readonly,
