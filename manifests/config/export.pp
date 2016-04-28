@@ -66,7 +66,7 @@ class rdiff_backup::config::export (
   include rdiff_backup::params
 
 
-  create_resources('rdiff_export', {
+  create_resources('rdiff_backup::rdiff_export', {
     "${::fqdn}_${path}" => {
       ensure         => $ensure,
       chroot         => $chroot,
