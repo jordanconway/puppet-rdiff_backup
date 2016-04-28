@@ -67,22 +67,23 @@ class rdiff_backup::config::export (
 
 
   create_resources('rdiff_export', {
-    title          => "${::fqdn}_${path}",
-    ensure         => $ensure,
-    chroot         => $chroot,
-    readonly       => $readonly,
-    mungesymlinks  => $mungesymlinks,
-    path           => $path,
-    uid            => $uid,
-    gid            => $gid,
-    users          => $users,
-    secrets        => $secrets,
-    allow          => $allow,
-    deny           => $deny,
-    prexferexec    => $prexferexec,
-    postxferexec   => $postxferexec,
-    rdiff_server   => $rdiff_server,
-    remote_path    => $_remote_path,
-    rdiffbackuptag => $rdiffbackuptag,
+    "${::fqdn}_${path}" => {
+      ensure         => $ensure,
+      chroot         => $chroot,
+      readonly       => $readonly,
+      mungesymlinks  => $mungesymlinks,
+      path           => $path,
+      uid            => $uid,
+      gid            => $gid,
+      users          => $users,
+      secrets        => $secrets,
+      allow          => $allow,
+      deny           => $deny,
+      prexferexec    => $prexferexec,
+      postxferexec   => $postxferexec,
+      rdiff_server   => $rdiff_server,
+      remote_path    => $_remote_path,
+      rdiffbackuptag => $rdiffbackuptag,
+    }
   })
 }
