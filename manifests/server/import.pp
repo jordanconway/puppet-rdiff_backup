@@ -4,5 +4,5 @@ class rdiff_backup::server::import(
 ){
   validate_string($rdiffbackuptag)
 
-  RRsyncd::Export <<| tag == $rdiffbackuptag |>> { }
+  Rsyncd::Export <<| tag == $rdiffbackuptag |>> { }
 }
