@@ -35,6 +35,7 @@ define rdiff_backup::rdiff_export (
     deny          => $deny,
     prexferexec   => $prexferexec,
     postxferexec  => $postxferexec,
+    tag           => $rdiffbackuptag
   }
 
   cron{ $rdiff_name:
