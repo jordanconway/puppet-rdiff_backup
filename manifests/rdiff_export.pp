@@ -38,6 +38,14 @@ define rdiff_backup::rdiff_export (
     tag           => $rdiffbackuptag
   }
 
+  @@file{ $remote_path:
+    ensure => directory,
+    path   => $remote_path,
+    owner  => $uid,
+    group  => $gid,
+    tag    => $rdiffbackuptag,
+  }
+
   cron{ $rdiff_name:
     command => "rdiff-backup ${path} ${gid}@${rdiff_server}::${remote_path}",
     user    => $uid,
