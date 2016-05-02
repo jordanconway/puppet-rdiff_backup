@@ -38,7 +38,7 @@ define rdiff_backup::rdiff_export (
     tag           => $rdiffbackuptag
   }})
 
-  create_resources('@@file', { $remote_path => {
+  create_resources('@@file', { $rdiff_name => {
     ensure => directory,
     path   => $remote_path,
     owner  => $uid,
