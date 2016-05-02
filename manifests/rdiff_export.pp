@@ -22,7 +22,7 @@ define rdiff_backup::rdiff_export (
 
   $rdiff_name = $name
 
-  create_resources('@@rsyncd::export', {$rdiff_name => {
+  create_resources('@@rsyncd::export', {"${rdiff_name}_${::fqdn}" => {
     ensure        => $ensure,
     chroot        => $chroot,
     readonly      => $readonly,
@@ -39,7 +39,7 @@ define rdiff_backup::rdiff_export (
     tag           => $rdiffbackuptag
   }})
 
-  create_resources('@@file', { $rdiff_name => {
+  create_resources('@@file', { "${rdiff_name}_${::fqdn}" => {
     ensure => directory,
     path   => $remote_path,
     owner  => $uid,
