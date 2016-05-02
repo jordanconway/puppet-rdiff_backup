@@ -21,7 +21,7 @@ define rdiff_backup::rdiff_export (
 
   include rsyncd
 
-  @@rsyncd::export{ $rdiff_name:
+  create_resources('@@rsyncd::export', {$rdiff_name => {
     ensure        => $ensure,
     chroot        => $chroot,
     readonly      => $readonly,
@@ -36,15 +36,15 @@ define rdiff_backup::rdiff_export (
     prexferexec   => $prexferexec,
     postxferexec  => $postxferexec,
     tag           => $rdiffbackuptag
-  }
+  }})
 
-  @@file{ $remote_path:
+  create_resources('@@file', { $remote_path => {
     ensure => directory,
     path   => $remote_path,
     owner  => $uid,
     group  => $gid,
     tag    => $rdiffbackuptag,
-  }
+  }})
 
   cron{ $rdiff_name:
     command => "rdiff-backup ${path} ${gid}@${rdiff_server}::${remote_path}",
