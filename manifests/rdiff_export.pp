@@ -21,7 +21,7 @@ define rdiff_backup::rdiff_export (
 
   include rsyncd
 
-  $rdiff_name = $title
+  $rdiff_name = $name
 
   create_resources('@@rsyncd::export', {$rdiff_name => {
     ensure        => $ensure,
