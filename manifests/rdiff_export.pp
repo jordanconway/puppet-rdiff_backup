@@ -1,9 +1,9 @@
 #new rdiff_export
 define rdiff_backup::rdiff_export (
-  $ensure=present,
-  $chroot=true,
-  $readonly=true,
-  $mungesymlinks=true,
+  $ensure=undef,
+  $chroot=undef,
+  $readonly=undef,
+  $mungesymlinks=undef,
   $path=undef,
   $uid=undef,
   $gid=undef,

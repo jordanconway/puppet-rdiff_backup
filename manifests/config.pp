@@ -122,13 +122,8 @@ class rdiff_backup::config (
     rdiffbackuptag => $rdiffbackuptag
   }
 
-  class {'rdiff_backup::config::import':
-    rdiffbackuptag => $rdiffbackuptag
-  }
-
   Anchor['rdiff_backup::config::begin'] ->
     Class['rdiff_backup::config::export'] ->
-    Class['rdiff_backup::config::import'] ->
   Anchor['rdiff_backup::config::end']
 
 }
