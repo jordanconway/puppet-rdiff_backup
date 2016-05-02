@@ -1,25 +1,27 @@
 #new rdiff_export
 define rdiff_backup::rdiff_export (
-  $ensure=undef,
-  $chroot=undef,
-  $readonly=undef,
-  $mungesymlinks=undef,
-  $path=undef,
-  $uid=undef,
-  $gid=undef,
-  $users=undef,
-  $secrets=undef,
-  $allow=undef,
-  $deny=undef,
-  $prexferexec=undef,
-  $postxferexec=undef,
-  $remote_path=undef,
-  $rdiff_server=undef,
-  $rdiff_name=$title,
-  $rdiffbackuptag=rdiffbackuptag,
+  $ensure,
+  $chroot,
+  $readonly,
+  $mungesymlinks,
+  $path,
+  $uid,
+  $gid,
+  $users,
+  $secrets,
+  $allow,
+  $deny,
+  $prexferexec,
+  $postxferexec,
+  $remote_path,
+  $rdiff_server,
+  $rdiff_name,
+  $rdiffbackuptag,
 ){
 
   include rsyncd
+
+  $rdiff_name = $title
 
   create_resources('@@rsyncd::export', {$rdiff_name => {
     ensure        => $ensure,
