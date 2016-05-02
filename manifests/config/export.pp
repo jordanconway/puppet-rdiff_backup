@@ -17,10 +17,18 @@ class rdiff_backup::config::export (
   $rdiff_server,
   $rdiffbackuptag
 ){
-  validate_string($ensure)
-  validate_bool($chroot)
-  validate_bool($readonly)
-  validate_bool($mungesymlinks)
+  if ($ensure){
+    validate_string($ensure)
+  }
+  if ($chroot){
+    validate_bool($chroot)
+  }
+  if ($readonly){
+    validate_bool($readonly)
+  }
+  if ($mungesymlinks){
+    validate_bool($mungesymlinks)
+  }
   if ($path){
     validate_absolute_path($path)
   }
