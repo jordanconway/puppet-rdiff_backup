@@ -15,7 +15,6 @@ define rdiff_backup::rdiff_export (
   $postxferexec,
   $remote_path,
   $rdiff_server,
-  $rdiff_name,
   $rdiffbackuptag,
 ){
 
