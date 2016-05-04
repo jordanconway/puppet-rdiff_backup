@@ -105,7 +105,9 @@ class rdiff_backup::config (
   if ($remote_path){
     validate_string($remote_path)
   }
-  validate_string($rdiffbackuptag)
+  if ($rdiffbackuptag){
+    validate_string($rdiffbackuptag)
+  }
 
   # Anchors
   anchor { 'rdiff_backup::config::begin': }

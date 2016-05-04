@@ -114,7 +114,9 @@ class rdiff_backup (
   if ($remote_path){
     validate_string($remote_path)
   }
-  validate_string($rdiffbackuptag)
+  if ($rdiffbackuptag){
+    validate_string($rdiffbackuptag)
+  }
 
   # Anchors
   anchor { 'rdiff_backup::begin': }
