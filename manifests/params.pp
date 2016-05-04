@@ -19,7 +19,7 @@ class rdiff_backup::params {
   $postxferexec = undef
   $remote_path = undef
   $rdiff_server = undef
-  $rdiffbackuptag = 'rdiffbackuptag'
+  $rdiffbackuptag = undef
 
   case $::osfamily {
     'RedHat': {
