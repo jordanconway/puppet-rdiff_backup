@@ -9,13 +9,13 @@ define rdiff_backup::rdiff_export (
   $gid,
   $users,
   $secrets,
-  $allow,
   $deny,
   $prexferexec,
   $postxferexec,
   $remote_path,
   $rdiff_server,
   $rdiffbackuptag,
+  $allow = $::ipaddress,
 ){
 
   include rsyncd
