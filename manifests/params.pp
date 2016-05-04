@@ -13,7 +13,7 @@ class rdiff_backup::params {
   $gid = undef
   $users = undef
   $secrets = undef
-  $allow = $::fqdn
+  $allow = $::ipaddress
   $deny = undef
   $prexferexec = undef
   $postxferexec = undef
