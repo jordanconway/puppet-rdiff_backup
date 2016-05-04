@@ -20,9 +20,7 @@ define rdiff_backup::rdiff_export (
 
   include rsyncd
 
-  $rdiff_name = $name
-
-  create_resources('@@rsyncd::export', {"${rdiff_name}_${::fqdn}" => {
+  create_resources('@@rsyncd::export', {"${::fqdn}_${$path}" => {
     ensure        => $ensure,
     chroot        => $chroot,
     readonly      => $readonly,
@@ -39,7 +37,7 @@ define rdiff_backup::rdiff_export (
     tag           => $rdiffbackuptag
   }})
 
-  create_resources('@@file', { "${rdiff_name}_${::fqdn}" => {
+  create_resources('@@file', { "${::fqdn}_${path}" => {
     ensure => directory,
     path   => $remote_path,
     owner  => $uid,
@@ -47,7 +45,7 @@ define rdiff_backup::rdiff_export (
     tag    => $rdiffbackuptag,
   }})
 
-  cron{ $rdiff_name:
+  cron{ "${::fqdn}_${path}":
     command => "rdiff-backup ${path} ${gid}@${rdiff_server}::${remote_path}",
     user    => $uid,
     hour    => 1,
