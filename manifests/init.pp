@@ -34,7 +34,7 @@
 #
 class rdiff_backup (
   $rsyncd_xinetd_service = $rdiff_backup::params::rsyncd_xinetd_service,
-  $rsyncd_xinetd_package = $rdoff_backup::params::rsyncd_xinetd_package,
+  $rsyncd_xinetd_package = $rdiff_backup::params::rsyncd_xinetd_package,
   $rdiffbackuptag
 ){
   validate_string($rsyncd_xinetd_service)
