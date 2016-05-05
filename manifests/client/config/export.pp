@@ -1,5 +1,5 @@
 # rdiff_backup::config::export class
-class rdiff_backup::config::export (
+class rdiff_backup::client::config::export (
   $ensure,
   $chroot,
   $readonly,

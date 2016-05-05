@@ -42,7 +42,7 @@
 #
 # Copyright 2016 Jordan Conway.
 #
-class rdiff_backup::config (
+class rdiff_backup::client::config (
   $ensure,
   $chroot,
   $readonly,
@@ -110,10 +110,10 @@ class rdiff_backup::config (
   }
 
   # Anchors
-  anchor { 'rdiff_backup::config::begin': }
-  anchor { 'rdiff_backup::config::end': }
+  anchor { 'rdiff_backup::client::config::begin': }
+  anchor { 'rdiff_backup::client::config::end': }
 
-  class {'rdiff_backup::config::export':
+  class {'rdiff_backup::client::config::export':
     ensure         => $ensure,
     chroot         => $chroot,
     readonly       => $readonly,
@@ -132,8 +132,8 @@ class rdiff_backup::config (
     rdiffbackuptag => $rdiffbackuptag
   }
 
-  Anchor['rdiff_backup::config::begin'] ->
-    Class['rdiff_backup::config::export'] ->
-  Anchor['rdiff_backup::config::end']
+  Anchor['rdiff_backup::client::config::begin'] ->
+    Class['rdiff_backup::client::config::export'] ->
+  Anchor['rdiff_backup::client::config::end']
 
 }

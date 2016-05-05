@@ -1,5 +1,5 @@
 # rdiff_backup::install class
-class rdiff_backup::install(
+class rdiff_backup::client::install(
   $package,
   $rsyncd_rsync_package,
 ) {
