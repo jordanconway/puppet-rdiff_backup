@@ -32,7 +32,7 @@
 #
 # Copyright 2016 Jordan Conway.
 #
-class rdiff_backup::init (
+class rdiff_backup (
   $rsyncd_xinetd_service,
   $rsyncd_xinetd_package,
   $rdiffbackuptag
