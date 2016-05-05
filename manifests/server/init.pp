@@ -33,10 +33,10 @@
 # Copyright 2016 Jordan Conway.
 #
 class rdiff_backup::server::init (
-  $rsyncd_xinetd_service = $rdiff_backup::params::rsyncd_xinetd_service,
-  $rsyncd_xinetd_package = $rdiff_backup::params::rsyncd_xinetd_package,
-  $rdiffbackuptag = $rdiffbackuptag
-) inherits rdiff_backup{
+  $rsyncd_xinetd_service,
+  $rsyncd_xinetd_package,
+  $rdiffbackuptag
+){
   validate_string($rsyncd_xinetd_service)
   validate_string($rsyncd_xinetd_package)
   if ($rdiffbackuptag){
