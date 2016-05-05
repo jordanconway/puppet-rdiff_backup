@@ -43,6 +43,8 @@ class rdiff_backup::server::init (
     validate_string($rdiffbackuptag)
   }
 
+  include rdiff_backup::params
+
   # Anchors
   anchor { 'rdiff_backup::server::begin': }
   anchor { 'rdiff_backup::server::end': }
