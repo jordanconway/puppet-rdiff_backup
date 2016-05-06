@@ -7,7 +7,7 @@ class rdiff_backup::params {
   $ensure = present
   $chroot = true
   $readonly = true
-  $mungesymlinks = undef
+  $mungesymlinks = true
   $path = undef
   $uid = undef
   $gid = undef
