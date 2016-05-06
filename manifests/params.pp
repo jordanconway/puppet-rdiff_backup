@@ -4,9 +4,9 @@ class rdiff_backup::params {
   $rsyncd_rsync_package = 'rsync'
   $rsyncd_xinetd_package = 'xinetd'
   $rsyncd_xinetd_service = 'xinetd'
-  $ensure = undef
-  $chroot = undef
-  $readonly = undef
+  $ensure = present
+  $chroot = true
+  $readonly = true
   $mungesymlinks = undef
   $path = undef
   $uid = undef
