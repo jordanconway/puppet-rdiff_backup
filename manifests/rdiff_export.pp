@@ -20,7 +20,9 @@ define rdiff_backup::rdiff_export (
 
   include rsyncd
 
-  create_resources('@@rsyncd::export', {"${::fqdn}-${path}" => {
+  $cleanpath = regsubst($path, '\/', '-')
+
+  create_resources('@@rsyncd::export', {"${::fqdn}-${cleanpath}" => {
     ensure        => $ensure,
     chroot        => $chroot,
     readonly      => $readonly,
@@ -37,7 +39,7 @@ define rdiff_backup::rdiff_export (
     tag           => $rdiffbackuptag
   }})
 
-  create_resources('@@file', { "${::fqdn}-${path}" => {
+  create_resources('@@file', { "${::fqdn}-${cleanpath}" => {
     ensure => directory,
     path   => $remote_path,
     owner  => $uid,
