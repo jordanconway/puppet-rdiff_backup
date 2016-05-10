@@ -39,7 +39,6 @@ define rdiff_backup::rdiff_export (
     mode    => '0460',
     owner   => $uid,
     group   => $gid,
-    require => User[$uid],
   }
 
 
