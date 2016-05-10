@@ -21,7 +21,7 @@ define rdiff_backup::rdiff_export (
   include rsyncd
 
   if ($path) {
-    $cleanpath = regsubst($path, '\/', '-')
+    $cleanpath = regsubst($path, '\/', '-', 'G')
   }
 
   create_resources('@@rsyncd::export', {"${::fqdn}${cleanpath}" => {
