@@ -68,8 +68,10 @@ define rdiff_backup::rdiff_export (
     tag    => $rdiffbackuptag,
   }})
 
-  cron{ "${::fqdn}_${path}":
-    command => "rdiff-backup ${path} ${gid}@${rdiff_server}::${remote_path}",
+  cron{ "${::fqdn}${cleanpath}":
+    #lint:ignore:80chars
+    command => "rdiff-backup ${path} ${::fqdn}${cleanpath}@${rdiff_server}::${::fqdn}${cleanpath}",
+    #lint:endignore
     user    => $uid,
     hour    => 1,
   }
