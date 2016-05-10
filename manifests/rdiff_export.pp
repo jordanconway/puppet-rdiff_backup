@@ -33,13 +33,14 @@ define rdiff_backup::rdiff_export (
     $_secrets = $secrets
   }
 
-  file { $_secrets:
+  create_resources('@@file', { $_secrets => {
     content => "${::fqdn}${cleanpath}:${password}",
     replace => no,
     mode    => '0460',
     owner   => $uid,
     group   => $gid,
-  }
+    tag     => $rdiffbackuptag
+  }})
 
 
   create_resources('@@rsyncd::export', {"${::fqdn}${cleanpath}" => {
