@@ -24,6 +24,22 @@ define rdiff_backup::rdiff_export (
     $cleanpath = regsubst($path, '\/', '-', 'G')
   }
 
+  $password = generate('/usr/bin/pwgen', 8, 1)
+
+  if $secrets == undef and !('' in [$secrets]) {
+    $secrets = "/etc/${::fqdn}${cleanpath}-rsyncd.secret"
+  }
+
+  file { $secrets:
+    content => "${::fqdn}${cleanpath}:${password}",
+    replace => no,
+    mode    => '0460',
+    owner   => $uid,
+    group   => $gid,
+    require => User[$uid],
+  }
+
+
   create_resources('@@rsyncd::export', {"${::fqdn}${cleanpath}" => {
     ensure        => $ensure,
     chroot        => $chroot,
