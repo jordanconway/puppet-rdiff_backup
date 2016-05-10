@@ -20,7 +20,7 @@ define rdiff_backup::rdiff_export (
 
   include rsyncd
 
-  create_resources('@@rsyncd::export', {"${$::hostname}_${$path}" => {
+  create_resources('@@rsyncd::export', {"${::hostname}_${path}" => {
     ensure        => $ensure,
     chroot        => $chroot,
     readonly      => $readonly,
