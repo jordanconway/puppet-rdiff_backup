@@ -18,8 +18,6 @@ define rdiff_backup::rdiff_export (
   $allow = undef,
 ){
 
-  include rsyncd
-
   if ($path) {
     $cleanpath = regsubst($path, '\/', '-', 'G')
   }
