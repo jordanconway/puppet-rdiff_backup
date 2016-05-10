@@ -12,6 +12,11 @@ class rdiff_backup::server::install (
     { ensure  => present, }
   )
 
-
+  if ( $::osfamily == 'RedHat' ){
+    selboolean { 'rsync_full_access':
+      persistent => true,
+      value      => on,
+    }
+  }
 
 }
