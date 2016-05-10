@@ -27,10 +27,13 @@ define rdiff_backup::rdiff_export (
   $password = generate('/usr/bin/pwgen', 8, 1)
 
   if $secrets == undef and !('' in [$secrets]) {
-    $secrets = "/etc/${::fqdn}${cleanpath}-rsyncd.secret"
+    $_secrets = "/etc/${::fqdn}${cleanpath}-rsyncd.secret"
+  }
+  else {
+    $_secrets = $secrets
   }
 
-  file { $secrets:
+  file { $_secrets:
     content => "${::fqdn}${cleanpath}:${password}",
     replace => no,
     mode    => '0460',
@@ -49,7 +52,7 @@ define rdiff_backup::rdiff_export (
     uid           => $uid,
     gid           => $gid,
     users         => $users,
-    secrets       => $secrets,
+    secrets       => $_secrets,
     allow         => $allow,
     deny          => $deny,
     prexferexec   => $prexferexec,
