@@ -9,7 +9,7 @@ define rdiff_backup::rdiff_export (
 ){
 
   if ($path) {
-    $cleanpath = regsubst($path, '\/', '_', 'G')
+    $cleanpath = regsubst(regsubst($path, '\/', '_', 'G'),'_', '')
   }
 
   $cleanfqdn = regsubst($::fqdn, '\.', '_', 'G')
