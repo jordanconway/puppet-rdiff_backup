@@ -9,10 +9,10 @@ define rdiff_backup::rdiff_export (
 ){
 
   if ($path) {
-    $cleanpath = regsubst($path, '\/', '-', 'G')
+    $cleanpath = regsubst($path, '\/', '_', 'G')
   }
 
-  $cleanfqdn = regsubst($::fqdn, '\.', '-', 'G')
+  $cleanfqdn = regsubst($::fqdn, '\.', '_', 'G')
 
   $rdiff_user = "${cleanfqdn}${cleanpath}"
 
