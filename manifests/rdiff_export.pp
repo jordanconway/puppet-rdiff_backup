@@ -22,6 +22,16 @@ define rdiff_backup::rdiff_export (
     tag        => $rdiffbackuptag,
   }})
 
+  create_resources('@@file', { "${::fqdn}${cleanpath} ssh rdiff user directory" => {
+    ensure => directory,
+    path   => "/var/lib/rdiff/${::fqdn}/${cleanpath}/.ssh",
+		mode   => '0700',
+    owner  => "${::hostname}${cleanpath}",
+    group  => "${::hostname}${cleanpath}",
+    tag    => $rdiffbackuptag,
+  }})
+
+
   User <<| title == "${::fqdn}${cleanpath}" |>> { }
 
   exec { "Create ${::hostname}${cleanpath} user SSH key":
