@@ -33,15 +33,8 @@
 # Copyright 2016 Jordan Conway.
 #
 class rdiff_backup (
-  $rsyncd_xinetd_service = $rdiff_backup::params::rsyncd_xinetd_service,
-  $rsyncd_xinetd_package = $rdiff_backup::params::rsyncd_xinetd_package,
   $rdiffbackuptag
 ){
-  validate_string($rsyncd_xinetd_service)
-  validate_string($rsyncd_xinetd_package)
-  if ($rdiffbackuptag){
-    validate_string($rdiffbackuptag)
-  }
 
   include rdiff_backup::params
 
@@ -50,10 +43,8 @@ class rdiff_backup (
   anchor { 'rdiff_backup::end': }
 
   class { 'rdiff_backup::server::install':
-    rsyncd_xinetd_package => $rsyncd_xinetd_package
   }
   class { 'rdiff_backup::server::service':
-    rsyncd_xinetd_service => $rsyncd_xinetd_service
   }
 
   class {'rdiff_backup::server::import':

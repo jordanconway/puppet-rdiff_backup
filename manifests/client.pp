@@ -44,9 +44,6 @@
 #
 class rdiff_backup::client (
   $package = $rdiff_backup::params::package,
-  $rsyncd_rsync_package = $rdiff_backup::params::rsyncd_rsync_package,
-  $rsyncd_xinetd_package = $ridff_backup::params::rsyncd_xinetd_package,
-  $rsyncd_xinetd_service = $ridff_backup::params::rsyncd_xinetd_service,
   $ensure = $rdiff_backup::params::ensure,
   $chroot = $rdiff_backup::params::chroot,
   $readonly = $rdiff_backup::params::readonly,
@@ -67,8 +64,6 @@ class rdiff_backup::client (
   $rdiffbackuptag = $rdiff_backup::params::rdiffbackuptag
 ) inherits rdiff_backup::params {
   validate_string($package)
-  validate_string($rsyncd_rsync_package)
-  validate_string($rsyncd_xinetd_package)
   if ($ensure){
     validate_string($ensure)
   }

@@ -1,17 +1,7 @@
 #new rdiff_export
 define rdiff_backup::rdiff_export (
   $ensure = undef,
-  $chroot = true,
-  $readonly = true,
-  $mungesymlinks = true,
   $path = undef,
-  $uid = undef,
-  $gid = undef,
-  $users = undef,
-  $secrets = undef,
-  $deny = undef,
-  $prexferexec = undef,
-  $postxferexec = undef,
   $remote_path = undef,
   $rdiff_server = undef,
   $rdiffbackuptag = undef,
@@ -22,55 +12,52 @@ define rdiff_backup::rdiff_export (
     $cleanpath = regsubst($path, '\/', '-', 'G')
   }
 
-  $password = generate('/usr/bin/pwgen', 8, 1)
 
-  if $secrets == undef and !('' in [$secrets]) {
-    $_secrets = "/etc/${::fqdn}${cleanpath}-rsyncd.secret"
-  }
-  else {
-    $_secrets = $secrets
-  }
-
-  create_resources('@@file', { $_secrets => {
-    content => "${::fqdn}${cleanpath}:${password}",
-    replace => no,
-    mode    => '0460',
-    owner   => $uid,
-    group   => $gid,
-    tag     => $rdiffbackuptag
-  }})
-
-
-  create_resources('@@rsyncd::export', {"${::fqdn}${cleanpath}" => {
-    ensure        => $ensure,
-    chroot        => $chroot,
-    readonly      => $readonly,
-    mungesymlinks => $mungesymlinks,
-    path          => $remote_path,
-    uid           => $uid,
-    gid           => $gid,
-    users         => $users,
-    secrets       => $_secrets,
-    allow         => $allow,
-    deny          => $deny,
-    prexferexec   => $prexferexec,
-    postxferexec  => $postxferexec,
-    tag           => $rdiffbackuptag
-  }})
-
-  create_resources('@@file', { "${::fqdn}${cleanpath}" => {
+  create_resources('@@file', { "${::fqdn} ssh rdiff user directory" => {
     ensure => directory,
-    path   => $remote_path,
-    owner  => $uid,
-    group  => $gid,
+    path   => "/var/lib/rdiff/${::fqdn}",
+    owner  => "${::fqdn}${cleanpath}",
+    group  => "${::fqdn}${cleanpath}",
     tag    => $rdiffbackuptag,
   }})
 
+  #Local resources
+  # Create ssh user key for rdiff user export and collect locally
+
+  create_resources('@@user', { "${::fqdn}${cleanpath}" => {
+    ensure  => present,
+    home    => "/var/lib/rdiff/${::fqdn}/${cleanpath}",
+    require => [ Ssh::Client::Config::User["${::fqdn}${cleanpath}"]],
+    tag    => $rdiffbackuptag,
+  }})
+
+  User <<| title == "${::fqdn}${cleanpath}" |>> { }
+
+  ssh::client::config::user { "${::fqdn}${cleanpath}":
+    ensure              => present,
+    manage_user_ssh_dir => false,
+    user_home_dir       => "/var/lib/rdiff/${::fqdn}/${cleanpath}",
+    options             => {
+      'HashKnownHosts' => 'yes'
+    },
+    tag                 => $rdiffbackuptag,
+  }
+
+  exec { "Create ${::fqdn}${cleanpath} user SSH key":
+    path    => '/usr/bin',
+    # lint:ignore:80chars
+    command => "ssh-keygen -t rsa -N '' -C '${::fqdn}${cleanpath}@${::fqdn}' -f /var/lib/rdiff/${::fqdn}/${cleanpath}/.ssh/id_rsa",
+    # lint:endignore
+    creates => "/var/lib/rdiff/${::fqdn}/${cleanpath}/.ssh/id_rsa",
+    user    => "${::fqdn}${cleanpath}",
+    require => [ Ssh::Client::Config::User["${::fqdn}${cleanpath}"]],
+  }
+
   cron{ "${::fqdn}${cleanpath}":
     #lint:ignore:80chars
-    command => "rdiff-backup ${path} ${::fqdn}${cleanpath}@${rdiff_server}::${::fqdn}${cleanpath}",
+    command => "rdiff-backup ${path} ${::fqdn}${cleanpath}@${rdiff_server}::/srv/rdiff/${::fqdn}/${cleanpath}",
     #lint:endignore
-    user    => $uid,
+    user    => "${::fqdn}${cleanpath}",
     hour    => 1,
   }
 }
