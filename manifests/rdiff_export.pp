@@ -21,6 +21,13 @@ define rdiff_backup::rdiff_export (
     tag    => $rdiffbackuptag,
   }})
 
+  create_resources('@@file', { "${remote_path}" => {
+    ensure => directory,
+    path   => "${remote_path}",
+    owner  => "${::fqdn}${cleanpath}",
+    group  => "${::fqdn}${cleanpath}",
+    tag    => $rdiffbackuptag,
+  }})
   #Local resources
   # Create ssh user key for rdiff user export and collect locally
 
@@ -55,7 +62,7 @@ define rdiff_backup::rdiff_export (
 
   cron{ "${::fqdn}${cleanpath}":
     #lint:ignore:80chars
-    command => "rdiff-backup ${path} ${::fqdn}${cleanpath}@${rdiff_server}::/srv/rdiff/${::fqdn}/${cleanpath}",
+    command => "rdiff-backup ${path} ${::fqdn}${cleanpath}@${rdiff_server}::${remote_path}/${::fqdn}/${cleanpath}",
     #lint:endignore
     user    => "${::fqdn}${cleanpath}",
     hour    => 1,
