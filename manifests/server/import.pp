@@ -8,5 +8,3 @@ class rdiff_backup::server::import(
 
   User <<| tag == $rdiffbackuptag |>> { }
   File <<| tag == $rdiffbackuptag |>> { }
-  Ssh_authorized_key <<| tag == $rdiffbackuptag |>> { }
-}
