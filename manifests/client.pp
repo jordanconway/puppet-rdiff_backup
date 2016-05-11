@@ -67,6 +67,7 @@ class rdiff_backup::client (
     validate_string($rdiffbackuptag)
   }
 
+  include sshkeys
   # Anchors
   anchor { 'rdiff_backup::client::begin': }
   anchor { 'rdiff_backup::client::end': }
