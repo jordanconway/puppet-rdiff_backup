@@ -17,6 +17,14 @@ define rdiff_backup::rdiff_export (
   $rdiff_user = "${cleanfqdn}${cleanpath}"
 
   #Local resources
+
+  create_resources('file', { "${rdiff_user} ssh rdiff user ssh directory" => {
+    ensure => directory,
+    path   => "/var/lib/rdiff/${::fqdn}/${cleanpath}/.ssh",
+    mode   => '0700',
+    owner  => $rdiff_user,
+    group  => $rdiff_user,
+  }})
   # Create ssh user key for rdiff user export and collect locally
 
   create_resources('@@user', { "$rdiff_user" => {
