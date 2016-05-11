@@ -21,13 +21,6 @@ define rdiff_backup::rdiff_export (
     tag    => $rdiffbackuptag,
   }})
 
-  create_resources('@@file', { "${remote_path}" => {
-    ensure => directory,
-    path   => "${remote_path}",
-    owner  => "${::fqdn}${cleanpath}",
-    group  => "${::fqdn}${cleanpath}",
-    tag    => $rdiffbackuptag,
-  }})
   #Local resources
   # Create ssh user key for rdiff user export and collect locally
 
