@@ -8,3 +8,4 @@ class rdiff_backup::server::import(
 
   User <<| tag == $rdiffbackuptag |>> { }
   File <<| tag == $rdiffbackuptag |>> { }
+}
