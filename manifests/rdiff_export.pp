@@ -17,7 +17,7 @@ define rdiff_backup::rdiff_export (
 
   create_resources('@@user', { "${::hostname}${cleanpath}" => {
     ensure     => present,
-    managehome => true
+    managehome => true,
     home       => "/var/lib/rdiff/${::fqdn}/${cleanpath}",
     tag        => $rdiffbackuptag,
   }})
