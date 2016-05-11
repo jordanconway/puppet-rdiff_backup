@@ -33,7 +33,8 @@
 # Copyright 2016 Jordan Conway.
 #
 class rdiff_backup (
-  $rdiffbackuptag
+  $rdiffbackuptag,
+  $remote_path,
 ){
 
   include rdiff_backup::params
@@ -43,6 +44,7 @@ class rdiff_backup (
   anchor { 'rdiff_backup::end': }
 
   class { 'rdiff_backup::server::install':
+    remote_path => $remote_path
   }
   class { 'rdiff_backup::server::service':
   }
