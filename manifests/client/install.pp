@@ -1,6 +1,7 @@
 # rdiff_backup::install class
 class rdiff_backup::client::install(
   $package,
+  $path,
 ) {
   validate_string($package)
 
@@ -14,4 +15,29 @@ class rdiff_backup::client::install(
     ensure => directory,
   }})
 
+  if ($path) {
+    $cleanpath = regsubst($path, '\/', '-', 'G')
+  }
+
+  $cleanfqdn = regsubst($::fqdn, '.', '-', 'G')
+
+  $rdiff_user = "${cleanfqdn}${cleanpath}"
+
+  #Local resources
+  # Create ssh user key for rdiff user export and collect locally
+
+  create_resources('file', { "${rdiff_user} ssh rdiff user directory" => {
+    ensure => directory,
+    path   => "/var/lib/rdiff/${::fqdn}/${cleanpath}",
+    mode   => '0700',
+    owner  => $rdiff_user,
+    group  => $rdiff_user,
+  }})
+  create_resources('file', { "${rdiff_user} ssh rdiff user ssh directory" => {
+    ensure => directory,
+    path   => "/var/lib/rdiff/${::fqdn}/${cleanpath}/.ssh",
+    mode   => '0700',
+    owner  => $rdiff_user,
+    group  => $rdiff_user,
+  }})
 }
