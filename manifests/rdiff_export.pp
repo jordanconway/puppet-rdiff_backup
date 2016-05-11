@@ -19,7 +19,7 @@ define rdiff_backup::rdiff_export (
 
   #Local resources
 
-  create_resources('file', { "${rdiff_user} ssh rdiff user ssh directory" => {
+  create_resources('file', { "${cleanhostname}${cleanpath} ssh rdiff user ssh directory" => {
     ensure => directory,
     path   => "/var/lib/rdiff/${::fqdn}/${cleanpath}/.ssh",
     mode   => '0700',
