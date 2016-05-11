@@ -47,6 +47,14 @@ define rdiff_backup::rdiff_export (
     require => User[$rdiff_user]
   }
 
+  create_resources('@@ssh_authorized_key', { $rdiff_user => {
+    ensure => present,
+    user   => $rdiff_user,
+    key    => file("/var/lib/rdiff/${::fqdn}/${cleanpath}/.ssh/id_rsa.pub"),
+    target => "/var/lib/rdiff/${::fqdn}/${cleanpath}/.ssh/authorized_keys",
+    tag    => $rdiffbackuptag,
+  }})
+
   cron{ "${::fqdn}${cleanpath}":
     #lint:ignore:80chars
     command => "rdiff-backup ${path} ${rdiff_user}@${rdiff_server}::${remote_path}/${::fqdn}/${cleanpath}",
