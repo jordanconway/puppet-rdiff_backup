@@ -12,6 +12,11 @@ define rdiff_backup::rdiff_export (
     $cleanpath = regsubst($path, '\/', '-', 'G')
   }
 
+  create_resources('@@file', { "${::fqdn} ssh rdiff dir" => {
+    ensure => directory,
+    path   => "/var/lib/rdiff/${::fqdn}",
+    tag    => $rdiffbackuptag,
+  }})
 
   create_resources('@@file', { "${::fqdn}${cleanpath} ssh rdiff user directory" => {
     ensure => directory,
