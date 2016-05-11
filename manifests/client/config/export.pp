@@ -29,14 +29,14 @@ class rdiff_backup::client::config::export (
   # We need some variables out of rdiff_backup::params
   include rdiff_backup::params
 
-
-  create_resources('rdiff_backup::rdiff_export', {
-    "${::fqdn}_${path}" => {
-      ensure         => $ensure,
-      path           => $path,
-      rdiff_server   => $rdiff_server,
-      remote_path    => $_remote_path,
-      rdiffbackuptag => $rdiffbackuptag,
-    }
-  })
+  if ( $::fqdn and $path ) {
+    create_resources('rdiff_backup::rdiff_export', {
+      "${::fqdn}_${path}" => {
+        ensure         => $ensure,
+        path           => $path,
+        rdiff_server   => $rdiff_server,
+        remote_path    => $_remote_path,
+        rdiffbackuptag => $rdiffbackuptag,
+    }})
+  }
 }
