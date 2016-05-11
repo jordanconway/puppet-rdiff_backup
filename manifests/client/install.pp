@@ -10,4 +10,8 @@ class rdiff_backup::client::install(
   # Install rdiff_backup and
   ensure_packages( [$package] )
 
+  create_resources('file', {['/var/lib/rdiff',"/var/lib/rdiff/${::fqdn}"] => {
+    ensure => directory,
+  }})
+
 }
