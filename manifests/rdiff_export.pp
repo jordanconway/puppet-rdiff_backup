@@ -13,7 +13,7 @@ define rdiff_backup::rdiff_export (
   }
 
 
-  create_resources('@@file', { "${::fqdn} ssh rdiff user directory" => {
+  create_resources('@@file', { "${::fqdn}${cleanpath} ssh rdiff user directory" => {
     ensure => directory,
     path   => "/var/lib/rdiff/${::fqdn}/${cleanpath}",
     owner  => "${::fqdn}${cleanpath}",
