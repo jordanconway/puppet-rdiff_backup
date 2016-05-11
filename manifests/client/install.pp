@@ -17,6 +17,6 @@ class rdiff_backup::client::install(
 		tag    => $rdiffbackuptag,
   }})
 
-  File <<| title == ['/var/lib/rdiff',"/var/lib/rdiff/${::fqdn}"] |>> { }
+  File <<| title == "/var/lib/rdiff/${::fqdn}" |>> { }
 
 }
