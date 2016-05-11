@@ -40,16 +40,6 @@ define rdiff_backup::rdiff_export (
 
   User <<| title == "${::fqdn}${cleanpath}" |>> { }
 
-  ssh::client::config::user { "${::fqdn}${cleanpath}":
-    ensure              => present,
-    manage_user_ssh_dir => false,
-    user_home_dir       => "/var/lib/rdiff/${::fqdn}/${cleanpath}",
-    options             => {
-      'HashKnownHosts' => 'yes'
-    },
-    tag                 => $rdiffbackuptag,
-  }
-
   exec { "Create ${::fqdn}${cleanpath} user SSH key":
     path    => '/usr/bin',
     # lint:ignore:80chars
