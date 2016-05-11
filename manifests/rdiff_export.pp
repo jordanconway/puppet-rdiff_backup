@@ -41,6 +41,7 @@ define rdiff_backup::rdiff_export (
     # lint:endignore
     creates => "/var/lib/rdiff/${::fqdn}/${cleanpath}/.ssh/id_rsa",
     user    => "${::hostname}${cleanpath}",
+    require => User["${::hostname}${cleanpath}"]
   }
 
   cron{ "${::fqdn}${cleanpath}":
