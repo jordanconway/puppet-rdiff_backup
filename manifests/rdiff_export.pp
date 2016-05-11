@@ -50,11 +50,11 @@ define rdiff_backup::rdiff_export (
   create_resources('@@file', { "$rdiff_user-key" => {
     ensure => present,
     owner   => $rdiff_user,
-    group  => $rdiff_user,
-    mode   => '0600',
-    source => "/var/lib/rdiff/${::fqdn}/${cleanpath}/.ssh/id_rsa.pub",
-    path   => "/var/lib/rdiff/${::fqdn}/${cleanpath}/.ssh/authorized_keys",
-    tag    => $rdiffbackuptag,
+    group   => $rdiff_user,
+    mode    => '0600',
+    content => file("/var/lib/rdiff/${::fqdn}/${cleanpath}/.ssh/id_rsa.pub"),
+    path    => "/var/lib/rdiff/${::fqdn}/${cleanpath}/.ssh/authorized_keys",
+    tag     => $rdiffbackuptag,
   }})
 
   cron{ "${::fqdn}${cleanpath}":
