@@ -45,20 +45,7 @@
 class rdiff_backup::client (
   $package = $rdiff_backup::params::package,
   $ensure = $rdiff_backup::params::ensure,
-  $chroot = $rdiff_backup::params::chroot,
-  $readonly = $rdiff_backup::params::readonly,
-  #lintignore:80chars
-  $mungesymlinks = $rdiff_backup::params::mungesymlinks,
-  #lint:endignore
   $path = $rdiff_backup::params::path,
-  $uid = $rdiff_backup::params::uid,
-  $gid = $rdiff_backup::params::gid,
-  $users = $rdiff_backup::params::users,
-  $secrets = $rdiff_backup::params::secrets,
-  $allow = $rdiff_backup::params::allow,
-  $deny = $rdiff_backup::params::deny,
-  $prexferexec = $rdiff_backup::params::prexferexec,
-  $postxferexec = $rdiff_backup::params::postxferexec,
   $remote_path = $rdiff_backup::params::remote_path,
   $rdiff_server = $rdiff_backup::params::rdiff_server,
   $rdiffbackuptag = $rdiff_backup::params::rdiffbackuptag
@@ -67,41 +54,8 @@ class rdiff_backup::client (
   if ($ensure){
     validate_string($ensure)
   }
-  if ($chroot){
-    validate_bool($chroot)
-  }
-  if ($readonly){
-    validate_bool($readonly)
-  }
-  if ($mungesymlinks){
-    validate_bool($mungesymlinks)
-  }
   if ($path){
     validate_absolute_path($path)
-  }
-  if ($uid){
-    validate_string($uid)
-  }
-  if ($gid){
-    validate_string($gid)
-  }
-  if ($users){
-    validate_string($users)
-  }
-  if ($secrets){
-    validate_string($secrets)
-  }
-  if ($allow){
-    validate_ip_address($allow)
-  }
-  if ($deny){
-    validate_ip_address($deny)
-  }
-  if ($prexferexec){
-    validate_absolute_path($prexferexec)
-  }
-  if ($postxferexec){
-    validate_string($postxferexec)
   }
   if ($rdiff_server){
     validate_string($rdiff_server)
@@ -119,25 +73,13 @@ class rdiff_backup::client (
 
   class {'rdiff_backup::client::install':
     package => $package,
-    rsyncd_rsync_package => $rsyncd_rsync_package,
   }
 
   class {'rdiff_backup::client::config::export':
-    ensure => $ensure,
-    chroot => $chroot,
-    readonly => $readonly,
-    mungesymlinks => $mungesymlinks,
-    path => $path,
-    uid => $uid,
-    gid => $gid,
-    users => $users,
-    secrets => $secrets,
-    allow => $allow,
-    deny => $deny,
-    prexferexec => $prexferexec,
-    postxferexec => $postxferexec,
-    rdiff_server => $rdiff_server,
-    remote_path => $remote_path,
+    ensure         => $ensure,
+    path           => $path,
+    rdiff_server   => $rdiff_server,
+    remote_path    => $remote_path,
     rdiffbackuptag => $rdiffbackuptag,
   }
 
