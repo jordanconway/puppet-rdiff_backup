@@ -12,27 +12,14 @@ define rdiff_backup::rdiff_export (
     $cleanpath = regsubst($path, '\/', '-', 'G')
   }
 
-  create_resources('@@file', { "${::fqdn} ssh rdiff dir" => {
-    ensure => directory,
-    path   => "/var/lib/rdiff/${::fqdn}",
-    tag    => $rdiffbackuptag,
-  }})
-
-  create_resources('@@file', { "${::fqdn}${cleanpath} ssh rdiff user directory" => {
-    ensure => directory,
-    path   => "/var/lib/rdiff/${::fqdn}/${cleanpath}",
-    owner  => "${::hostname}${cleanpath}",
-    group  => "${::hostname}${cleanpath}",
-    tag    => $rdiffbackuptag,
-  }})
-
   #Local resources
   # Create ssh user key for rdiff user export and collect locally
 
   create_resources('@@user', { "${::hostname}${cleanpath}" => {
-    ensure  => present,
-    home    => "/var/lib/rdiff/${::fqdn}/${cleanpath}",
-    tag    => $rdiffbackuptag,
+    ensure     => present,
+    managehome => true
+    home       => "/var/lib/rdiff/${::fqdn}/${cleanpath}",
+    tag        => $rdiffbackuptag,
   }})
 
   User <<| title == "${::fqdn}${cleanpath}" |>> { }
