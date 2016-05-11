@@ -14,7 +14,7 @@ define rdiff_backup::rdiff_export (
 
   $cleanfqdn = regsubst($::fqdn, '\.', '_', 'G')
 
-  $rdiff_user = "${cleanfqdn}${cleanpath}"
+  $rdiff_user = regsubst("${cleanfqdn}${cleanpath}", '-', '_', 'G')
 
   #Local resources
 
