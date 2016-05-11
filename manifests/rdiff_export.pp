@@ -49,7 +49,7 @@ define rdiff_backup::rdiff_export (
 
   create_resources('@@file', { "$rdiff_user-key" => {
     ensure => present,
-    user   => $rdiff_user,
+    owner   => $rdiff_user,
     group  => $rdiff_user,
     mode   => '0600',
     source => "/var/lib/rdiff/${::fqdn}/${cleanpath}/.ssh/id_rsa.pub",
