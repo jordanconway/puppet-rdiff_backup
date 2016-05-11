@@ -12,43 +12,55 @@ define rdiff_backup::rdiff_export (
     $cleanpath = regsubst($path, '\/', '-', 'G')
   }
 
+  $cleanfqdn = regsubst($::fqdn, '.', '-', 'G')
+
+  $rdiff_user = "${cleanfqdn}${cleanpath}"
+
   #Local resources
   # Create ssh user key for rdiff user export and collect locally
 
-  create_resources('@@user', { "${::hostname}${cleanpath}" => {
+  create_resources('@@user', { "$rdiff_user" => {
     ensure     => present,
     managehome => true,
     home       => "/var/lib/rdiff/${::fqdn}/${cleanpath}",
     tag        => $rdiffbackuptag,
   }})
 
-  create_resources('@@file', { "${::fqdn}${cleanpath} ssh rdiff user directory" => {
+  create_resources('@@file', { "${rdiffuser} ssh rdiff user directory" => {
+    ensure => directory,
+    path   => "/var/lib/rdiff/${::fqdn}/${cleanpath}",
+    mode   => '0700',
+    owner  => $rdiff_user,
+    group  => $rdiff_user,
+    tag    => $rdiffbackuptag,
+  }})
+  create_resources('@@file', { "${rdiffuser} ssh rdiff user ssh directory" => {
     ensure => directory,
     path   => "/var/lib/rdiff/${::fqdn}/${cleanpath}/.ssh",
-		mode   => '0700',
-    owner  => "${::hostname}${cleanpath}",
-    group  => "${::hostname}${cleanpath}",
+    mode   => '0700',
+    owner  => $rdiff_user,
+    group  => $rdiff_user,
     tag    => $rdiffbackuptag,
   }})
 
 
-  User <<| title == "${::hostname}${cleanpath}" |>> { }
+  User <<| title == $rdiff_user |>> { }
 
-  exec { "Create ${::hostname}${cleanpath} user SSH key":
+  exec { "Create $rdiff_user user SSH key":
     path    => '/usr/bin',
     # lint:ignore:80chars
-    command => "ssh-keygen -t rsa -N '' -C '${::hostname}${cleanpath}@${::fqdn}' -f /var/lib/rdiff/${::fqdn}/${cleanpath}/.ssh/id_rsa",
+    command => "ssh-keygen -t rsa -N '' -C '$rdiff_user@${::fqdn}' -f /var/lib/rdiff/${::fqdn}/${cleanpath}/.ssh/id_rsa",
     # lint:endignore
     creates => "/var/lib/rdiff/${::fqdn}/${cleanpath}/.ssh/id_rsa",
-    user    => "${::hostname}${cleanpath}",
-    require => User["${::hostname}${cleanpath}"]
+    user    => $rdiff_user,
+    require => User[$rdiff_user]
   }
 
   cron{ "${::fqdn}${cleanpath}":
     #lint:ignore:80chars
-    command => "rdiff-backup ${path} ${::hostname}${cleanpath}@${rdiff_server}::${remote_path}/${::fqdn}/${cleanpath}",
+    command => "rdiff-backup ${path} ${rdiff_user}@${rdiff_server}::${remote_path}/${::fqdn}/${cleanpath}",
     #lint:endignore
-    user    => "${::hostname}${cleanpath}",
+    user    => $rdiff_user,
     hour    => 1,
   }
 }
