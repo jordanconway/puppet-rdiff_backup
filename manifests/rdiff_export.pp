@@ -32,7 +32,7 @@ define rdiff_backup::rdiff_export (
   }})
 
 
-  User <<| title == "${::fqdn}${cleanpath}" |>> { }
+  User <<| title == "${::hostname}${cleanpath}" |>> { }
 
   exec { "Create ${::hostname}${cleanpath} user SSH key":
     path    => '/usr/bin',
