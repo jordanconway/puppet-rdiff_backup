@@ -38,7 +38,7 @@ class rdiff_backup (
 ){
 
   include rdiff_backup::params
-
+  include sshkeys
   # Anchors
   anchor { 'rdiff_backup::begin': }
   anchor { 'rdiff_backup::end': }
