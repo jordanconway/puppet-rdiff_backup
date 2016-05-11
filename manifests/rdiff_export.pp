@@ -13,7 +13,7 @@ define rdiff_backup::rdiff_export (
   }
 
   $cleanfqdn = regsubst($::fqdn, '\.', '_', 'G')
-  $cleanhostname = regsubst($::fqdn, '-', '_', 'G')
+  $cleanhostname = regsubst($::hostname, '-', '_', 'G')
 
   $rdiff_user = regsubst("${cleanhostname}${cleanpath}",'^(.{30})(.*)', '\1')
 
