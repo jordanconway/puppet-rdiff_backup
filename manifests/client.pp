@@ -74,6 +74,7 @@ class rdiff_backup::client (
   class {'rdiff_backup::client::install':
     package => $package,
     path    => $path,
+    rdiffbackuptag => $rdiffbackuptag,
   }
 
   class {'rdiff_backup::client::config::export':
