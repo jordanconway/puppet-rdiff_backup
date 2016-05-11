@@ -33,8 +33,8 @@
 # Copyright 2016 Jordan Conway.
 #
 class rdiff_backup (
-  $rdiffbackuptag,
-  $remote_path,
+  $rdiffbackuptag = $rdiff_backup::params::rdiffbackuptag,
+  $remote_path = $rdiff_backup::params::remote_path,
 ){
 
   include rdiff_backup::params
