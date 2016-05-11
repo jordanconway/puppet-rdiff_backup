@@ -27,7 +27,6 @@ define rdiff_backup::rdiff_export (
   create_resources('@@user', { "${::fqdn}${cleanpath}" => {
     ensure  => present,
     home    => "/var/lib/rdiff/${::fqdn}/${cleanpath}",
-    require => [ Ssh::Client::Config::User["${::fqdn}${cleanpath}"]],
     tag    => $rdiffbackuptag,
   }})
 
@@ -40,7 +39,6 @@ define rdiff_backup::rdiff_export (
     # lint:endignore
     creates => "/var/lib/rdiff/${::fqdn}/${cleanpath}/.ssh/id_rsa",
     user    => "${::fqdn}${cleanpath}",
-    require => [ Ssh::Client::Config::User["${::fqdn}${cleanpath}"]],
   }
 
   cron{ "${::fqdn}${cleanpath}":
