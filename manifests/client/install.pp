@@ -2,7 +2,7 @@
 class rdiff_backup::client::install(
   $package,
   $path,
-	$rdiffbackuptag,
+  $rdiffbackuptag,
 ) {
   validate_string($package)
 
@@ -12,15 +12,9 @@ class rdiff_backup::client::install(
   # Install rdiff_backup and
   ensure_packages( [$package] )
 
-  create_resources('file', { '/var/lib/rdiff' => {
-    ensure => directory,
-  }})
-  
   create_resources('@@file', {"/var/lib/rdiff/${::fqdn}" => {
     ensure => directory,
-		tag    => $rdiffbackuptag,
+    tag    => $rdiffbackuptag,
   }})
-
-  File <<| title == "/var/lib/rdiff/${::fqdn}" |>> { }
 
 }

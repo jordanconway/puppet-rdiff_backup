@@ -28,14 +28,6 @@ define rdiff_backup::rdiff_export (
   #}})
   # Create ssh user key for rdiff user export and collect locally
 
-  create_resources('@@user', { "$rdiff_user" => {
-    ensure     => present,
-    managehome => true,
-    home       => "/var/lib/rdiff/",
-    tag        => $rdiffbackuptag,
-  }})
-
-  User <<| title == $rdiff_user |>> { }
 
   create_resources('sshkeys::create_key', { $rdiff_user => {
     home        => "/var/lib/rdiff/${::fqdn}/",
