@@ -28,6 +28,19 @@ define rdiff_backup::rdiff_export (
   # Create ssh user key for rdiff user export and collect locally
 
 
+  create_resources('sshkeys::create_key', { "${cleanfqdn}-${rdiff_user}" => {
+    user        => $rdiff_user,
+    home        => "/var/lib/rdiff/${::fqdn}/",
+    ssh_keytype => 'rsa',
+  }})
+
+  create_resources('sshkeys::set_authorized_key', {"${rdiff_user}@${::fqdn} to ${rdiff_user}@${rdiff_server}" => {
+    local_user  => $rdiff_user,
+    remote_user => "${rdiff_user}@${rdiff_server}",
+    home        => '/var/lib/rdiff/',
+    options     => "command='rdiff-backup --server --restrict ${remote_path}/${::fqdn}'",
+  }})
+
   cron{ "${::fqdn}${cleanpath}":
     #lint:ignore:80chars
     command => "rdiff-backup ${path} ${rdiff_user}@${rdiff_server}::${remote_path}/${::fqdn}/${cleanpath}",

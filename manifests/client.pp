@@ -79,9 +79,6 @@ class rdiff_backup::client (
   class {'rdiff_backup::client::install':
     package        => $package,
     path           => $path,
-    rdiff_server   => $rdiff_server,
-    rdiff_user     => $rdiff_user,
-    remote_path    => $remote_path,
     rdiffbackuptag => $rdiffbackuptag,
   }
 
