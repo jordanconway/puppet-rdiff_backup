@@ -16,18 +16,6 @@ define rdiff_backup::rdiff_export (
   $cleanfqdn = regsubst($::fqdn, '\.', '_', 'G')
   $cleanhostname = regsubst($::hostname, '-', '_', 'G')
 
-  #Local resources
-
-  #create_resources('file', { "${cleanhostname}${cleanpath} ssh rdiff user ssh directory" => {
-  #  ensure => directory,
-  #  path   => "/var/lib/rdiff/${::fqdn}/${cleanpath}/.ssh",
-  #  mode   => '0700',
-  #  owner  => $rdiff_user,
-  #  group  => $rdiff_user,
-  #}})
-  # Create ssh user key for rdiff user export and collect locally
-
-
   cron{ "${::fqdn}${cleanpath}":
     #lint:ignore:80chars
     command => "rdiff-backup ${path} ${rdiff_user}@${rdiff_server}::${remote_path}/${::fqdn}/${cleanpath}",
