@@ -15,7 +15,7 @@ define rdiff_backup::rdiff_export (
   $cleanfqdn = regsubst($::fqdn, '\.', '_', 'G')
   $cleanhostname = regsubst($::hostname, '-', '_', 'G')
 
-  $rdiff_user = regsubst("${cleanhostname}${cleanpath}",'^(.{30})(.*)', '\1')
+  $rdiff_user = 'rdiffbackup'
 
   #Local resources
 
@@ -31,41 +31,22 @@ define rdiff_backup::rdiff_export (
   create_resources('@@user', { "$rdiff_user" => {
     ensure     => present,
     managehome => true,
-    home       => "/var/lib/rdiff/${::fqdn}/${cleanpath}",
+    home       => "/var/lib/rdiff/",
     tag        => $rdiffbackuptag,
   }})
 
   User <<| title == $rdiff_user |>> { }
 
-  #exec { "Create $rdiff_user user SSH key":
-  #  path    => '/usr/bin',
-  #  # lint:ignore:80chars
-  #  command => "ssh-keygen -t rsa -N '' -C '$rdiff_user@${::fqdn}' -f /var/lib/rdiff/${::fqdn}/${cleanpath}/.ssh/id_rsa",
-  #  # lint:endignore
-  #  creates => "/var/lib/rdiff/${::fqdn}/${cleanpath}/.ssh/id_rsa",
-  #  user    => $rdiff_user,
-  #  require => User[$rdiff_user]
-  #}
-
-  #create_resources('@@file', { "$rdiff_user-key" => {
-  #  ensure => present,
-  #  owner   => $rdiff_user,
-  #  group   => $rdiff_user,
-  #  mode    => '0600',
-  #  content => file("/var/lib/rdiff/${::fqdn}/${cleanpath}/.ssh/id_rsa.pub"),
-  #  path    => "/var/lib/rdiff/${::fqdn}/${cleanpath}/.ssh/authorized_keys",
-  #  tag     => $rdiffbackuptag,
-  #}})
-
-	create_resources('sshkeys::create_key', { $rdiff_user => {
-  	home     => "/var/lib/rdiff/${::fqdn}/${cleanpath}/",
-  	ssh_keytype => 'rsa',
+  create_resources('sshkeys::create_key', { $rdiff_user => {
+    home        => "/var/lib/rdiff/${::fqdn}/",
+    ssh_keytype => 'rsa',
 	}})
 
 	create_resources('sshkeys::set_authorized_key', {"${rdiff_user}@${::fqdn} to ${rdiff_user}@${rdiff_server}" => {
   	local_user  => $rdiff_user,
 		remote_user => "${rdiff_user}@${rdiff_server}",
-  	home        => "/var/lib/rdiff/${::fqdn}/${cleanpath}/",
+  	home        => "/var/lib/rdiff/",
+    options     => "command='rdiff-backup --server --restrict ${remote_path}/${::fqdn}'",
 	}})
 
   cron{ "${::fqdn}${cleanpath}":
