@@ -6,6 +6,7 @@ define rdiff_backup::rdiff_export (
   $rdiff_server = undef,
   $rdiffbackuptag = undef,
   $allow = undef,
+  $rdiff_user = undef.
 ){
 
   if ($path) {
@@ -14,8 +15,6 @@ define rdiff_backup::rdiff_export (
 
   $cleanfqdn = regsubst($::fqdn, '\.', '_', 'G')
   $cleanhostname = regsubst($::hostname, '-', '_', 'G')
-
-  $rdiff_user = 'rdiffbackup'
 
   #Local resources
 

@@ -2,6 +2,7 @@
 class rdiff_backup::client::config::export (
   $ensure,
   $path,
+  $rdiff_user,
   $remote_path,
   $rdiff_server,
   $rdiffbackuptag
@@ -14,6 +15,9 @@ class rdiff_backup::client::config::export (
   }
   if ($rdiff_server){
     validate_string($rdiff_server)
+  }
+  if ($rdiff_user){
+    validate_string($rdiff_user)
   }
   if ($remote_path){
     validate_string($remote_path)
@@ -35,6 +39,7 @@ class rdiff_backup::client::config::export (
         ensure         => $ensure,
         path           => $path,
         rdiff_server   => $rdiff_server,
+        rdiff_user     => $rdiff_user,
         remote_path    => $_remote_path,
         rdiffbackuptag => $rdiffbackuptag,
     }})

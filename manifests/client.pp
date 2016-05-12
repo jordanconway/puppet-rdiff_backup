@@ -86,6 +86,7 @@ class rdiff_backup::client (
     ensure         => $ensure,
     path           => $path,
     rdiff_server   => $rdiff_server,
+    rdiff_user     => $rdiff_user,
     remote_path    => $remote_path,
     rdiffbackuptag => $rdiffbackuptag,
   }
