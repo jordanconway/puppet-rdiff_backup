@@ -3,14 +3,12 @@ class rdiff_backup::client::install(
   $package,
   $path,
   $rdiffbackuptag,
-  $rdiff_server = $rdiff_backup::params::rdiff_server,
+  $rdiff_server,
   $remote_path,
   $rdiff_user,
-) {
+) inherits rdiff_backup::params{
   validate_string($package)
 
-  # We need some variables out of rdiff_backup::params
-  include rdiff_backup::params
 
   # Install rdiff_backup and
   ensure_packages( [$package] )
