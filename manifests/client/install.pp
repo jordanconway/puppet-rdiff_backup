@@ -30,5 +30,6 @@ class rdiff_backup::client::install(
     ensure => directory,
     tag    => $rdiffbackuptag,
   }})
+  File <<| title == "/var/lib/rdiff/${::fqdn}" |>>
 
 }
