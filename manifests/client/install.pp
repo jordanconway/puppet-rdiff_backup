@@ -14,7 +14,7 @@ class rdiff_backup::client::install(
   ensure_packages( [$package] )
   
   create_resources('sshkeys::create_key', { $rdiff_user => {
-    home        => "/var/lib/rdiff/${::fqdn}/",
+    home        => "/var/lib/rdiff/",
     ssh_keytype => 'rsa',
   }})
 
