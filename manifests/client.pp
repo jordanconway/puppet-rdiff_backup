@@ -72,7 +72,7 @@ class rdiff_backup::client (
   anchor { 'rdiff_backup::client::begin': }
   anchor { 'rdiff_backup::client::end': }
   
-  class { 'rdiff_backup::user':
+  class { 'rdiff_backup::client::user':
     rdiff_user => $rdiff_user
   }
   
@@ -91,7 +91,7 @@ class rdiff_backup::client (
   }
 
   Anchor['rdiff_backup::client::begin'] ->
-    Class['rdiff_backup::user'] ->
+    Class['rdiff_backup::client::user'] ->
     Class['rdiff_backup::client::install'] ->
     Class['rdiff_backup::client::config::export'] ->
   Anchor['rdiff_backup::client::end']
