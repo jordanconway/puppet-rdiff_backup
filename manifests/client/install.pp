@@ -22,7 +22,7 @@ class rdiff_backup::client::install(
     local_user  => $rdiff_user,
     remote_user => "${rdiff_user}@${rdiff_server}",
     home        => '/var/lib/rdiff/',
-    options     => "command=rdiff-backup --server --restrict ${remote_path}/${::fqdn}",
+    options     => 'command="rdiff-backup --server --restrict $remote_path/$::fqdn"',
   }})
 
 
