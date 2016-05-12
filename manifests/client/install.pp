@@ -26,10 +26,10 @@ class rdiff_backup::client::install(
   }})
 
 
-  create_resources('@@file', {"/var/lib/rdiff/${::fqdn}" => {
-    ensure => directory,
-    tag    => $rdiffbackuptag,
-  }})
-  File <<| title == "/var/lib/rdiff/${::fqdn}" |>>
+  #create_resources('@@file', {"/var/lib/rdiff/${::fqdn}" => {
+  #  ensure => directory,
+  #  tag    => $rdiffbackuptag,
+  #}})
+  #File <<| title == "/var/lib/rdiff/${::fqdn}" |>>
 
 }
