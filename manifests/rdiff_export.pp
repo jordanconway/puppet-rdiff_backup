@@ -23,4 +23,9 @@ define rdiff_backup::rdiff_export (
     user    => $rdiff_user,
     hour    => 1,
   }
+
+  create_resources('@@file', { "${remote_path}/${::fqdn}" => {
+    ensure => directory,
+    owner  => $rdiff_user,
+  }})
 }
