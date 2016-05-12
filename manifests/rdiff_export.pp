@@ -24,8 +24,10 @@ define rdiff_backup::rdiff_export (
     hour    => 1,
   }
 
-  create_resources('@@file', { "${remote_path}/${::fqdn}" => {
-    ensure => directory,
-    owner  => $rdiff_user,
-  }})
+  if ($remote_path){
+    create_resources('@@file', { "${remote_path}/${::fqdn}" => {
+      ensure => directory,
+      owner  => $rdiff_user,
+    }})
+  }
 }
