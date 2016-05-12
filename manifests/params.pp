@@ -7,5 +7,5 @@ class rdiff_backup::params {
   $remote_path = '/srv/rdiff'
   $rdiff_server = undef
   $rdiffbackuptag = $::fqdn
-  $rdiff_user = undef
+  $rdiff_user = 'rdiffbackup'
 }
