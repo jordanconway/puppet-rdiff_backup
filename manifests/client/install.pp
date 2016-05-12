@@ -24,6 +24,11 @@ class rdiff_backup::client::install(
     tag         => $rdiffbackuptag,
   }})
 
+  create_resources('@@file', { "${remote_path}/${::fqdn}" => {
+    ensure => directory,
+    owner  => $rdiff_user,
+    tag    => $rdiffbackuptag,
+  }})
 
   #create_resources('@@file', {"/var/lib/rdiff/${::fqdn}" => {
   #  ensure => directory,
