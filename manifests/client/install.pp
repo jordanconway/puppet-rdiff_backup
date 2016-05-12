@@ -3,7 +3,7 @@ class rdiff_backup::client::install(
   $package,
   $path,
   $rdiffbackuptag,
-  $rdiff_server,
+  $rdiff_server = $rdiff_backup::params::rdiff_server,
   $remote_path,
   $rdiff_user,
 ) {
