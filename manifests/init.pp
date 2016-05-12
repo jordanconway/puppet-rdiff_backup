@@ -1,28 +1,26 @@
 # Class: rdiff_backup ===========================
 #
-# Full description of class rdiff_backup here.
+# rdiff_backup class sets up the rdiffbackup server by default.
+# You should also configure the rdiff_backup::client class for a fully working
+# system.
 #
 # Parameters ----------
 #
-# Document parameters here.
+# * `remote_path`
+# Defaults to '/srv/rdiff' The path on the rdiff-backup server that will contain
+# your backups.
 #
-# * `sample parameter` Explanation of what this parameter affects and what it
-# defaults to.  e.g. "Specify one or more upstream ntp servers as an array."
-#
-# Variables ----------
-#
-# Here you should define a list of variables that this module would require.
-#
-# * `sample variable` Explanation of how this variable affects the function of
-# this class and if it has a default. e.g. "The parameter enc_ntp_servers must
-# be set by the External Node Classifier as a comma separated list of
-# hostnames." (Note, global variables should be avoided in favor of class
-# parameters as of Puppet 2.6.)
+# * `rdiffbackuptag`
+# Defaults to '$::fqdn'. This is used to aid resource collection on the 
+# rdiff-backup server. It you can manage different servers for different nodes 
+# with different rdiffbackuptags.
 #
 # Examples --------
 #
-# @example class { 'rdiff_backup': servers => [ 'pool.ntp.org',
-# 'ntp.local.company.com' ], }
+# @example class { 'rdiff_backup':
+#             remote_path    => '/srv/backups',
+#             rdiffbackuptag => 'server1backups'
+#          }
 #
 # Authors -------
 #

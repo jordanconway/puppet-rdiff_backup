@@ -5,6 +5,30 @@
 #
 # Parameters
 # ----------
+# * `ensure`
+# Defaults to 'present' probablt not needed as a param... *FIXME*
+# 
+# * `package`
+# Defaults to 'rdiff-backup'. Module is CentOS/RHEL specific right now, if you
+# use a custom package for rdiff-backup, specify it here.
+#
+# * `path`
+# Defaults to undef, probably not actually needed at a param **FIXME**
+#
+# * `rdiff_server`
+# Defaults to undef. Set this to the FQDN of the node you will use as your
+# rdiff-backup server.
+# 
+# * `remote_path`
+# Defaults to '/srv/rdiff' The path on the rdiff-backup server that will contain
+# your backups.
+#
+# * `rdiffbackuptag`
+# Defaults to '$::fqdn'. This is used to aid resource collection on the 
+# rdiff-backup server. It you can manage different servers for different nodes 
+# with different rdiffbackuptags.
+#
+#
 #
 # Document parameters here.
 #
