@@ -35,7 +35,6 @@
 class rdiff_backup (
   $rdiffbackuptag = $rdiff_backup::params::rdiffbackuptag,
   $remote_path = $rdiff_backup::params::remote_path,
-  $rdiff_user = $rdiff_backup::params::rdiff_user,
 ){
 
   include rdiff_backup::params
@@ -46,8 +45,6 @@ class rdiff_backup (
   class { 'rdiff_backup::server::install':
     remote_path => $remote_path
   }
-  class { 'rdiff_backup::server::service':
-  }
 
   class {'rdiff_backup::server::import':
     rdiffbackuptag => $rdiffbackuptag
@@ -55,7 +52,6 @@ class rdiff_backup (
 
   Anchor['rdiff_backup::begin'] ->
   Class['rdiff_backup::server::install'] ->
-  Class['rdiff_backup::server::service'] ->
   Class['rdiff_backup::server::import'] ->
   Anchor['rdiff_backup::end']
 

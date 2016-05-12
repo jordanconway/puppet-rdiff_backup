@@ -13,9 +13,6 @@ define rdiff_backup::rdiff_export (
     $cleanpath = regsubst(regsubst($path, '\/', '_', 'G'),'_', '')
   }
 
-  $cleanfqdn = regsubst($::fqdn, '\.', '_', 'G')
-  $cleanhostname = regsubst($::hostname, '-', '_', 'G')
-
   cron{ "${::fqdn}${cleanpath}":
     #lint:ignore:80chars
     command => "rdiff-backup ${path} ${rdiff_user}@${rdiff_server}::${remote_path}/${::fqdn}/${cleanpath}",
