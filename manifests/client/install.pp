@@ -14,14 +14,12 @@ class rdiff_backup::client::install(
   ensure_packages( [$package] )
   
   create_resources('sshkeys::create_ssh_key', { $rdiff_user => {
-    home        => '/var/lib/rdiff/',
     ssh_keytype => 'rsa',
   }})
 
   create_resources('@@sshkeys::set_authorized_key', {"${rdiff_user}@${::fqdn} to ${rdiff_user}@${rdiff_server}" => {
     local_user  => $rdiff_user,
     remote_user => "${rdiff_user}@${::fqdn}}",
-    home        => '/var/lib/rdiff/',
     options     => "command=\"rdiff-backup --server --restrict ${remote_path}/${::fqdn}\"",
     tag         => $rdiffbackuptag,
   }})
