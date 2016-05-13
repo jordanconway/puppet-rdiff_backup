@@ -10,6 +10,10 @@
 # Defaults to '/srv/rdiff' The path on the rdiff-backup server that will contain
 # your backups.
 #
+# *`rdiff_user`
+# Defaults to rdiffbackup. The user that will be created on the backup server
+# and run the server side of rdiff-backup.
+#
 # * `rdiffbackuptag`
 # Defaults to '$::fqdn'. This is used to aid resource collection on the 
 # rdiff-backup server. It you can manage different servers for different nodes 
@@ -19,6 +23,7 @@
 #
 # @example class { 'rdiff_backup':
 #             remote_path    => '/srv/backups',
+#             rdiff_user     => 'backupmgr',
 #             rdiffbackuptag => 'server1backups'
 #          }
 #
