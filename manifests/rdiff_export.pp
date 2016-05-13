@@ -17,7 +17,7 @@ define rdiff_backup::rdiff_export (
     #lint:ignore:80chars
     command => "rdiff-backup ${path} ${rdiff_user}@${rdiff_server}::${remote_path}/${::fqdn}/${cleanpath}",
     #lint:endignore
-    user    => $rdiff_user,
+    user    => root,
     hour    => 1,
   }
 

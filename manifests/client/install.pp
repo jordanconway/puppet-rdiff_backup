@@ -12,16 +12,16 @@ class rdiff_backup::client::install(
 
   # Install rdiff_backup and
   ensure_packages( [$package] )
-  
-  create_resources('sshkeys::create_ssh_key', { $rdiff_user => {
+
+  create_resources('sshkeys::create_ssh_key', { 'root' => {
     ssh_keytype => 'rsa',
   }})
 
   #lint:ignore:80chars
-  create_resources('@@sshkeys::set_authorized_key', {"${rdiff_user}@${::fqdn} to ${rdiff_user}@${rdiff_server}" => {
+  create_resources('@@sshkeys::set_authorized_key', {"root@${::fqdn} to ${rdiff_user}@${rdiff_server}" => {
   #lint:endignore
     local_user  => $rdiff_user,
-    remote_user => "${rdiff_user}@${::fqdn}",
+    remote_user => "root@${::fqdn}",
   #lint:ignore:80chars
     options     => "command=\"rdiff-backup --server --restrict ${remote_path}/${::fqdn}\"",
   #lint:endignore
