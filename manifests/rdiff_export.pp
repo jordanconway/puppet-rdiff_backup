@@ -26,7 +26,7 @@ define rdiff_backup::rdiff_export (
   concat::fragment{ "retention_${cleanpath}":
     target  => $backup_script,
     #lint:ignore:80chars
-    content => "rdiff-backup --force --remove-older-than ${rdiff_retention} ${rdiff_user}@${rdiff_server}::${remote_path}/${::fqdn}/${cleanpath}\n\n",
+    content => "rdiff-backup -v0 --force --remove-older-than ${rdiff_retention} ${rdiff_user}@${rdiff_server}::${remote_path}/${::fqdn}/${cleanpath}\n\n",
     #lint:endignore
     order   => '15'
   }
