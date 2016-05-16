@@ -46,6 +46,7 @@ class rdiff_backup::client::config (
   $ensure,
   $path,
   $rdiff_server,
+  $rdiff_user,
   $remote_path,
   $backup_script,
   $rdiffbackuptag,
@@ -74,6 +75,7 @@ class rdiff_backup::client::config (
     ensure         => $ensure,
     path           => $path,
     rdiff_server   => $rdiff_server,
+    rdiff_user     => $rdiff_user,
     remote_path    => $remote_path,
     rdiffbackuptag => $rdiffbackuptag
   }
