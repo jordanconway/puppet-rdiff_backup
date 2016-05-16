@@ -18,7 +18,7 @@ define rdiff_backup::rdiff_export (
   concat::fragment{ 'backup_script_backups':
     target  => $backup_script,
     #lint:ignore:80chars
-    content => "rdiff--backup ${path} ${rdiff_user}@${rdiff_server}::${remote_path}/${::fqdn}/${cleanpath}\n\n",
+    content => "rdiff-backup ${path} ${rdiff_user}@${rdiff_server}::${remote_path}/${::fqdn}/${cleanpath}\n\n",
     #lint:endignore
     order   => '10'
   }
@@ -26,7 +26,7 @@ define rdiff_backup::rdiff_export (
   concat::fragment{ 'backup_script_retentions':
     target  => $backup_script,
     #lint:ignore:80chars
-    content => "rdiff--backup --force --remove-older-than ${rdiff_retention} ${rdiff_user}@${rdiff_server}::${remote_path}/${::fqdn}/${cleanpath}\n\n",
+    content => "rdiff-backup --force --remove-older-than ${rdiff_retention} ${rdiff_user}@${rdiff_server}::${remote_path}/${::fqdn}/${cleanpath}\n\n",
     #lint:endignore
     order   => '15'
   }
@@ -36,7 +36,5 @@ define rdiff_backup::rdiff_export (
     user    => root,
     hour    => 1,
   }
-
-  
 
 }
