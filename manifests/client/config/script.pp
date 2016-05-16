@@ -1,5 +1,5 @@
 # rdiff_backup::client::script class
-class rdiff_backup::client::script(
+class rdiff_backup::client::config::script(
   $path,
   $rdiffbackuptag,
   $rdiff_server,
