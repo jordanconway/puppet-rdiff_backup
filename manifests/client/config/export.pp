@@ -5,6 +5,7 @@ class rdiff_backup::client::config::export (
   $rdiff_user,
   $remote_path,
   $rdiff_server,
+  $backup_script,
   $rdiffbackuptag
 ){
   if ($ensure){
@@ -40,6 +41,7 @@ class rdiff_backup::client::config::export (
         path           => $path,
         rdiff_server   => $rdiff_server,
         rdiff_user     => $rdiff_user,
+        backup_script  => $backup_script,
         remote_path    => $_remote_path,
         rdiffbackuptag => $rdiffbackuptag,
     }})
