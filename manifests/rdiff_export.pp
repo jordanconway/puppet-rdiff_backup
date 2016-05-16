@@ -7,18 +7,38 @@ define rdiff_backup::rdiff_export (
   $rdiffbackuptag = undef,
   $allow = undef,
   $rdiff_user = undef,
+  $backup_script = undef,
+  $rdiff_retention = undef,
 ){
 
   if ($path) {
     $cleanpath = regsubst(regsubst($path, '\/', '_', 'G'),'_', '')
   }
 
-  cron{ "${::fqdn}${cleanpath}":
+  $backup_script = '/usr/local/bin/rdiff_backup.sh'
+
+  concat::fragment{ 'backup_script_backups':
+    target  => $backup_script,
     #lint:ignore:80chars
-    command => "rdiff-backup ${path} ${rdiff_user}@${rdiff_server}::${remote_path}/${::fqdn}/${cleanpath}",
+    content => "rdiff--backup ${path} ${rdiff_user}@${rdiff_server}::${remote_path}/${::fqdn}/${cleanpath}",
     #lint:endignore
+    order   => '10'
+  }
+
+  concat::fragment{ 'backup_script_retentions':
+    target  => $backup_script,
+    #lint:ignore:80chars
+    content => "rdiff--backup --force --remove-older-than ${rdiff_retention} ${rdiff_user}@${rdiff_server}::${remote_path}/${::fqdn}/${cleanpath}",
+    #lint:endignore
+    order   => '15'
+  }
+  
+  cron{ "${::fqdn}${cleanpath}":
+    command => $backup_script,
     user    => root,
     hour    => 1,
   }
+
+  
 
 }

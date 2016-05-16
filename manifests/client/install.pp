@@ -6,9 +6,9 @@ class rdiff_backup::client::install(
   $rdiff_server,
   $remote_path,
   $rdiff_user,
+  $backup_script,
 ) inherits rdiff_backup::params{
   validate_string($package)
-
 
   # Install rdiff_backup and
   ensure_packages( [$package] )
@@ -33,6 +33,5 @@ class rdiff_backup::client::install(
     owner  => $rdiff_user,
     tag    => $rdiffbackuptag,
   }})
-
 
 }

@@ -74,6 +74,7 @@ class rdiff_backup::client (
   $rdiff_server = $rdiff_backup::params::rdiff_server,
   $rdiffbackuptag = $rdiff_backup::params::rdiffbackuptag,
   $rdiff_user = $rdiff_backup::params::rdiff_user,
+  $backup_script = $rdiff_backup::params::backup_script,
 ) inherits rdiff_backup::params {
   validate_string($package)
   if ($ensure){
@@ -87,6 +88,9 @@ class rdiff_backup::client (
   }
   if ($remote_path){
     validate_string($remote_path)
+  }
+  if ($backup_script){
+    validate_string($backup_script)
   }
   if ($rdiffbackuptag){
     validate_string($rdiffbackuptag)
@@ -102,6 +106,7 @@ class rdiff_backup::client (
     rdiff_server   => $rdiff_server,
     rdiff_user     => $rdiff_user,
     remote_path    => $remote_path,
+    backup_script  => $backup_script,
     rdiffbackuptag => $rdiffbackuptag,
   }
 
@@ -111,12 +116,24 @@ class rdiff_backup::client (
     rdiff_server   => $rdiff_server,
     rdiff_user     => $rdiff_user,
     remote_path    => $remote_path,
+    backup_script  => $backup_script,
+    rdiffbackuptag => $rdiffbackuptag,
+  }
+
+  class {'rdiff_backup::client::config::script':
+    ensure         => $ensure,
+    path           => $path,
+    rdiff_server   => $rdiff_server,
+    rdiff_user     => $rdiff_user,
+    remote_path    => $remote_path,
+    backup_script  => $backup_script,
     rdiffbackuptag => $rdiffbackuptag,
   }
 
   Anchor['rdiff_backup::client::begin'] ->
     Class['rdiff_backup::client::install'] ->
     Class['rdiff_backup::client::config::export'] ->
+    Class['rdiff_backup::client::config::script'] ->
   Anchor['rdiff_backup::client::end']
 
 }
