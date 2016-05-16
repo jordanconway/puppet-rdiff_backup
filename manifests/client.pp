@@ -110,17 +110,7 @@ class rdiff_backup::client (
     rdiffbackuptag => $rdiffbackuptag,
   }
 
-  class {'rdiff_backup::client::config::export':
-    ensure         => $ensure,
-    path           => $path,
-    rdiff_server   => $rdiff_server,
-    rdiff_user     => $rdiff_user,
-    remote_path    => $remote_path,
-    backup_script  => $backup_script,
-    rdiffbackuptag => $rdiffbackuptag,
-  }
-
-  class {'rdiff_backup::client::config::script':
+  class {'rdiff_backup::client::config':
     ensure         => $ensure,
     path           => $path,
     rdiff_server   => $rdiff_server,
@@ -132,8 +122,7 @@ class rdiff_backup::client (
 
   Anchor['rdiff_backup::client::begin'] ->
     Class['rdiff_backup::client::install'] ->
-    Class['rdiff_backup::client::config::export'] ->
-    Class['rdiff_backup::client::config::script'] ->
+    Class['rdiff_backup::client::config'] ->
   Anchor['rdiff_backup::client::end']
 
 }
