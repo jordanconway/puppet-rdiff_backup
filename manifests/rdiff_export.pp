@@ -15,7 +15,7 @@ define rdiff_backup::rdiff_export (
     $cleanpath = regsubst(regsubst($path, '\/', '_', 'G'),'_', '')
   }
 
-  concat::fragment{ 'backup_script_backups':
+  concat::fragment{ "backup_${cleanpath}":
     target  => $backup_script,
     #lint:ignore:80chars
     content => "rdiff-backup ${path} ${rdiff_user}@${rdiff_server}::${remote_path}/${::fqdn}/${cleanpath}\n\n",
@@ -23,7 +23,7 @@ define rdiff_backup::rdiff_export (
     order   => '10'
   }
 
-  concat::fragment{ 'backup_script_retentions':
+  concat::fragment{ "retention_${cleanpath}":
     target  => $backup_script,
     #lint:ignore:80chars
     content => "rdiff-backup --force --remove-older-than ${rdiff_retention} ${rdiff_user}@${rdiff_server}::${remote_path}/${::fqdn}/${cleanpath}\n\n",
