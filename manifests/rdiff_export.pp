@@ -15,8 +15,6 @@ define rdiff_backup::rdiff_export (
     $cleanpath = regsubst(regsubst($path, '\/', '_', 'G'),'_', '')
   }
 
-  $backup_script = '/usr/local/bin/rdiff_backup.sh'
-
   concat::fragment{ 'backup_script_backups':
     target  => $backup_script,
     #lint:ignore:80chars
