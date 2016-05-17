@@ -48,17 +48,19 @@
 #
 class rdiff_backup::client (
   $package = $rdiff_backup::params::package,
-  $remote_path = $rdiff_backup::params::remote_path,
   $rdiff_server = $rdiff_backup::params::rdiff_server,
-  $rdiffbackuptag = $rdiff_backup::params::rdiffbackuptag,
-  $rdiff_user = $rdiff_backup::params::rdiff_user,
   $backup_script = $rdiff_backup::params::backup_script,
-) inherits rdiff_backup::params {
+  $rdiffbackuptag = $::rdiff_backup::rdiffbackuptag,
+  $remote_path = $::rdiff_backup::remote_path,
+  $rdiff_user = $::rdiff_backup::rdiff_user,
+) {
   validate_string($package)
   validate_string($rdiff_server)
   validate_string($remote_path)
   validate_string($backup_script)
   validate_string($rdiffbackuptag)
+  
+  include ::rdiff_backup
 
   # Anchors
   anchor { 'rdiff_backup::client::begin': }
