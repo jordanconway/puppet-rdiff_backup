@@ -179,8 +179,6 @@ CentOS/RHEL 7 only thus far. May also work on EL6.
 
 PRs Welcome!
 
-## Release Notes/Contributors/Etc. **Optional**
+## Release Notes/Contributors/Etc.
 
-If you aren't using changelog, put your release notes here (though you should
-consider using changelog). You can also add any additional sections you feel
-are necessary or important to include here. Please use the `## ` header.
+PRE-RELEASE
