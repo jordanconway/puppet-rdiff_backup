@@ -2,12 +2,12 @@
 define rdiff_backup::rdiff_export (
   $ensure = present,
   $path = undef,
-  $remote_path = $::remote_path,
-  $rdiff_server = $::rdiff_server,
-  $rdiffbackuptag = $::rdiffbackuptag,
   $rdiff_user = undef,
-  $backup_script = $::backup_script,
   $rdiff_retention = undef,
+  $remote_path = $::rdiff_backup::client::remote_path,
+  $rdiff_server = $::rdiff_backup::client::rdiff_server,
+  $rdiffbackuptag = $::rdiff_backup::client::rdiffbackuptag,
+  $backup_script = $::rdiff_backup::client::backup_script,
 ){
 
   include ::rdiff_backup::client
