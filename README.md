@@ -14,67 +14,166 @@
 
 ## Description
 
-Start with a one- or two-sentence summary of what the module does and/or what
-problem it solves. This is your 30-second elevator pitch for your module.
-Consider including OS/Puppet version it works with.
-
-You can give more descriptive information in a second paragraph. This paragraph
-should answer the questions: "What does this module *do*?" and "Why would I use
-it?" If your module has a range of functionality (installation, configuration,
-management, etc.), this is the time to mention it.
+A module to install and configure rdiff-backup on a server and clients.
+A defined type *rdiff_backup::rdiff_exports* added on clients will export
+to servers and setup backups according to the configured option.
+Currently CentOS/RHEL 7 only, requires puppetdb and storedconfigs.
 
 ## Setup
 
-### What rdiff_backup affects **OPTIONAL**
+### What rdiff_backup affects
 
-If it's obvious what your module touches, you can skip this section. For
-example, folks can probably figure out that your mysql_instance module affects
-their MySQL instances.
+* *$package* will be installed on servers and clients.
+* A ssh pubkey for root on each client will be created/exported to connect to
+ the *$rdiff_user* on the server.
+* *$rdiff_user* will be created on the server with a $HOME of '/var/lib/rdiff/'
+ and the pubkey from root on each client will be added to
+ '/var/lib/rdiff/.ssh/authorized_keys' file with limited commands to only run
+ rdiff-backup related commands
+* *$remote_path* will be created/managed on the server. If you plan on using NFS
+ or other remote/mounted filesystems configure it before this module.
+* On each client *$backup_script* will be created to manage the rdiff-backup
+ commands
 
-If there's more that they should know about, though, this is the place to mention:
+### Setup Requirements
 
-* A list of files, packages, services, or operations that the module will alter,
-  impact, or execute.
-* Dependencies that your module automatically installs.
-* Warnings or other important notices.
-
-### Setup Requirements **OPTIONAL**
-
-If your module requires anything extra before setting up (pluginsync enabled,
-etc.), mention it here.
-
-If your most recent release breaks compatibility or requires particular steps
-for upgrading, you might want to include an additional "Upgrading" section
-here.
+This module requires puppetdb and storedconfigs to propperly work.
+Dependancy modules are
+ * puppetlabs-stdlib >= 1.0.0
+ * jtopjian-sshkeys >= 2.1.0
+ * dalen-puppetdbquery >= 1.3.2
 
 ### Beginning with rdiff_backup
 
-The very basic steps needed for a user to get the module up and running. This
-can include setup steps, if necessary, or it can be an example of the most
-basic use of the module.
+#### Minimum viable configuration
+Some of the server and client parameters need to be identical. The defaults
+will be identical, but if you plan on changing any of them they need to be
+identical for both rdiff_backup and rdiff_backup::client's parameters
+##### Server Node
+```
+class { 'rdiff_backup':
+}
+```
+This will use the defaults from rdiff_backup::params to configure a server with
+  $package = 'rdiff-backup'
+  $remote_path = '/srv/rdiff'
+  $rdiffbackuptag = 'rdiffbackuptag'
+  $rdiff_user = 'rdiffbackup'
+##### Client Nodes
+```
+class { 'rdiff_backup::client':
+  rdiff_server   => 'your.backup.fqdn',
+}
+```
+This will use the defaults from rdiff_backup::params to configure a client with
+  $package = 'rdiff-backup'
+  $remote_path = '/srv/rdiff'
+  $rdiffbackuptag = 'rdiffbackuptag'
+  $rdiff_user = 'rdiffbackup'
+  $backup_script = '/usr/local/bin/rdiff_backup.sh'
+Technically *$rdiff_server* will default to  *"backup.${::domain}"* but it's safer
+to specify it yourself since your infrastructure may not match that configuration.
 
 ## Usage
 
-This section is where you describe how to customize, configure, and do the
-fancy stuff with your module here. It's especially helpful if you include usage
-examples and code samples for doing things with your module.
+With clients and servers defined you'll want to start backing things up.
+This is done using the *rdiff_backup::rdiff_export* type.
+Example:
+```
+rdiff_backup::rdiff_export {'webserver-etc':
+  ensure          => present,
+  path            => '/etc,
+  rdiff_retention => '2D',
+  rdiffbackuptag  => 'production-YUL'
+}
+```
+## The Hiera/Roles/Profiles way
+###Example client profile
+```
+# Rdiff_backup client
+class profile::rdiff_backup::client {
+  include ::rdiff_backup::client
 
+  $rdiff_exports = hiera('rdiff_backup::rdiff_exports', undef)
+  if ( $rdiff_exports ) {
+    create_resources('rdiff_backup::rdiff_export', $rdiff_exports)
+  }
+
+}
+```
+###Example server profile
+```
+#rdiff_backup::server profile
+class profile::rdiff_backup::server {
+  include ::rdiff_backup
+
+  selinux::module {'mysshd':
+    source => 'puppet:///modules/profile/rdiff_backup/selinux/mysshd.te',
+  }
+
+}
+```
+mysshd.te
+```
+module mysshd 1.0;
+
+require {
+  type sshd_t;
+  type var_lib_t;
+  class file read;
+  class file open;
+  class file getattr;
+}
+
+#============= sshd_t ==============
+allow sshd_t var_lib_t:file read;
+allow sshd_t var_lib_t:file open;
+allow sshd_t var_lib_t:file getattr;
+```
+### Example hiera
+common.yaml
+```
+rdiff_backup::rdiffbackuptag: 'production-YUL'
+rdiff_backup::rdiff_user: 'backupman'
+rdiff_backup::remote_path: '/srv/rdiffbackups'
+rdiff_backup::client::rdiff_user: 'backupman'
+rdiff_backup::client::rdiffbackuptag: 'production-YUL'
+rdiff_backup::client::remote_path: '/srv/rdiffbackups'
+rdiff_backup::client::rdiff_server: 'backups.businessfactory.tld'
+```
+client_x.yaml
+```
+rdiff_backup::rdiff_exports:
+  export3:
+    path: '/etc/export3'
+    rdiff_retention: '2D'
+  export4:
+    path: '/etc/export4'
+    rdiff_retention: '5D'
+```
 ## Reference
 
-Here, include a complete list of your module's classes, types, providers,
-facts, along with the parameters for each. Users refer to this section (thus
-the name "Reference") to find specific details; most users don't read it per
-se.
-
+### Defined type full options
+Example:
+```
+rdiff_backup::rdiff_export {'myexport':
+  ensure          => # Type: String, Default: present
+  path            => # REQUIRED, Type: String, Default: undef
+  rdiff_retention => # Type: String, Default: '1D'
+  rdiff_user      => # Type: String, Default: $::rdiff_backup::client::rdiff_user
+  remote_path     => # Type String(absolute_path), Default: $::rdiff_backup::client::remote_path
+  rdiff_server    => # Type String, Default: $::rdiff_backup::client::rdiff_server
+  rdiffbackuptag  => # Type String, Default: $::rdiff_backup::client::rdiffbackuptag
+  backup_script   => #Type String, Default: ::rdiff_backup::client::backup_script
+}
+```
 ## Limitations
 
-This is where you list OS compatibility, version compatibility, etc. If there
-are Known Issues, you might want to include them under their own heading here.
+CentOS/RHEL 7 only thus far. May also work on EL6.
 
 ## Development
 
-Since your module is awesome, other users will want to play with it. Let them
-know what the ground rules for contributing are.
+PRs Welcome!
 
 ## Release Notes/Contributors/Etc. **Optional**
 

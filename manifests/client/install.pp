@@ -1,4 +1,16 @@
-# rdiff_backup::install class
+# Class: rdiff_backup::client:install
+# ===================================
+#
+# Authors
+# -------
+#
+# Jordan Conway  <jconway@linuxfoundation.org>
+#
+# Copyright
+# ---------
+#
+# Copyright 2016 Jordan Conway.
+#
 class rdiff_backup::client::install(
   $package,
   $rdiffbackuptag,

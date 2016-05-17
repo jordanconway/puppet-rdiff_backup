@@ -1,4 +1,16 @@
-# rdiff_backup::client::script class
+# Class: rdiff_backup::client::config::script
+# ===========================================
+#
+# Authors
+# -------
+#
+# Jordan Conway  <jconway@linuxfoundation.org>
+#
+# Copyright
+# ---------
+#
+# Copyright 2016 Jordan Conway.
+#
 class rdiff_backup::client::config::script(
   $rdiffbackuptag,
   $backup_script,

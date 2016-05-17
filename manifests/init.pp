@@ -45,9 +45,11 @@ class rdiff_backup (
   $rdiffbackuptag = $rdiff_backup::params::rdiffbackuptag,
   $rdiff_user     = $rdiff_backup::params::rdiff_user,
   $remote_path    = $rdiff_backup::params::remote_path,
+  $package        = $rdiff_backup::params::package,
 ){
   validate_string($rdiffbackuptag)
   validate_string($rdiff_user)
+  validate_string($package)
   validate_absolute_path($remote_path)
 
   include rdiff_backup::params
@@ -61,6 +63,7 @@ class rdiff_backup (
 
   class { 'rdiff_backup::server::install':
     remote_path => $remote_path,
+    package     => $package,
     rdiff_user  => $rdiff_user,
   }
 
