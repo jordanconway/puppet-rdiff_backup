@@ -2,11 +2,11 @@
 define rdiff_backup::rdiff_export (
   $ensure = present,
   $path = undef,
-  $remote_path = $remote_path,
-  $rdiff_server = $rdiff_server,
-  $rdiffbackuptag = $rdiffbackuptag,
+  $remote_path = $::remote_path,
+  $rdiff_server = $::rdiff_server,
+  $rdiffbackuptag = $::rdiffbackuptag,
   $rdiff_user = undef,
-  $backup_script = $backup_script,
+  $backup_script = $::backup_script,
   $rdiff_retention = undef,
 ){
 
