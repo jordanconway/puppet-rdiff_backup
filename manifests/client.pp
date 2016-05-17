@@ -101,7 +101,6 @@ class rdiff_backup::client (
     rdiff_server   => $rdiff_server,
     rdiff_user     => $rdiff_user,
     remote_path    => $remote_path,
-    backup_script  => $backup_script,
     rdiffbackuptag => $rdiffbackuptag,
   }
 
