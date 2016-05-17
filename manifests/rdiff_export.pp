@@ -2,8 +2,8 @@
 define rdiff_backup::rdiff_export (
   $ensure = present,
   $path = undef,
-  $rdiff_user = undef,
   $rdiff_retention = undef,
+  $rdiff_user = $::rdiff_backup::client::rdiff_user,
   $remote_path = $::rdiff_backup::client::remote_path,
   $rdiff_server = $::rdiff_backup::client::rdiff_server,
   $rdiffbackuptag = $::rdiff_backup::client::rdiffbackuptag,
