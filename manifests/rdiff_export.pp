@@ -10,6 +10,8 @@ define rdiff_backup::rdiff_export (
   $rdiff_retention = undef,
 ){
 
+  include rdiff_backup::params
+
   if ($path) {
     $cleanpath = regsubst(regsubst($path, '\/', '_', 'G'),'_', '')
   }
