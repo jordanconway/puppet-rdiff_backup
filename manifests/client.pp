@@ -105,10 +105,6 @@ class rdiff_backup::client (
   }
 
   class {'rdiff_backup::client::config':
-    ensure         => $ensure,
-    rdiff_server   => $rdiff_server,
-    rdiff_user     => $rdiff_user,
-    remote_path    => $remote_path,
     backup_script  => $backup_script,
     rdiffbackuptag => $rdiffbackuptag,
   }
