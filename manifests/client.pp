@@ -50,15 +50,17 @@ class rdiff_backup::client (
   $package = $rdiff_backup::params::package,
   $rdiff_server = $rdiff_backup::params::rdiff_server,
   $backup_script = $rdiff_backup::params::backup_script,
-  $rdiffbackuptag = $::rdiff_backup::rdiffbackuptag,
-  $remote_path = $::rdiff_backup::remote_path,
-  $rdiff_user = $::rdiff_backup::rdiff_user,
+  $rdiffbackuptag = $rdiff_backup::params::rdiffbackuptag,
+  $remote_path = $rdiff_backup::params::remote_path,
+  $rdiff_user = $rdiff_backup::params::rdiff_user,
 ) {
   validate_string($package)
   validate_string($rdiff_server)
   validate_string($remote_path)
   validate_string($backup_script)
   validate_string($rdiffbackuptag)
+
+  include rdiff_backup::params
 
   # Anchors
   anchor { 'rdiff_backup::client::begin': }
