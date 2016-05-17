@@ -53,13 +53,13 @@ class rdiff_backup::client (
   $rdiffbackuptag = $::rdiff_backup::rdiffbackuptag,
   $remote_path = $::rdiff_backup::remote_path,
   $rdiff_user = $::rdiff_backup::rdiff_user,
-) inherits rdiff_backup{
+) {
   validate_string($package)
   validate_string($rdiff_server)
   validate_string($remote_path)
   validate_string($backup_script)
   validate_string($rdiffbackuptag)
-  
+
   # Anchors
   anchor { 'rdiff_backup::client::begin': }
   anchor { 'rdiff_backup::client::end': }
