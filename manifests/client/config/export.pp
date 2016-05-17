@@ -31,10 +31,6 @@ class rdiff_backup::client::config::export (
     validate_string($rdiffbackuptag)
   }
 
-  # We need some variables out of rdiff_backup::params
-  include rdiff_backup::params
-
-  if ( $::fqdn and $path ) {
     create_resources('rdiff_backup::rdiff_export', {
       "${::fqdn}_${path}" => {
         ensure         => $ensure,
@@ -45,5 +41,4 @@ class rdiff_backup::client::config::export (
         remote_path    => $_remote_path,
         rdiffbackuptag => $rdiffbackuptag,
     }})
-  }
 }

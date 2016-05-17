@@ -1,16 +1,18 @@
 # rdiff_backup::install class
 class rdiff_backup::client::install(
   $package,
-  $path,
   $rdiffbackuptag,
   $rdiff_server,
   $remote_path,
   $rdiff_user,
-  $backup_script,
 ) inherits rdiff_backup::params{
   validate_string($package)
+  validate_string($rdiffbackuptag)
+  validate_absolute_path($remote_path)
+  validate_string($rdiff_server)
+  validate_string($rdiff_user)
 
-  # Install rdiff_backup and
+  # Install rdiff_backup package
   ensure_packages( [$package] )
 
   create_resources('sshkeys::create_ssh_key', { 'root' => {

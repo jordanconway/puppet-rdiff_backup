@@ -69,7 +69,6 @@
 class rdiff_backup::client (
   $package = $rdiff_backup::params::package,
   $ensure = $rdiff_backup::params::ensure,
-  $path = $rdiff_backup::params::path,
   $remote_path = $rdiff_backup::params::remote_path,
   $rdiff_server = $rdiff_backup::params::rdiff_server,
   $rdiffbackuptag = $rdiff_backup::params::rdiffbackuptag,
@@ -79,9 +78,6 @@ class rdiff_backup::client (
   validate_string($package)
   if ($ensure){
     validate_string($ensure)
-  }
-  if ($path){
-    validate_absolute_path($path)
   }
   if ($rdiff_server){
     validate_string($rdiff_server)
@@ -102,7 +98,6 @@ class rdiff_backup::client (
 
   class {'rdiff_backup::client::install':
     package        => $package,
-    path           => $path,
     rdiff_server   => $rdiff_server,
     rdiff_user     => $rdiff_user,
     remote_path    => $remote_path,
@@ -112,7 +107,6 @@ class rdiff_backup::client (
 
   class {'rdiff_backup::client::config':
     ensure         => $ensure,
-    path           => $path,
     rdiff_server   => $rdiff_server,
     rdiff_user     => $rdiff_user,
     remote_path    => $remote_path,

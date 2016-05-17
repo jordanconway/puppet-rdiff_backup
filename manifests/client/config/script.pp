@@ -2,7 +2,9 @@
 class rdiff_backup::client::config::script(
   $rdiffbackuptag,
   $backup_script,
-) inherits rdiff_backup::params{
+){
+  validate_string($rdiffbackuptag)
+  validate_absolute_path($backup_script)
 
   concat { $backup_script:
     owner => 'root',
