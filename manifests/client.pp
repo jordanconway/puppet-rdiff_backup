@@ -1,39 +1,62 @@
-# Class: rdiff_backup
+# Class: rdiff_backup::client
 # ===========================
 #
-# Full description of class rdiff_backup here.
+# Class that configured rdiff-backup clients and exports their info to the
+# rdiff-backup server configured with Class['rdiff_backup'].
 #
 # Parameters
 # ----------
 #
-# * `package`
-# Defaults to 'rdiff-backup'. Module is CentOS/RHEL specific right now, if you
-# use a custom package for rdiff-backup, specify it here.
+# [*package*]
+#   Module is currently CentOS/RHEL specific right now, if you use a custom
+#   package for rdiff-backup, specify it here.
 #
-# * `rdiff_server`
-# Defaults to undef. Set this to the FQDN of the node you will use as your
-# rdiff-backup server.
+#   Type: String
+#   Default see $rdiff_backup::params::package
 #
-# * `remote_path`
-# Defaults to '/srv/rdiff' The path on the rdiff-backup server that will contain
-# your backups.
+# [*rdiff_user*]
+#   The user that will be created on the backup server and run the server side
+#   of rdiff-backup.
 #
-# * `rdiffbackuptag`
-# Defaults to '$::fqdn'. This is used to aid resource collection on the
-# rdiff-backup server. It you can manage different servers for different nodes
-# with different rdiffbackuptags.
+#   Type: String
+#   Default: see $rdiff_backup::params::rdiff_user
 #
-# * `backup_script`
-# Defaults to '/usr/local/bin/rdiff_backup.sh'
-# No need to change unless you prefer scripts to be run from elsewhere or named
-# differently.
+# [*rdiff_server*]
+#   Set this to the FQDN of the node you will use as your rdiff-backup server.
+#
+#   Type: String
+#   Default: see $rdiff_backup::params::rdiff_server
+#
+# [*remote_path*]
+#   The path on the rdiff-backup server that will contain your backups.
+#
+#   Type: String(absolute_path)
+#   Default: see rdiff_backup::params::remote_path
+#
+# [*rdiffbackuptag*]
+#   This is used to aid resource collection on the rdiff-backup server. You can
+#   manage different servers for different nodes with different rdiffbackuptags.
+#
+#   Type: String
+#   Default: see rdiff_backup::params::rdiffbackuptag
+#
+# [*backup_script*]
+#   Full path of he script that is built to manage rdiff-backups and retentions.
+#
+#   Type: String(absolute_path)
+#   Default: see rdiff_backup::params::backup_script
 #
 # Examples
 # --------
 #
 # @example
-#    class { 'rdiff_backup':
-#      servers => [ 'pool.ntp.org', 'ntp.local.company.com' ],
+#    class { 'rdiff_backup::client':
+#      rdiff_user     => 'backupman',
+#      rdiffbackuptag => 'rdiffbackup',
+#      rdiff_server   => 'backups.mydomain.org',
+#      remote_path    => '/srv/rdiffbackups',
+#      rdiff_server   => 'puppet.jordanlab.local',
+#      backup_script  => '/usr/local/bin/runbackups.sh',
 #    }
 #
 # Authors

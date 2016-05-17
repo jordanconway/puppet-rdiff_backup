@@ -5,20 +5,33 @@
 #
 # Parameters ----------
 #
-# * `remote_path` Defaults to '/srv/rdiff' The path on the rdiff-backup server
-# that will contain your backups.
+# [*rdiff_user*]
+#   The user that will be created on the backup server and run the server side
+#   of rdiff-backup.
 #
-# *`rdiff_user` Defaults to rdiffbackup. The user that will be created on the
-# backup server and run the server side of rdiff-backup.
+#   Type: String
+#   Default: see $rdiff_backup::params::rdiff_user
 #
-# * `rdiffbackuptag` Defaults to '$::fqdn'. This is used to aid resource
-# collection on the rdiff-backup server. It you can manage different servers
-# for different nodes with different rdiffbackuptags.
+# [*remote_path*]
+#   The path on the rdiff-backup server that will contain your backups.
+#
+#   Type: String(absolute_path)
+#   Default: see rdiff_backup::params::remote_path
+#
+# [*rdiffbackuptag*]
+#   This is used to aid resource collection on the rdiff-backup server. You can
+#   manage different servers for different nodes with different rdiffbackuptags.
+#
+#   Type: String
+#   Default: see rdiff_backup::params::rdiffbackuptag
 #
 # Examples --------
 #
-# @example class { 'rdiff_backup': remote_path    => '/srv/backups', rdiff_user
-# => 'backupmgr', rdiffbackuptag => 'server1backups' }
+# @example class { 'rdiff_backup':
+#            remote_path    => '/srv/backups',
+#            rdiff_user     => 'backupmgr',
+#            rdiffbackuptag => 'server1backups'
+#          }
 #
 # Authors -------
 #
@@ -30,8 +43,8 @@
 #
 class rdiff_backup (
   $rdiffbackuptag = $rdiff_backup::params::rdiffbackuptag,
-  $rdiff_user = $rdiff_backup::params::rdiff_user,
-  $remote_path = $rdiff_backup::params::remote_path,
+  $rdiff_user     = $rdiff_backup::params::rdiff_user,
+  $remote_path    = $rdiff_backup::params::remote_path,
 ){
   validate_string($rdiffbackuptag)
   validate_string($rdiff_user)
