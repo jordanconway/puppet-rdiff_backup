@@ -43,43 +43,15 @@
 # Copyright 2016 Jordan Conway.
 #
 class rdiff_backup::client::config (
-  $ensure,
-  $path,
-  $rdiff_server,
-  $rdiff_user,
-  $remote_path,
   $backup_script,
   $rdiffbackuptag,
 ) inherits rdiff_backup::params {
-  if ($ensure){
-    validate_string($ensure)
-  }
-  if ($path){
-    validate_absolute_path($path)
-  }
-  if ($rdiff_server){
-    validate_string($rdiff_server)
-  }
-  if ($remote_path){
-    validate_string($remote_path)
-  }
-  if ($rdiffbackuptag){
-    validate_string($rdiffbackuptag)
-  }
+  validate_string($rdiffbackuptag)
+  validate_absolute_path($backup_script)
 
   # Anchors
   anchor { 'rdiff_backup::client::config::begin': }
   anchor { 'rdiff_backup::client::config::end': }
-
-  class {'rdiff_backup::client::config::export':
-    ensure         => $ensure,
-    path           => $path,
-    rdiff_server   => $rdiff_server,
-    rdiff_user     => $rdiff_user,
-    backup_script  => $backup_script,
-    remote_path    => $remote_path,
-    rdiffbackuptag => $rdiffbackuptag
-  }
 
   class {'rdiff_backup::client::config::script':
     backup_script  => $backup_script,
@@ -87,7 +59,6 @@ class rdiff_backup::client::config (
   }
 
   Anchor['rdiff_backup::client::config::begin'] ->
-    Class['rdiff_backup::client::config::export'] ->
     Class['rdiff_backup::client::config::script'] ->
   Anchor['rdiff_backup::client::config::end']
 
