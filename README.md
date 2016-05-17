@@ -46,7 +46,7 @@ Dependancy modules are
 ### Beginning with rdiff_backup
 
 #### Minimum viable configuration
-Some of the server and client parameters need to be identical. The defaults
+**Parameters that exist on the server and client must be identical.** The defaults
 will be identical, but if you plan on changing any of them they need to be
 identical for both rdiff_backup and rdiff_backup::client's parameters
 ##### Server Node
@@ -154,6 +154,10 @@ rdiff_backup::rdiff_exports:
 ## Reference
 
 ### Defined type full options
+The default params that come from $::rdiff_backup::client should not be changed
+unless you are certain what you are doing and make sure they match existing
+client/server values.
+
 Example:
 ```
 rdiff_backup::rdiff_export {'myexport':
