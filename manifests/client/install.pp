@@ -5,7 +5,7 @@ class rdiff_backup::client::install(
   $rdiff_server,
   $remote_path,
   $rdiff_user,
-) inherits rdiff_backup::params{
+){
   validate_string($package)
   validate_string($rdiffbackuptag)
   validate_absolute_path($remote_path)

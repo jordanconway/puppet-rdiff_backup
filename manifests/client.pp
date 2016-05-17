@@ -56,7 +56,7 @@ class rdiff_backup::client (
 ) {
   validate_string($package)
   validate_string($rdiff_server)
-  validate_string($remote_path)
+  validate_absolute_path($remote_path)
   validate_string($backup_script)
   validate_string($rdiffbackuptag)
 
