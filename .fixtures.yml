@@ -1,0 +1,8 @@
+fixtures:
+  forge_modules:
+    stdlib: "puppetlabs/stdlib"
+    sshkeys: "jtopjian-sshkeys"
+    puppetdbquery: "dalen-puppetdbquery"
+    concat: "puppetlabs-concat"
+  symlinks:
+    rdiff_backup: "#{source_dir}"

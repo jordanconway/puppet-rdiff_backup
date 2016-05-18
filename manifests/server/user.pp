@@ -6,6 +6,9 @@ class rdiff_backup::server::user(
 
   create_resources('file', {'/var/lib/rdiff' => {
     ensure => directory,
+    owner  => $rdiff_user,
+    group  => 'root',
+    mode   => '0700',
   }})
 
   create_resources('user', { $rdiff_user => {

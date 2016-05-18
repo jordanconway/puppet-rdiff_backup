@@ -1,5 +1,5 @@
 require 'spec_helper'
-describe 'rdiff_backup' do
+describe 'rdiff_backup::client' do
 
   on_supported_os.each do |os, facts|
     context "on #{os}" do
@@ -15,12 +15,11 @@ describe 'rdiff_backup' do
       case facts[:osfamily]
       when 'RedHat'
         context 'with defaults for all parameters' do
-          it { should contain_class('rdiff_backup') }
-          it { should contain_anchor('rdiff_backup::begin') }
-          it { should contain_class('rdiff_backup::server::user') }
-          it { should contain_class('rdiff_backup::server::install') }
-          it { should contain_class('rdiff_backup::server::import') }
-          it { should contain_anchor('rdiff_backup::end') }
+          it { should contain_class('rdiff_backup::client') }
+          it { should contain_anchor('rdiff_backup::client::begin') }
+          it { should contain_class('rdiff_backup::client::install') }
+          it { should contain_class('rdiff_backup::client::config') }
+          it { should contain_anchor('rdiff_backup::client::end') }
         end
       else
       end

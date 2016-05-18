@@ -1,5 +1,5 @@
 require 'spec_helper'
-describe 'rdiff_backup::server::install' do
+describe 'rdiff_backup::client::config::script' do
 
   on_supported_os.each do |os, facts|
     context "on #{os}" do
@@ -27,19 +27,24 @@ describe 'rdiff_backup::server::install' do
         context 'with basic init defaults' do
           let(:params) {
             {
-              'remote_path' => '/srv/rdiff',
-              'package'     => 'rdiff-backup',
-              'rdiff_user'  => 'rdiffbackup',
+              'rdiffbackuptag' => 'rdiffbackuptag',
+              'backup_script'     => '/usr/local/bin/rdiff_backup.sh',
             }
           }
-          it { should contain_class('rdiff_backup::server::install') }
-          it { should contain_package('rdiff-backup') }
-          it { should contain_file('/srv/rdiff').with(
-            'ensure'  => 'directory',
-            'owner'   => 'rdiffbackup',
+          it { should contain_class('rdiff_backup::client::config::script') }
+          it { should contain_concat('/usr/local/bin/rdiff_backup.sh').with(
+            'owner'   => 'root',
             'group'   => 'root',
             'mode'    => '0700',
+            'tag'     => 'rdiffbackuptag',
           ) }
+          it { should contain_concat__fragment('backup_script_header').with(
+            'target'   => '/usr/local/bin/rdiff_backup.sh',
+            'content'   => "#!/bin/sh\n",
+            'order'    => '01',
+            'tag'     => 'rdiffbackuptag',
+          ) }
+
         end
       else
       end

@@ -1,5 +1,5 @@
 require 'spec_helper'
-describe 'rdiff_backup::server::service' do
+describe 'rdiff_backup::params' do
 
   on_supported_os.each do |os, facts|
     context "on #{os}" do
@@ -13,15 +13,9 @@ describe 'rdiff_backup::server::service' do
 
       it { is_expected.to compile.with_all_deps }
       case facts[:osfamily]
-      when 'Debian'
-        context 'with defaults for all parameters' do
-          it { should contain_class('rdiff_backup::server::service') }
-          it { should contain_class('rsyncd') }
-        end
       when 'RedHat'
         context 'with defaults for all parameters' do
-          it { should contain_class('rdiff_backup::server::service') }
-          it { should contain_class('rsyncd') }
+          it { should contain_class('rdiff_backup::params') }
         end
       else
       end

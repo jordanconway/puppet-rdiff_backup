@@ -1,6 +1,6 @@
 require 'spec_helper'
-describe 'rdiff_backup::server::install' do
-
+describe 'rdiff_backup::rdiff_export',:type => :define do
+  let(:title) { 'Test me' }
   on_supported_os.each do |os, facts|
     context "on #{os}" do
       let(:facts) do
@@ -24,22 +24,21 @@ describe 'rdiff_backup::server::install' do
     end
       case facts[:osfamily]
       when 'RedHat'
-        context 'with basic init defaults' do
+        context 'with good params' do
           let(:params) {
             {
-              'remote_path' => '/srv/rdiff',
-              'package'     => 'rdiff-backup',
-              'rdiff_user'  => 'rdiffbackup',
+              'ensure'          => 'present',
+              'path'            => '/etc/httpd',
+              'rdiff_retention' => '1D',
+              'rdiff_user'      => 'rdiffbackup',
+              'remote_path'     => '/srv/rdiff',
+              'rdiff_server'    => 'backup.example.com',
+              'backup_script'   => '/usr/local/bin/rdiff_backup.sh',
+              'rdiffbackuptag'  => 'rdiffbackuptag',
             }
           }
-          it { should contain_class('rdiff_backup::server::install') }
-          it { should contain_package('rdiff-backup') }
-          it { should contain_file('/srv/rdiff').with(
-            'ensure'  => 'directory',
-            'owner'   => 'rdiffbackup',
-            'group'   => 'root',
-            'mode'    => '0700',
-          ) }
+          it { should compile }
+
         end
       else
       end
