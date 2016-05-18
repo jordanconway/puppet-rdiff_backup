@@ -46,7 +46,7 @@ class rdiff_backup (
   $rdiff_user     = $rdiff_backup::params::rdiff_user,
   $remote_path    = $rdiff_backup::params::remote_path,
   $package        = $rdiff_backup::params::package,
-){
+) inherits rdiff_backup::params {
   validate_string($rdiffbackuptag)
   validate_string($rdiff_user)
   validate_string($package)
