@@ -1,5 +1,7 @@
 # rdiff_backup
 
+[![Build Status](https://travis-ci.org/jordanconway/puppet-rdiff_backup.png)](https://travis-ci.org/jordanconway/puppet-rdiff_backup)
+
 #### Table of Contents
 
 1. [Description](#description)
