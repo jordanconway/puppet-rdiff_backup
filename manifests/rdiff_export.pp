@@ -59,6 +59,7 @@ define rdiff_backup::rdiff_export (
   }
 
   cron{ "${::fqdn}_${cleanpath}":
+    ensure  => $ensure,
     command => $backup_script,
     user    => root,
     hour    => 1,
