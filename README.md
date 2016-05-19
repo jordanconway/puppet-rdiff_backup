@@ -89,6 +89,14 @@ rdiff_backup::rdiff_export {'webserver-etc':
   rdiffbackuptag  => 'production-YUL'
 }
 ```
+#### A note about rdiff_retention
+The time interval is an integer followed by the
+ character s, m, h, D, W, M, or Y, indicating  seconds, minutes, hours, days,
+ weeks, months, or years respectively, or a number of these concatenated. For
+ example, 32m  means  32  minutes, and 3W2D10h7s means 3 weeks, 2 days, 10
+ hours, and 7 seconds. In this context, a month means 30 days, a year is
+ 365 days, and a day is always 86400 seconds.
+
 ## The Hiera/Roles/Profiles way
 ###Example client profile
 ```
@@ -159,13 +167,12 @@ rdiff_backup::rdiff_exports:
 The default params that come from $::rdiff_backup::client should not be changed
 unless you are certain what you are doing and make sure they match existing
 client/server values.
-
 Example:
 ```
 rdiff_backup::rdiff_export {'myexport':
   ensure          => # Type: String, Default: present
   path            => # REQUIRED, Type: String, Default: undef
-  rdiff_retention => # Type: String, Default: '1D'
+  rdiff_retention => # Type: String*, Default: '1D'
   rdiff_user      => # Type: String, Default: $::rdiff_backup::client::rdiff_user
   remote_path     => # Type String(absolute_path), Default: $::rdiff_backup::client::remote_path
   rdiff_server    => # Type String, Default: $::rdiff_backup::client::rdiff_server
@@ -173,6 +180,7 @@ rdiff_backup::rdiff_export {'myexport':
   backup_script   => #Type String, Default: ::rdiff_backup::client::backup_script
 }
 ```
+*Please see [A note about rdiff_retention][]
 ## Limitations
 
 CentOS/RHEL 7 only thus far. May also work on EL6.
