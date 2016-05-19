@@ -163,11 +163,80 @@ rdiff_backup::rdiff_exports:
 ```
 ## Reference
 
-### Defined type full options
-The default params that come from $::rdiff_backup::client should not be changed
-unless you are certain what you are doing and make sure they match existing
-client/server values.
-Example:
+###Classes
+* rdiff_backup: Install and configure an rdiff-backup server.
+* rdiff_backup::server::user: Sets up the rdiff backup user on the server. (Accessed via rdiff_backup:)
+* rdiff_backup::server::install: Installs rdiff-backup on the server. (Accessed via rdiff_backup:)
+* rdiff_backup::server::import: Imports exported configs from the clients. (Accessed via rdiff_backup:)
+* rdiff_backup::client: Install and configure and rdiff-backup client.
+* rdiff_backup::client::install: Install rdiff-backup on the client. (Accessed via rdiff_backup::client:)
+* rdiff_backup::client::config : Configures the basics for rdiff-backup on the client. (Accessed via rdiff_backup::client:)
+* rdiff_backup::client::config::script: Assembles the script used to send backups to the rdiff backup server. (Accessed via rdiff_backup::client:)
+
+
+###Defines
+* `rdiff_backup::rdiff_export`: Exports the backup configuration to the defined server and sets up a local cronjob to run the backup script.
+
+###Parameters
+
+####Class: `rdiff_backup`
+#####`rdiffbackuptag`
+The tag that controls which clients and defined rdiff_exports  will be collected by the server. Type String, Default: see $rdiff_backup::params::rdiffbackuptag
+
+#####`rdiff_user`
+The user that runs rdiffbackup on the server. Type: String, Default value: see $rdiff_backup::params::rdiff_user
+
+#####`remote_path`
+The path on the server where backups will live, if using nfs or other remote/mounted filesystem configure it first. Type String(absolute_path), Default value: $rdiff_backup::params::remote_path,
+
+####`package`
+Module is currently CentOS/RHEL specific right now, if you use a custom package for rdiff-backup, specify it here. Type String, Default value: $rdiff_backup::params::package
+
+####Class: `rdiff_backup::client`
+#####`rdiffbackuptag`
+The tag that controls which clients and defined rdiff_exports  will be collected by the server. Type String, Default: see $rdiff_backup::params::rdiffbackuptag
+
+#####`rdiff_user`
+The user that runs rdiffbackup on the server. Type: String, Default value: see $rdiff_backup::params::rdiff_user
+
+#####`remote_path`
+The path on the server where backups will live, if using nfs or other remote/mounted filesystem configure it first. Type String(absolute_path), Default value: $rdiff_backup::params::remote_path,
+
+####`package`
+Module is currently CentOS/RHEL specific right now, if you use a custom package for rdiff-backup, specify it here. Type String, Default value: $rdiff_backup::params::package
+
+####`backup_script`
+The script on the clients that runs the rdiff-backup commands. Type String, Default value: $rdiff_backup::params::backup_script
+
+####Define: `rdiff_backup::rdiff_export`
+The default params that come from $::rdiff_backup::client should not be changed unless you are certain what you are doing and make sure they match existing client/server values.
+Unless Specified these parameters are optional.
+
+#####`ensure`
+This will ensure wether or not the cron definition that runs the backup script exists on the client machine. Type: String, Valid Options: 'present' and 'absent' Default value: 'present'
+
+#####`path`
+REQUIRED. The path of the directory or files that you are backing up with this define. Type: String(absolute_path), Default value: undef
+
+#####`rdiff_retention`
+*See [A note about rdiff_retention](#a-note-about-rdiff_retention) Type: String, Default value: '1D'
+
+#####`rdiff_user`
+The user that runs rdiffbackup on the server - this should not be changed. Type: String, Default value: $::rdiff_backup::client::rdiff_user
+
+#####`remote_path`
+The remote path on the rdiff server where backups will live - this should not be changed. Type String(absolute_path), Default value: $::rdiff_backup::client::remote_path
+
+#####`rdiff_server`
+The rdiff-backup server that the backup will be sent to - this should not be changed. Type String, Default value: $::rdiff_backup::client::rdiff_server
+
+#####`rdiffbackuptag`
+The tag that controls which server will collect the backup. Unless you are sending multiple files on the same client to different servers this should not be changed. Type String, Default: $::rdiff_backup::client::rdiffbackuptag
+
+#####`backup_script`
+The script that runs the rdiff-backup commands - this should not be changed. Type String, Default value: ::rdiff_backup::client::backup_script
+
+######Example:
 ```
 rdiff_backup::rdiff_export {'myexport':
   ensure          => # Type: String, Default: present
@@ -180,7 +249,6 @@ rdiff_backup::rdiff_export {'myexport':
   backup_script   => #Type String, Default: ::rdiff_backup::client::backup_script
 }
 ```
-*Please see [A note about rdiff_retention](#a-note-about-rdiff_retention)
 ## Limitations
 
 CentOS/RHEL 7 only thus far. May also work on EL6.
