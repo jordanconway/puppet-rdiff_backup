@@ -84,7 +84,7 @@ Example:
 ```
 rdiff_backup::rdiff_export {'webserver-etc':
   ensure          => present,
-  path            => '/etc,
+  path            => '/etc',
   rdiff_retention => '2D',
   rdiffbackuptag  => 'production-YUL'
 }
