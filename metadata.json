@@ -1,6 +1,6 @@
 {
   "name": "jconway-rdiff_backup",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Jordan Conway",
   "summary": "Puppet Module to manage rdiff-backup",
   "license": "Apache-2.0",
