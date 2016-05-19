@@ -180,7 +180,7 @@ rdiff_backup::rdiff_export {'myexport':
   backup_script   => #Type String, Default: ::rdiff_backup::client::backup_script
 }
 ```
-*Please see [A note about rdiff_retention](#note-about-rdiff_retention)
+*Please see [A note about rdiff_retention](#a-note-about-rdiff_retention)
 ## Limitations
 
 CentOS/RHEL 7 only thus far. May also work on EL6.
