@@ -9,7 +9,14 @@ define rdiff_backup::rdiff_export (
   $rdiffbackuptag = $::rdiff_backup::client::rdiffbackuptag,
   $backup_script = $::rdiff_backup::client::backup_script,
 ){
-
+  validate_string($ensure)
+  validate_absolute_path($path)
+  validate_re($rdiff_retention, '^(?:\d+[YMWDhms])+$')
+  validate_re($rdiff_user, '^([a-z_][a-z0-9_]{0,30})$')
+  validate_absolute_path($remote_path)
+  validate_string($rdiff_server)
+  validate_string($rdiffbackuptag)
+  validate_absolute_path($backup_script)
   include ::rdiff_backup::client
 
   if ($path) {
@@ -51,7 +58,7 @@ define rdiff_backup::rdiff_export (
     }
   }
 
-  cron{ "${::fqdn}${cleanpath}":
+  cron{ "${::fqdn}_${cleanpath}":
     command => $backup_script,
     user    => root,
     hour    => 1,
