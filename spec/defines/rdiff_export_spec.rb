@@ -34,7 +34,9 @@ describe 'rdiff_backup::rdiff_export',:type => :define do
               'remote_path'     => '/srv/rdiff',
               'rdiff_server'    => 'backup.example.com',
               'backup_script'   => '/usr/local/bin/rdiff_backup.sh',
-              'rdiffbackuptag'  => 'rdiffbackuptag',
+              'rdiffbackuptag'  => 'rdiif,fbackuptag',
+              'cron_hour'       => '2',
+              'cron_minute'     => '15',
             }
           }
           it { should compile }
@@ -94,7 +96,8 @@ describe 'rdiff_backup::rdiff_export',:type => :define do
           it { should contain_cron('test.example.com_etc_httpd').with(
             'command' => '/usr/local/bin/rdiff_backup.sh',
             'user'    => 'root',
-            'hour'    => '1',
+            'hour'    => '2',
+            'minute'  => '15',
           ) }
 
         end

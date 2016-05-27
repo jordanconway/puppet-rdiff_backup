@@ -86,6 +86,7 @@ rdiff_backup::rdiff_export {'webserver-etc':
   ensure          => present,
   path            => '/etc',
   rdiff_retention => '2D',
+  cron_hour       => '3',
   rdiffbackuptag  => 'production-YUL'
 }
 ```
@@ -157,9 +158,11 @@ rdiff_backup::rdiff_exports:
   export3:
     path: '/etc/export3'
     rdiff_retention: '2D'
+    cron_hour: '2'
   export4:
     path: '/etc/export4'
     rdiff_retention: '5D'
+    cron_hour: '3'
 ```
 ## Reference
 
@@ -235,6 +238,12 @@ The tag that controls which server will collect the backup. Unless you are sendi
 
 #####`backup_script`
 The script that runs the rdiff-backup commands - this should not be changed. Type String, Default value: ::rdiff_backup::client::backup_script
+
+#####`cron_hour`
+The hour at which the cron job runs. Type String (as an Int value between 0-23), Default value: 1
+
+#####`cron_minute`
+The minute at which the cron job runs. Type String (as an Int value between 0-59) Default value: undef
 
 ######Example:
 ```

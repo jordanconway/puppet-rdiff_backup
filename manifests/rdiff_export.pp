@@ -3,6 +3,8 @@ define rdiff_backup::rdiff_export (
   $ensure = present,
   $path = undef,
   $rdiff_retention = '1D',
+  $cron_hour = '1',
+  $cron_minute = undef,
   $rdiff_user = $::rdiff_backup::client::rdiff_user,
   $remote_path = $::rdiff_backup::client::remote_path,
   $rdiff_server = $::rdiff_backup::client::rdiff_server,
@@ -12,6 +14,8 @@ define rdiff_backup::rdiff_export (
   validate_string($ensure)
   validate_absolute_path($path)
   validate_re($rdiff_retention, '^(?:\d+[YMWDhms])+$')
+  validate_re($cron_hour, '^[0-1]?[0-9]$|^[0-2]?[0-3]$')
+  validate_re($cron_minute, '^[0-5]?[0-9]$')
   validate_re($rdiff_user, '^([a-z_][a-z0-9_]{0,30})$')
   validate_absolute_path($remote_path)
   validate_string($rdiff_server)
@@ -62,7 +66,8 @@ define rdiff_backup::rdiff_export (
     ensure  => $ensure,
     command => $backup_script,
     user    => root,
-    hour    => 1,
+    hour    => $cron_hour,
+    minute  => $cron_minute,
   }
 
 }
