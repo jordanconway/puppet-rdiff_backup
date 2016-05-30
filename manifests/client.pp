@@ -40,12 +40,6 @@
 #   Type: String
 #   Default: see rdiff_backup::params::rdiffbackuptag
 #
-# [*backup_script*]
-#   Full path of he script that is built to manage rdiff-backups and retentions.
-#
-#   Type: String(absolute_path)
-#   Default: see rdiff_backup::params::backup_script
-#
 # Examples
 # --------
 #
@@ -56,7 +50,6 @@
 #      rdiff_server   => 'backups.mydomain.org',
 #      remote_path    => '/srv/rdiffbackups',
 #      rdiff_server   => 'puppet.jordanlab.local',
-#      backup_script  => '/usr/local/bin/runbackups.sh',
 #    }
 #
 # Authors
@@ -72,7 +65,6 @@
 class rdiff_backup::client (
   $package        = $rdiff_backup::params::package,
   $rdiff_server   = $rdiff_backup::params::rdiff_server,
-  $backup_script  = $rdiff_backup::params::backup_script,
   $rdiffbackuptag = $rdiff_backup::params::rdiffbackuptag,
   $remote_path    = $rdiff_backup::params::remote_path,
   $rdiff_user     = $rdiff_backup::params::rdiff_user,
@@ -80,7 +72,6 @@ class rdiff_backup::client (
   validate_string($package)
   validate_string($rdiff_server)
   validate_absolute_path($remote_path)
-  validate_string($backup_script)
   validate_string($rdiffbackuptag)
 
   include rdiff_backup::params
@@ -97,14 +88,8 @@ class rdiff_backup::client (
     rdiffbackuptag => $rdiffbackuptag,
   }
 
-  class {'rdiff_backup::client::config':
-    backup_script  => $backup_script,
-    rdiffbackuptag => $rdiffbackuptag,
-  }
-
   Anchor['rdiff_backup::client::begin'] ->
     Class['rdiff_backup::client::install'] ->
-    Class['rdiff_backup::client::config'] ->
   Anchor['rdiff_backup::client::end']
 
 }

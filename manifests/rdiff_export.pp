@@ -9,7 +9,6 @@ define rdiff_backup::rdiff_export (
   $remote_path = $::rdiff_backup::client::remote_path,
   $rdiff_server = $::rdiff_backup::client::rdiff_server,
   $rdiffbackuptag = $::rdiff_backup::client::rdiffbackuptag,
-  $backup_script = $::rdiff_backup::client::backup_script,
 ){
   validate_string($ensure)
   validate_absolute_path($path)
@@ -20,12 +19,13 @@ define rdiff_backup::rdiff_export (
   validate_absolute_path($remote_path)
   validate_string($rdiff_server)
   validate_string($rdiffbackuptag)
-  validate_absolute_path($backup_script)
   include ::rdiff_backup::client
 
   if ($path) {
     $cleanpath = regsubst(regsubst($path, '\/', '_', 'G'),'_', '')
   }
+
+  $backup_script = "/usr/local/bin/rdiff_${cleanpath}_run.sh"
 
   if ( $rdiff_server == $::fqdn){
     concat::fragment{ "backup_${cleanpath}":
@@ -60,6 +60,20 @@ define rdiff_backup::rdiff_export (
       #lint:endignore
       order   => '15'
     }
+  }
+
+  concat { $backup_script:
+    owner => 'root',
+    group => 'root',
+    mode  => '0700',
+    tag   => $rdiffbackuptag,
+  }
+
+  concat::fragment{ 'backup_script_header':
+    target  => $backup_script,
+    content => "#!/bin/sh\n",
+    order   => '01',
+    tag     => $rdiffbackuptag,
   }
 
   cron{ "${::fqdn}_${cleanpath}":

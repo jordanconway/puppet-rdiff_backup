@@ -18,7 +18,6 @@ describe 'rdiff_backup::client' do
           it { should contain_class('rdiff_backup::client') }
           it { should contain_anchor('rdiff_backup::client::begin') }
           it { should contain_class('rdiff_backup::client::install') }
-          it { should contain_class('rdiff_backup::client::config') }
           it { should contain_anchor('rdiff_backup::client::end') }
         end
       else
