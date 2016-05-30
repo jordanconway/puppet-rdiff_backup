@@ -4,7 +4,7 @@ define rdiff_backup::rdiff_export (
   $path = undef,
   $rdiff_retention = '1D',
   $cron_hour = '1',
-  $cron_minute = undef,
+  $cron_minute = '0',
   $rdiff_user = $::rdiff_backup::client::rdiff_user,
   $remote_path = $::rdiff_backup::client::remote_path,
   $rdiff_server = $::rdiff_backup::client::rdiff_server,
