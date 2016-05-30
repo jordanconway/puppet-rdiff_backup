@@ -63,10 +63,11 @@ define rdiff_backup::rdiff_export (
   }
 
   concat { $backup_script:
-    owner => 'root',
-    group => 'root',
-    mode  => '0700',
-    tag   => $rdiffbackuptag,
+    ensure => $ensure,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0700',
+    tag    => $rdiffbackuptag,
   }
 
   concat::fragment{ "backup_script_header_${cleanpath}":

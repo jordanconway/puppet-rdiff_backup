@@ -34,8 +34,6 @@ Currently CentOS/RHEL 7 only, requires puppetdb and storedconfigs.
  rdiff-backup related commands
 * *$remote_path* will be created/managed on the server. If you plan on using NFS
  or other remote/mounted filesystems configure it before this module.
-* On each client *$backup_script* will be created to manage the rdiff-backup
- commands
 
 ### Setup Requirements
 
@@ -72,7 +70,6 @@ This will use the defaults from rdiff_backup::params to configure a client with
   $remote_path = '/srv/rdiff'
   $rdiffbackuptag = 'rdiffbackuptag'
   $rdiff_user = 'rdiffbackup'
-  $backup_script = '/usr/local/bin/rdiff_backup.sh'
 Technically *$rdiff_server* will default to  *"backup.${::domain}"* but it's safer
 to specify it yourself since your infrastructure may not match that configuration.
 
@@ -173,9 +170,6 @@ rdiff_backup::rdiff_exports:
 * rdiff_backup::server::import: Imports exported configs from the clients. (Accessed via rdiff_backup:)
 * rdiff_backup::client: Install and configure and rdiff-backup client.
 * rdiff_backup::client::install: Install rdiff-backup on the client. (Accessed via rdiff_backup::client:)
-* rdiff_backup::client::config : Configures the basics for rdiff-backup on the client. (Accessed via rdiff_backup::client:)
-* rdiff_backup::client::config::script: Assembles the script used to send backups to the rdiff backup server. (Accessed via rdiff_backup::client:)
-
 
 ###Defines
 * `rdiff_backup::rdiff_export`: Exports the backup configuration to the defined server and sets up a local cronjob to run the backup script.
@@ -208,15 +202,12 @@ The path on the server where backups will live, if using nfs or other remote/mou
 ####`package`
 Module is currently CentOS/RHEL specific right now, if you use a custom package for rdiff-backup, specify it here. Type String, Default value: $rdiff_backup::params::package
 
-####`backup_script`
-The script on the clients that runs the rdiff-backup commands. Type String, Default value: $rdiff_backup::params::backup_script
-
 ####Define: `rdiff_backup::rdiff_export`
 The default params that come from $::rdiff_backup::client should not be changed unless you are certain what you are doing and make sure they match existing client/server values.
 Unless Specified these parameters are optional.
 
 #####`ensure`
-This will ensure wether or not the cron definition that runs the backup script exists on the client machine. Type: String, Valid Options: 'present' and 'absent' Default value: 'present'
+This will ensure wether or not the cron definition that runs the backup script and the backup script exists on the client machine. Type: String, Valid Options: 'present' and 'absent' Default value: 'present'
 
 #####`path`
 REQUIRED. The path of the directory or files that you are backing up with this define. Type: String(absolute_path), Default value: undef
@@ -236,9 +227,6 @@ The rdiff-backup server that the backup will be sent to - this should not be cha
 #####`rdiffbackuptag`
 The tag that controls which server will collect the backup. Unless you are sending multiple files on the same client to different servers this should not be changed. Type String, Default: $::rdiff_backup::client::rdiffbackuptag
 
-#####`backup_script`
-The script that runs the rdiff-backup commands - this should not be changed. Type String, Default value: ::rdiff_backup::client::backup_script
-
 #####`cron_hour`
 The hour at which the cron job runs. Type String (as an Int value between 0-23), Default value: 1
 
@@ -255,7 +243,6 @@ rdiff_backup::rdiff_export {'myexport':
   remote_path     => # Type String(absolute_path), Default: $::rdiff_backup::client::remote_path
   rdiff_server    => # Type String, Default: $::rdiff_backup::client::rdiff_server
   rdiffbackuptag  => # Type String, Default: $::rdiff_backup::client::rdiffbackuptag
-  backup_script   => #Type String, Default: ::rdiff_backup::client::backup_script
 }
 ```
 ## Limitations
