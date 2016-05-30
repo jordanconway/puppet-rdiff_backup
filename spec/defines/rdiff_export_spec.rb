@@ -33,8 +33,9 @@ describe 'rdiff_backup::rdiff_export',:type => :define do
               'rdiff_user'      => 'rdiffbackup',
               'remote_path'     => '/srv/rdiff',
               'rdiff_server'    => 'backup.example.com',
-              'backup_script'   => '/usr/local/bin/rdiff_backup.sh',
               'rdiffbackuptag'  => 'rdiffbackuptag',
+              'cron_hour'       => '2',
+              'cron_minute'     => '15',
             }
           }
           it { should compile }
@@ -60,12 +61,18 @@ describe 'rdiff_backup::rdiff_export',:type => :define do
                 /does not match/)
           end
 
-          it 'should fail on bad backup_script' do
-            params.merge!({'backup_script' => 'not_a_path'})
-            expect { should compile }.to \
-              raise_error(RSpec::Expectations::ExpectationNotMetError,
-                /is not an absolute path/)
-          end
+          it { should contain_concat('/usr/local/bin/rdiff_etc_httpd_run.sh').with(
+            'owner'   => 'root',
+            'group'   => 'root',
+            'mode'    => '0700',
+            'tag'     => 'rdiffbackuptag',
+          ) }
+          it { should contain_concat__fragment('backup_script_header_etc_httpd').with(
+            'target'   => '/usr/local/bin/rdiff_etc_httpd_run.sh',
+            'content'   => "#!/bin/sh\n",
+            'order'    => '01',
+            'tag'     => 'rdiffbackuptag',
+          ) }
 
           it { should contain_concat__fragment('backup_etc_httpd').with(
             'content' => "rdiff-backup /etc/httpd rdiffbackup@backup.example.com::/srv/rdiff/test.example.com/etc_httpd\n\n",
@@ -92,9 +99,10 @@ describe 'rdiff_backup::rdiff_export',:type => :define do
           end
 
           it { should contain_cron('test.example.com_etc_httpd').with(
-            'command' => '/usr/local/bin/rdiff_backup.sh',
+            'command' => '/usr/local/bin/rdiff_etc_httpd_run.sh',
             'user'    => 'root',
-            'hour'    => '1',
+            'hour'    => '2',
+            'minute'  => '15',
           ) }
 
         end
