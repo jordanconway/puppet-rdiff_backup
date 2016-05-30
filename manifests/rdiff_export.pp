@@ -69,7 +69,7 @@ define rdiff_backup::rdiff_export (
     tag   => $rdiffbackuptag,
   }
 
-  concat::fragment{ 'backup_script_header':
+  concat::fragment{ "backup_script_header_${cleanpath}":
     target  => $backup_script,
     content => "#!/bin/sh\n",
     order   => '01',

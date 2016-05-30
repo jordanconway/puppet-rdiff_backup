@@ -67,7 +67,7 @@ describe 'rdiff_backup::rdiff_export',:type => :define do
             'mode'    => '0700',
             'tag'     => 'rdiffbackuptag',
           ) }
-          it { should contain_concat__fragment('backup_script_header').with(
+          it { should contain_concat__fragment('backup_script_header_etc_httpd').with(
             'target'   => '/usr/local/bin/rdiff_etc_httpd_run.sh',
             'content'   => "#!/bin/sh\n",
             'order'    => '01',
