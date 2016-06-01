@@ -233,6 +233,9 @@ The hour at which the cron job runs. Type String (as an Int value between 0-23),
 #####`cron_minute`
 The minute at which the cron job runs. Type String (as an Int value between 0-59) Default value: undef
 
+#####`cron_jitter`
+An optional value that will add a random jitter into the rdiff-backup commands. This can help avoid all machines sending their backups at the exact same time, even within the same cron_hour/minute and help reduce overall load, especially on virtualized systems sharing the same host. It is the maximum number of seconds of random wait before executing the command. Type Integer(non-zero, positive), Default: 1
+
 ######Example:
 ```
 rdiff_backup::rdiff_export {'myexport':
