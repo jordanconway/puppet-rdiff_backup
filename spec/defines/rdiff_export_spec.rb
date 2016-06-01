@@ -75,12 +75,12 @@ describe 'rdiff_backup::rdiff_export',:type => :define do
           ) }
 
           it { should contain_concat__fragment('backup_etc_httpd').with(
-            'content' => "rdiff-backup /etc/httpd rdiffbackup@backup.example.com::/srv/rdiff/test.example.com/etc_httpd\n\n",
+            'content' => "sleep $(( RANDOM %= 1 ))&&rdiff-backup /etc/httpd rdiffbackup@backup.example.com::/srv/rdiff/test.example.com/etc_httpd\n\n",
             'order'    => '10',
           ) }
 
           it { should contain_concat__fragment('retention_etc_httpd').with(
-            'content' => "rdiff-backup -v0 --force --remove-older-than 1Y2M3W4D5h6m7s rdiffbackup@backup.example.com::/srv/rdiff/test.example.com/etc_httpd\n\n",
+            'content' => "sleep $(( RANDOM %= 1 ))&&rdiff-backup -v0 --force --remove-older-than 1Y2M3W4D5h6m7s rdiffbackup@backup.example.com::/srv/rdiff/test.example.com/etc_httpd\n\n",
             'order'    => '15',
           ) }
 
@@ -93,7 +93,7 @@ describe 'rdiff_backup::rdiff_export',:type => :define do
             ) }
 
             expect { should contain_concat__fragment('retention_etc_httpd').with(
-              'content' => "rdiff-backup -v0 --force --remove-older-than 1Y2M3W4D5h6m7s /srv/rdiff/test.example.com/etc_httpd\n\n",
+              'content' => "sleep $(( RANDOM %= 1 ))&&rdiff-backup -v0 --force --remove-older-than 1Y2M3W4D5h6m7s /srv/rdiff/test.example.com/etc_httpd\n\n",
               'order'    => '15',
             ) }
           end
