@@ -5,6 +5,7 @@ define rdiff_backup::rdiff_export (
   $rdiff_retention = '1D',
   $cron_hour = '1',
   $cron_minute = '0',
+  $cron_jitter = '1',
   $rdiff_user = $::rdiff_backup::client::rdiff_user,
   $remote_path = $::rdiff_backup::client::remote_path,
   $rdiff_server = $::rdiff_backup::client::rdiff_server,
@@ -15,6 +16,7 @@ define rdiff_backup::rdiff_export (
   validate_re($rdiff_retention, '^(?:\d+[YMWDhms])+$')
   validate_re($cron_hour, '^[0-1]?[0-9]$|^[0-2]?[0-3]$')
   validate_re($cron_minute, '^[0-5]?[0-9]$')
+  validate_re($cron_jitter, '^\d+$')
   validate_re($rdiff_user, '^([a-z_][a-z0-9_]{0,30})$')
   validate_absolute_path($remote_path)
   validate_string($rdiff_server)
@@ -31,7 +33,7 @@ define rdiff_backup::rdiff_export (
     concat::fragment{ "backup_${cleanpath}":
       target  => $backup_script,
       #lint:ignore:80chars
-      content => "rdiff-backup ${path} ${remote_path}/${::fqdn}/${cleanpath}\n\n",
+      content => "sleep $(( RANDOM %= ${cron_jitter} ))&&rdiff-backup ${path} ${remote_path}/${::fqdn}/${cleanpath}\n\n",
       #lint:endignore
       order   => '10'
     }
@@ -39,7 +41,7 @@ define rdiff_backup::rdiff_export (
     concat::fragment{ "retention_${cleanpath}":
       target  => $backup_script,
       #lint:ignore:80chars
-      content => "rdiff-backup -v0 --force --remove-older-than ${rdiff_retention} ${remote_path}/${::fqdn}/${cleanpath}\n\n",
+      content => "sleep $(( RANDOM %= ${cron_jitter} ))&&rdiff-backup -v0 --force --remove-older-than ${rdiff_retention} ${remote_path}/${::fqdn}/${cleanpath}\n\n",
       #lint:endignore
       order   => '15'
     }
@@ -48,7 +50,7 @@ define rdiff_backup::rdiff_export (
     concat::fragment{ "backup_${cleanpath}":
       target  => $backup_script,
       #lint:ignore:80chars
-      content => "rdiff-backup ${path} ${rdiff_user}@${rdiff_server}::${remote_path}/${::fqdn}/${cleanpath}\n\n",
+      content => "sleep $(( RANDOM %= ${cron_jitter} ))&&rdiff-backup ${path} ${rdiff_user}@${rdiff_server}::${remote_path}/${::fqdn}/${cleanpath}\n\n",
       #lint:endignore
       order   => '10'
     }
@@ -56,7 +58,7 @@ define rdiff_backup::rdiff_export (
     concat::fragment{ "retention_${cleanpath}":
       target  => $backup_script,
       #lint:ignore:80chars
-      content => "rdiff-backup -v0 --force --remove-older-than ${rdiff_retention} ${rdiff_user}@${rdiff_server}::${remote_path}/${::fqdn}/${cleanpath}\n\n",
+      content => "sleep $(( RANDOM %= ${cron_jitter} ))&&rdiff-backup -v0 --force --remove-older-than ${rdiff_retention} ${rdiff_user}@${rdiff_server}::${remote_path}/${::fqdn}/${cleanpath}\n\n",
       #lint:endignore
       order   => '15'
     }
