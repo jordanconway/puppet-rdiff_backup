@@ -114,29 +114,7 @@ class profile::rdiff_backup::client {
 #rdiff_backup::server profile
 class profile::rdiff_backup::server {
   include ::rdiff_backup
-
-  selinux::module {'mysshd':
-    source => 'puppet:///modules/profile/rdiff_backup/selinux/mysshd.te',
-  }
-
 }
-```
-mysshd.te
-```
-module mysshd 1.0;
-
-require {
-  type sshd_t;
-  type var_lib_t;
-  class file read;
-  class file open;
-  class file getattr;
-}
-
-#============= sshd_t ==============
-allow sshd_t var_lib_t:file read;
-allow sshd_t var_lib_t:file open;
-allow sshd_t var_lib_t:file getattr;
 ```
 ### Example hiera
 common.yaml
