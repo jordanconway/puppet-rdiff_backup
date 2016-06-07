@@ -6,6 +6,8 @@ define rdiff_backup::rdiff_export (
   $cron_hour = '1',
   $cron_minute = '0',
   $cron_jitter = 1,
+  $include = undef,
+  $exclude = undef,
   $rdiff_user = $::rdiff_backup::client::rdiff_user,
   $remote_path = $::rdiff_backup::client::remote_path,
   $rdiff_server = $::rdiff_backup::client::rdiff_server,
@@ -27,13 +29,25 @@ define rdiff_backup::rdiff_export (
     $cleanpath = regsubst(regsubst($path, '\/', '_', 'G'),'_', '')
   }
 
+  if is_array($include) {
+    $_include = join(prefix($include, '--include '), ' ')
+  } else {
+    $_include = ''
+  }
+
+  if is_array($exclude) {
+    $_exclude = join(prefix($exclude, '--exclude '), ' ')
+  } else {
+    $_exclude = ''
+  }
+
   $backup_script = "/usr/local/bin/rdiff_${cleanpath}_run.sh"
 
   if ( $rdiff_server == $::fqdn){
     concat::fragment{ "backup_${cleanpath}":
       target  => $backup_script,
       #lint:ignore:80chars
-      content => "sleep $(( RANDOM %= ${cron_jitter} ))&&rdiff-backup --no-eas ${path} ${remote_path}/${::fqdn}/${cleanpath}\n\n",
+      content => "sleep $(( RANDOM %= ${cron_jitter} ))&&rdiff-backup --no-eas ${path} ${_include} ${_exclude} ${remote_path}/${::fqdn}/${cleanpath}\n\n",
       #lint:endignore
       order   => '10'
     }
@@ -50,7 +64,7 @@ define rdiff_backup::rdiff_export (
     concat::fragment{ "backup_${cleanpath}":
       target  => $backup_script,
       #lint:ignore:80chars
-      content => "sleep $(( RANDOM %= ${cron_jitter} ))&&rdiff-backup --no-eas ${path} ${rdiff_user}@${rdiff_server}::${remote_path}/${::fqdn}/${cleanpath}\n\n",
+      content => "sleep $(( RANDOM %= ${cron_jitter} ))&&rdiff-backup --no-eas ${path} ${_include} ${_exclude} ${rdiff_user}@${rdiff_server}::${remote_path}/${::fqdn}/${cleanpath}\n\n",
       #lint:endignore
       order   => '10'
     }
