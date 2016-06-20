@@ -1,3 +1,11 @@
+## 2016-06-20 - Version 0.2.1
+### Summary
+Adds the ability to add includes and excludes to rdiff_export type
+
+#### Features
+- Add include parameter for rdiff_export type
+- Add exclude parameter for rdiff_export type
+
 ## 2016-06-01 - Version 0.2.0
 ### Summary
 Split backup scripts into one per resource rather than one monolithic file per host, made cron hour and minute
