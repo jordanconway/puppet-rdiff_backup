@@ -40,7 +40,7 @@ define rdiff_backup::rdiff_export (
   if is_array($exclude) {
     $_exclude = join(prefix($exclude, '--exclude '), ' ')
   } elsif $exclude != undef and is_string($exclude){
-    $_exclude = "--include ${exclude} "
+    $_exclude = "--exclude ${exclude} "
   } else {
     $_exclude = ''
   }
