@@ -31,12 +31,16 @@ define rdiff_backup::rdiff_export (
 
   if is_array($include) {
     $_include = join(prefix($include, '--include '), ' ')
+  } elsif is_sting($include){
+    $_include = $include
   } else {
     $_include = ''
   }
 
   if is_array($exclude) {
     $_exclude = join(prefix($exclude, '--exclude '), ' ')
+  } elsif is_string($exclude){
+    $_exclude = $exclude
   } else {
     $_exclude = ''
   }
