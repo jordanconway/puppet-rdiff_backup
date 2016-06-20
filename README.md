@@ -208,10 +208,10 @@ The user that runs rdiffbackup on the server - this should not be changed. Type:
 The remote path on the rdiff server where backups will live - this should not be changed. Type String(absolute_path), Default value: $::rdiff_backup::client::remote_path
 
 #####`exclude`
-Array of file/directory paths to exclude from the backup path. Type Array, Default value: undef
+String of single or Array of multiple file/directory paths to exclude from the backup path. Type Array/String, Default value: undef
 
 #####`include`
-Array of file/directory paths to include with the backup path.. Similar to exclude but include matched files instead. Unlike exclude, this option will also match parent directories. Type Array, Default value: undef
+String of single or Array of multiple file/directory paths to include with the backup path.. Similar to exclude but include matched files instead. Unlike exclude, this option will also match parent directories. Type Array/String, Default value: undef
 
 #####`rdiff_server`
 The rdiff-backup server that the backup will be sent to - this should not be changed. Type String, Default value: $::rdiff_backup::client::rdiff_server
