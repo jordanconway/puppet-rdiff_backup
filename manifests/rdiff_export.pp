@@ -31,7 +31,7 @@ define rdiff_backup::rdiff_export (
 
   if is_array($include) {
     $_include = join(prefix($include, '--include '), ' ')
-  } elsif is_sting($include){
+  } elsif is_string($include){
     $_include = $include
   } else {
     $_include = ''
