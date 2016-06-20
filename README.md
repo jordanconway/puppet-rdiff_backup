@@ -132,10 +132,18 @@ client_x.yaml
 rdiff_backup::rdiff_exports:
   export3:
     path: '/etc/export3'
-    rdiff_retention: '2D'
+    exclude:
+      - '/etc/export3/test'
+      - '/etc/export3/tmp'
     cron_hour: '2'
+    rdiff_retention: '2D'
   export4:
     path: '/etc/export4'
+    exclude:
+      - '/etc/export3/test'
+    include:
+      - '/etc/export3/test/important_test
+      - '/etc/export3/test/jordanstest
     rdiff_retention: '5D'
     cron_hour: '3'
 ```
@@ -198,6 +206,12 @@ The user that runs rdiffbackup on the server - this should not be changed. Type:
 
 #####`remote_path`
 The remote path on the rdiff server where backups will live - this should not be changed. Type String(absolute_path), Default value: $::rdiff_backup::client::remote_path
+
+#####`exclude`
+String of single or Array of multiple file/directory paths to exclude from the backup path. Type Array/String, Default value: undef
+
+#####`include`
+String of single or Array of multiple file/directory paths to include with the backup path.. Similar to exclude but include matched files instead. Unlike exclude, this option will also match parent directories. Type Array/String, Default value: undef
 
 #####`rdiff_server`
 The rdiff-backup server that the backup will be sent to - this should not be changed. Type String, Default value: $::rdiff_backup::client::rdiff_server

@@ -75,7 +75,7 @@ describe 'rdiff_backup::rdiff_export',:type => :define do
           ) }
 
           it { should contain_concat__fragment('backup_etc_httpd').with(
-            'content' => "sleep $(( RANDOM %= 1 ))&&rdiff-backup /etc/httpd rdiffbackup@backup.example.com::/srv/rdiff/test.example.com/etc_httpd\n\n",
+            'content' => "sleep $(( RANDOM %= 1 ))&&rdiff-backup --no-eas   /etc/httpd rdiffbackup@backup.example.com::/srv/rdiff/test.example.com/etc_httpd\n\n",
             'order'    => '10',
           ) }
 
@@ -84,11 +84,38 @@ describe 'rdiff_backup::rdiff_export',:type => :define do
             'order'    => '15',
           ) }
 
+          it 'with includes and excludes as strings' do
+            params.merge!({'exclude' => '/etc/httpd/not_this', 'include' => '/etc/httpd/not_this/but_this'})
+
+            expect { should contain_concat__fragment('backup_etc_httpd').with(
+              'content' => "rdiff-backup --no-eas  --include /etc/httpd/not_this/but_this --exclude /etc/httpd/not_this /etc/httpd /srv/rdiff/test.example.com/etc_httpd\n\n",
+              'order'    => '10',
+            ) }
+          end
+
+          it 'with includes and excludes as arrays' do
+            params.merge!({'exclude' => ['/etc/httpd/not_this'], 'include' => ['/etc/httpd/not_this/but_this']})
+
+            expect { should contain_concat__fragment('backup_etc_httpd').with(
+              'content' => "rdiff-backup --no-eas  --include /etc/httpd/not_this/but_this --exclude /etc/httpd/not_this /etc/httpd /srv/rdiff/test.example.com/etc_httpd\n\n",
+              'order'    => '10',
+            ) }
+          end
+
+          it 'with includes and excludes as multi-element arrays' do
+            params.merge!({'exclude' => ['/etc/httpd/not_this','/etc/httpd/not_this_either'], 'include' => ['/etc/httpd/not_this/but_this','/etc/httpd/not_this_either/but_this']})
+
+            expect { should contain_concat__fragment('backup_etc_httpd').with(
+              'content' => "rdiff-backup --no-eas  --include /etc/httpd/not_this/but_this /etc/httpd/not_this_either/but_this --exclude /etc/httpd/not_this /not_this_either /etc/httpd /srv/rdiff/test.example.com/etc_httpd\n\n",
+              'order'    => '10',
+            ) }
+          end
+
           it 'with $rdiff_server == $::fqdn' do
             params.merge!({'rdiff_server' => 'test.example.com'})
 
             expect { should contain_concat__fragment('backup_etc_httpd').with(
-              'content' => "rdiff-backup /etc/httpd /srv/rdiff/test.example.com/etc_httpd\n\n",
+              'content' => "rdiff-backup --no-eas   /etc/httpd /srv/rdiff/test.example.com/etc_httpd\n\n",
               'order'    => '10',
             ) }
 
