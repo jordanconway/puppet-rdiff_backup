@@ -47,7 +47,7 @@ define rdiff_backup::rdiff_export (
     concat::fragment{ "backup_${cleanpath}":
       target  => $backup_script,
       #lint:ignore:80chars
-      content => "sleep $(( RANDOM %= ${cron_jitter} ))&&rdiff-backup --no-eas ${path} ${_include} ${_exclude} ${remote_path}/${::fqdn}/${cleanpath}\n\n",
+      content => "sleep $(( RANDOM %= ${cron_jitter} ))&&rdiff-backup --no-eas ${_include} ${_exclude} ${path} ${remote_path}/${::fqdn}/${cleanpath}\n\n",
       #lint:endignore
       order   => '10'
     }
@@ -64,7 +64,7 @@ define rdiff_backup::rdiff_export (
     concat::fragment{ "backup_${cleanpath}":
       target  => $backup_script,
       #lint:ignore:80chars
-      content => "sleep $(( RANDOM %= ${cron_jitter} ))&&rdiff-backup --no-eas ${path} ${_include} ${_exclude} ${rdiff_user}@${rdiff_server}::${remote_path}/${::fqdn}/${cleanpath}\n\n",
+      content => "sleep $(( RANDOM %= ${cron_jitter} ))&&rdiff-backup --no-eas ${_include} ${_exclude} ${path} ${rdiff_user}@${rdiff_server}::${remote_path}/${::fqdn}/${cleanpath}\n\n",
       #lint:endignore
       order   => '10'
     }
