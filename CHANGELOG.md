@@ -1,3 +1,13 @@
+## 2016-06-22 - Version 0.2.2
+### Summary
+Changes to the backup scripts for safety and versatility.
+
+#### Features
+- Backup script now pidified and locked.
+- Cleanup job will not run unless backup was successful.
+- No redundant sleep before cleanup job.
+- Backup script can be manually run with --now to avoid cron jitter wait.
+
 ## 2016-06-20 - Version 0.2.1
 ### Summary
 Adds the ability to add includes and excludes to rdiff_export type
