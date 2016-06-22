@@ -48,53 +48,22 @@ define rdiff_backup::rdiff_export (
   $backup_script = "/usr/local/bin/rdiff_${cleanpath}_run.sh"
 
   if ( $rdiff_server == $::fqdn){
-    concat::fragment{ "backup_${cleanpath}":
-      target  => $backup_script,
-      #lint:ignore:80chars
-      content => "sleep $(( RANDOM %= ${cron_jitter} ))&&rdiff-backup --no-eas ${_include} ${_exclude} ${path} ${remote_path}/${::fqdn}/${cleanpath}\n\n",
-      #lint:endignore
-      order   => '10'
-    }
-
-    concat::fragment{ "retention_${cleanpath}":
-      target  => $backup_script,
-      #lint:ignore:80chars
-      content => "sleep $(( RANDOM %= ${cron_jitter} ))&&rdiff-backup -v0 --force --remove-older-than ${rdiff_retention} ${remote_path}/${::fqdn}/${cleanpath}\n\n",
-      #lint:endignore
-      order   => '15'
+    file { $backup_script:
+      ensure  => $ensure,
+      owner   => 'root',
+      mode    => '0700',
+      content => template('rabbitmq/backup_script_server.erb'),
+      tag     => $rdiffbackuptag,
     }
   }
   else {
-    concat::fragment{ "backup_${cleanpath}":
-      target  => $backup_script,
-      #lint:ignore:80chars
-      content => "sleep $(( RANDOM %= ${cron_jitter} ))&&rdiff-backup --no-eas ${_include} ${_exclude} ${path} ${rdiff_user}@${rdiff_server}::${remote_path}/${::fqdn}/${cleanpath}\n\n",
-      #lint:endignore
-      order   => '10'
+    file { $backup_script:
+      ensure  => $ensure,
+      owner   => 'root',
+      mode    => '0700',
+      content => template('rabbitmq/backup_script_server.erb'),
+      tag     => $rdiffbackuptag,
     }
-
-    concat::fragment{ "retention_${cleanpath}":
-      target  => $backup_script,
-      #lint:ignore:80chars
-      content => "sleep $(( RANDOM %= ${cron_jitter} ))&&rdiff-backup -v0 --force --remove-older-than ${rdiff_retention} ${rdiff_user}@${rdiff_server}::${remote_path}/${::fqdn}/${cleanpath}\n\n",
-      #lint:endignore
-      order   => '15'
-    }
-  }
-
-  concat { $backup_script:
-    ensure => $ensure,
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0700',
-    tag    => $rdiffbackuptag,
-  }
-
-  concat::fragment{ "backup_script_header_${cleanpath}":
-    target  => $backup_script,
-    content => "#!/bin/sh\n",
-    order   => '01',
-    tag     => $rdiffbackuptag,
   }
 
   cron{ "${::fqdn}_${cleanpath}":
