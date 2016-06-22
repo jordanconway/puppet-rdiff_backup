@@ -52,7 +52,7 @@ define rdiff_backup::rdiff_export (
       ensure  => $ensure,
       owner   => 'root',
       mode    => '0700',
-      content => template('rabbitmq/backup_script_server.erb'),
+      content => template('rdiff_backup/backup_script_server.erb'),
       tag     => $rdiffbackuptag,
     }
   }
@@ -61,7 +61,7 @@ define rdiff_backup::rdiff_export (
       ensure  => $ensure,
       owner   => 'root',
       mode    => '0700',
-      content => template('rabbitmq/backup_script_server.erb'),
+      content => template('rdiff_backup/backup_script_server.erb'),
       tag     => $rdiffbackuptag,
     }
   }
