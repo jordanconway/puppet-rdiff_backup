@@ -5,7 +5,7 @@
         sleep $(( RANDOM %= <%= @cron_jitter %> ))
     fi
     rdiff-backup --no-eas <%= @_include %> <%= @_exclude %> <%= @path %> <%= @remote_path %>/<%= @fqdn %>/<%= @cleanpath %>
-    if [ $? == '0' ]; then        
+    if [ $? == '0' ]; then
         rdiff-backup -v0 --force --remove-older-than <%= @rdiff_retention %> <%= @remote_path %>/<%= @fqdn %>/<%= @cleanpath %>
     fi
 ) 200>/var/lock/rdiff_etc_run.lock
