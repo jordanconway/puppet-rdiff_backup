@@ -1,3 +1,7 @@
+## 2016-06-23 - Version 0.2.4
+### Summary
+Added tests.
+
 ## 2016-06-23 - Version 0.2.3
 ### Summary
 Bugfixes.
