@@ -1,3 +1,11 @@
+## 2016-06-23 - Version 0.2.3
+### Summary
+Bugfixes.
+
+#### Fixes
+- Defining '/' as a path will no longer result in broken paths/titles.
+- Defining '*' as an include or exclude will no longer break backup scripts as it is quoted.
+
 ## 2016-06-22 - Version 0.2.2
 ### Summary
 Changes to the backup scripts for safety and versatility.
