@@ -1,6 +1,6 @@
 require 'spec_helper'
 describe 'rdiff_backup::rdiff_export',:type => :define do
-  let(:title) { 'Test me' }
+  let(:title) { 'test_me' }
   on_supported_os.each do |os, facts|
     context "on #{os}" do
       let(:facts) do
@@ -61,7 +61,7 @@ describe 'rdiff_backup::rdiff_export',:type => :define do
                 /does not match/)
           end
 
-          it { should contain_file('/usr/local/bin/rdiff_etc_httpd_run.sh').with(
+          it { should contain_file('/usr/local/bin/rdiff_test_me_run.sh').with(
             'owner'   => 'root',
             'mode'    => '0700',
             'content' => '#!/bin/bash
@@ -70,9 +70,9 @@ describe 'rdiff_backup::rdiff_export',:type => :define do
     if [ "$1" != "--now" ]; then
         sleep $(( RANDOM %= 1 ))
     fi
-    rdiff-backup --no-eas   /etc/httpd rdiffbackup@backup.example.com::/srv/rdiff/test.example.com/etc_httpd
+    rdiff-backup --no-eas   /etc/httpd rdiffbackup@backup.example.com::/srv/rdiff/test.example.com/test_me
     if [ $? == \'0\' ]; then
-        rdiff-backup -v0 --force --remove-older-than 1Y2M3W4D5h6m7s rdiffbackup@backup.example.com::/srv/rdiff/test.example.com/etc_httpd
+        rdiff-backup -v0 --force --remove-older-than 1Y2M3W4D5h6m7s rdiffbackup@backup.example.com::/srv/rdiff/test.example.com/test_me
     fi
 ) 200>/var/lock/rdiff_etc_run.lock
 ',
@@ -82,7 +82,7 @@ describe 'rdiff_backup::rdiff_export',:type => :define do
           it 'with includes and excludes as strings' do
             params.merge!({'exclude' => '/etc/httpd/not_this', 'include' => '/etc/httpd/not_this/but_this'})
 
-          expect { should contain_file('/usr/local/bin/rdiff_etc_httpd_run.sh').with(
+          expect { should contain_file('/usr/local/bin/rdiff_test_me_run.sh').with(
             'owner'   => 'root',
             'group'   => 'root',
             'mode'    => '0700',
@@ -92,9 +92,9 @@ describe 'rdiff_backup::rdiff_export',:type => :define do
     if [ "$1" != "--now" ]; then
         sleep $(( RANDOM %= 1 ))
     fi
-    rdiff-backup --no-eas --include /etc/httpd/not_this/but_this --exclude /etc/httpd/not_this  /etc/httpd rdiffbackup@backup.example.com::/srv/rdiff/test.example.com/etc_httpd
+    rdiff-backup --no-eas --include \'/etc/httpd/not_this/but_this\' --exclude \'/etc/httpd/not_this\'  /etc/httpd rdiffbackup@backup.example.com::/srv/rdiff/test.example.com/test_me
     if [ $? == \'0\' ]; then
-        rdiff-backup -v0 --force --remove-older-than 1Y2M3W4D5h6m7s rdiffbackup@backup.example.com::/srv/rdiff/test.example.com/etc_httpd
+        rdiff-backup -v0 --force --remove-older-than 1Y2M3W4D5h6m7s rdiffbackup@backup.example.com::/srv/rdiff/test.example.com/test_me
     fi
 ) 200>/var/lock/rdiff_etc_run.lock
 ',)}
@@ -102,7 +102,7 @@ describe 'rdiff_backup::rdiff_export',:type => :define do
           it 'with includes and excludes as arrays' do
             params.merge!({'exclude' => ['/etc/httpd/not_this'], 'include' => ['/etc/httpd/not_this/but_this']})
 
-          expect { should contain_file('/usr/local/bin/rdiff_etc_httpd_run.sh').with(
+          expect { should contain_file('/usr/local/bin/rdiff_test_me_run.sh').with(
             'owner'   => 'root',
             'group'   => 'root',
             'mode'    => '0700',
@@ -112,9 +112,9 @@ describe 'rdiff_backup::rdiff_export',:type => :define do
     if [ "$1" != "--now" ]; then
         sleep $(( RANDOM %= 14 ))
     fi
-    rdiff-backup --no-eas --include /etc/httpd/not_this/but_this --exclude /etc/httpd/not_this  /etc/httpd rdiffbackup@backup.example.com::/srv/rdiff/test.example.com/etc_httpd
+    rdiff-backup --no-eas --include \'/etc/httpd/not_this/but_this\' --exclude \'/etc/httpd/not_this\'  /etc/httpd rdiffbackup@backup.example.com::/srv/rdiff/test.example.com/test_me
     if [ $? == \'0\' ]; then
-        rdiff-backup -v0 --force --remove-older-than 1Y2M3W4D5h6m7s rdiffbackup@backup.example.com::/srv/rdiff/test.example.com/etc_httpd
+        rdiff-backup -v0 --force --remove-older-than 1Y2M3W4D5h6m7s rdiffbackup@backup.example.com::/srv/rdiff/test.example.com/test_me
     fi
 ) 200>/var/lock/rdiff_etc_run.lock
 ',)}
@@ -122,7 +122,7 @@ describe 'rdiff_backup::rdiff_export',:type => :define do
           it 'with includes and excludes as multi-element arrays' do
             params.merge!({'exclude' => ['/etc/httpd/not_this','/etc/httpd/not_this_either'], 'include' => ['/etc/httpd/not_this/but_this','/etc/httpd/not_this_either/but_this']})
 
-          expect { should contain_file('/usr/local/bin/rdiff_etc_httpd_run.sh').with(
+          expect { should contain_file('/usr/local/bin/rdiff_test_me_run.sh').with(
             'owner'   => 'root',
             'group'   => 'root',
             'mode'    => '0700',
@@ -132,16 +132,16 @@ describe 'rdiff_backup::rdiff_export',:type => :define do
     if [ "$1" != "--now" ]; then
         sleep $(( RANDOM %= 14 ))
     fi
-    rdiff-backup --no-eas --include /etc/httpd/not_this/but_this /etc/httpd/not_this_either/but_this --exclude /etc/httpd/not_this /not_this_either /etc/httpd /srv/rdiff/test.example.com/etc_httpd
+    rdiff-backup --no-eas --include \'/etc/httpd/not_this/but_this\' \'/etc/httpd/not_this_either/but_this\' --exclude \'/etc/httpd/not_this\' \'/not_this_either\' /etc/httpd /srv/rdiff/test.example.com/test_me
     if [ $? == \'0\' ]; then
-        rdiff-backup -v0 --force --remove-older-than 1Y2M3W4D5h6m7s /srv/rdiff/test.example.com/etc_httpd
+        rdiff-backup -v0 --force --remove-older-than 1Y2M3W4D5h6m7s /srv/rdiff/test.example.com/test_me
     fi
 ) 200>/var/lock/rdiff_etc_run.lock
 ',)}
           end
           it  'with $rdiff_server == $::fqdn' do
             params.merge!({'rdiff_server' => 'test.example.com'})
-          expect { should contain_file('/usr/local/bin/rdiff_etc_httpd_run.sh').with(
+          expect { should contain_file('/usr/local/bin/rdiff_test_me_run.sh').with(
             'owner'   => 'root',
             'group'   => 'root',
             'mode'    => '0700',
@@ -151,17 +151,17 @@ describe 'rdiff_backup::rdiff_export',:type => :define do
     if [ "$1" != "--now" ]; then
         sleep $(( RANDOM %= 1 ))
     fi
-    rdiff-backup --no-eas   /etc/httpd /srv/rdiff/test.example.com/etc_httpd
+    rdiff-backup --no-eas   /etc/httpd /srv/rdiff/test.example.com/test_me
     if [ $? == \'0\' ]; then
-        rdiff-backup -v0 --force --remove-older-than 1Y2M3W4D5h6m7s /srv/rdiff/test.example.com/etc_httpd
+        rdiff-backup -v0 --force --remove-older-than 1Y2M3W4D5h6m7s /srv/rdiff/test.example.com/test_me
     fi
 ) 200>/var/lock/rdiff_etc_run.lock
 ',
             'tag'     => 'rdiffbackuptag',
           ) }
           end
-          it { should contain_cron('test.example.com_etc_httpd').with(
-            'command' => '/usr/local/bin/rdiff_etc_httpd_run.sh',
+          it { should contain_cron('test.example.com_test_me').with(
+            'command' => '/usr/local/bin/rdiff_test_me_run.sh',
             'user'    => 'root',
             'hour'    => '2',
             'minute'  => '15',
