@@ -26,7 +26,7 @@ define rdiff_backup::rdiff_export (
   include ::rdiff_backup::client
 
   if is_array($include) {
-    $_include = join(prefix($include, '--include '), ' ')
+    $_include = join(suffux(prefix($include, '--include \''), '\''), ' ')
   } elsif $include != undef and is_string($include){
     $_include = "--include \'${include}\'"
   } else {
@@ -34,7 +34,7 @@ define rdiff_backup::rdiff_export (
   }
 
   if is_array($exclude) {
-    $_exclude = join(prefix($exclude, '--exclude '), ' ')
+    $_exclude = join(suffix(prefix($exclude, '--exclude \''), '\''), ' ')
   } elsif $exclude != undef and is_string($exclude){
     $_exclude = "--exclude \'${exclude}\'"
   } else {
