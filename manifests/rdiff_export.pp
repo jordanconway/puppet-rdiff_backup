@@ -25,27 +25,23 @@ define rdiff_backup::rdiff_export (
   validate_string($rdiffbackuptag)
   include ::rdiff_backup::client
 
-  if ($path) {
-    $cleanpath = regsubst(regsubst($path, '\/', '_', 'G'),'_', '')
-  }
-
   if is_array($include) {
-    $_include = join(prefix($include, '--include '), ' ')
+    $_include = join(suffix(prefix($include, '--include \''), '\''), ' ')
   } elsif $include != undef and is_string($include){
-    $_include = "--include ${include}"
+    $_include = "--include \'${include}\'"
   } else {
     $_include = ''
   }
 
   if is_array($exclude) {
-    $_exclude = join(prefix($exclude, '--exclude '), ' ')
+    $_exclude = join(suffix(prefix($exclude, '--exclude \''), '\''), ' ')
   } elsif $exclude != undef and is_string($exclude){
-    $_exclude = "--exclude ${exclude}"
+    $_exclude = "--exclude \'${exclude}\'"
   } else {
     $_exclude = ''
   }
 
-  $backup_script = "/usr/local/bin/rdiff_${cleanpath}_run.sh"
+  $backup_script = "/usr/local/bin/rdiff_${title}_run.sh"
 
   if ( $rdiff_server == $::fqdn){
     file { $backup_script:
@@ -66,7 +62,7 @@ define rdiff_backup::rdiff_export (
     }
   }
 
-  cron{ "${::fqdn}_${cleanpath}":
+  cron{ "${::fqdn}_${title}":
     ensure  => $ensure,
     command => $backup_script,
     user    => root,
