@@ -207,6 +207,15 @@ The user that runs rdiffbackup on the server - this should not be changed. Type:
 #####`remote_path`
 The remote path on the rdiff server where backups will live - this should not be changed. Type String(absolute_path), Default value: $::rdiff_backup::client::remote_path
 
+#####`excludespecialfiles`
+Option to add/remove --exclude-special-files to not include special files (all device files, fifo files, socket files, and symbolic links). Type Boolean, Default value: true
+
+#####`includesymboliclinks`
+Option to add/remove --include-symbolic-links to backup symlinks, use with excludespecialfiles to maintain symlinks. Type Boolean, Default value: true
+
+#####`noeas`
+Option to add/remove --no-eas to disable backup of Extended Atributes. Type Boolean, Default value: true
+
 #####`exclude`
 String of single or Array of multiple file/directory paths to exclude from the backup path. Type Array/String, Default value: undef
 
