@@ -7,4 +7,3 @@ gem 'puppet-lint', '>= 1.0.0'
 gem 'facter', '>= 1.7.0'
 gem 'rspec-puppet-facts', :require => false
 gem 'metadata-json-lint'
-gem 'puppet-syntax', git: 'https://github.com/gds-operations/puppet-syntax.git'
