@@ -1,3 +1,11 @@
+## 2016-06-28 - Version 0.3.0
+### Summary
+Added includesymboliclinks excludespecialfiles and made them default true and tunable along with noeas.
+#### Features
+- New rdiff_export param: excludespecialfiles
+- New rdiff_export param: includesymboliclinks
+- New rdiff_export param: noeas
+
 ## 2016-06-23 - Version 0.2.4
 ### Summary
 Added tests.
