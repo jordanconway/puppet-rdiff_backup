@@ -112,7 +112,7 @@ describe 'rdiff_backup::rdiff_export',:type => :define do
     if [ "$1" != "--now" ]; then
         sleep $(( RANDOM %= 1 ))
     fi
-    rdiff-backup  BREAKSOMECHECKS  /etc/httpd rdiffbackup@backup.example.com::/srv/rdiff/test.example.com/test_me
+    rdiff-backup    /etc/httpd rdiffbackup@backup.example.com::/srv/rdiff/test.example.com/test_me
     if [ $? == \'0\' ]; then
         rdiff-backup -v0 --force --remove-older-than 1Y2M3W4D5h6m7s rdiffbackup@backup.example.com::/srv/rdiff/test.example.com/test_me
     fi
