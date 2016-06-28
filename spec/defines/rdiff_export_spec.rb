@@ -70,7 +70,7 @@ describe 'rdiff_backup::rdiff_export',:type => :define do
     if [ "$1" != "--now" ]; then
         sleep $(( RANDOM %= 1 ))
     fi
-    rdiff-backup --no-eas   /etc/httpd rdiffbackup@backup.example.com::/srv/rdiff/test.example.com/test_me
+    rdiff-backup --no-eas --exclude-special-files --include-symbolic-links   /etc/httpd rdiffbackup@backup.example.com::/srv/rdiff/test.example.com/test_me
     if [ $? == \'0\' ]; then
         rdiff-backup -v0 --force --remove-older-than 1Y2M3W4D5h6m7s rdiffbackup@backup.example.com::/srv/rdiff/test.example.com/test_me
     fi
@@ -92,7 +92,27 @@ describe 'rdiff_backup::rdiff_export',:type => :define do
     if [ "$1" != "--now" ]; then
         sleep $(( RANDOM %= 1 ))
     fi
-    rdiff-backup --no-eas --include \'/etc/httpd/not_this/but_this\' --exclude \'/etc/httpd/not_this\'  /etc/httpd rdiffbackup@backup.example.com::/srv/rdiff/test.example.com/test_me
+    rdiff-backup --no-eas --exclude-special-files --include-symbolic-links  --include \'/etc/httpd/not_this/but_this\' --exclude \'/etc/httpd/not_this\'  /etc/httpd rdiffbackup@backup.example.com::/srv/rdiff/test.example.com/test_me
+    if [ $? == \'0\' ]; then
+        rdiff-backup -v0 --force --remove-older-than 1Y2M3W4D5h6m7s rdiffbackup@backup.example.com::/srv/rdiff/test.example.com/test_me
+    fi
+) 200>/var/lock/rdiff_etc_run.lock
+',)}
+          end
+          it 'with noeas, excludespecialfiles and includesymboliclinks as false' do
+            params.merge!({'noeas' => false, 'excludespecialfiles' => false, 'includesymboliclinks' => false})
+
+          expect { should contain_file('/usr/local/bin/rdiff_test_me_run.sh').with(
+            'owner'   => 'root',
+            'group'   => 'root',
+            'mode'    => '0700',
+            'content' => '#!/bin/bash
+(
+    flock -x -n 200 || exit 0
+    if [ "$1" != "--now" ]; then
+        sleep $(( RANDOM %= 1 ))
+    fi
+    rdiff-backup    /etc/httpd rdiffbackup@backup.example.com::/srv/rdiff/test.example.com/test_me
     if [ $? == \'0\' ]; then
         rdiff-backup -v0 --force --remove-older-than 1Y2M3W4D5h6m7s rdiffbackup@backup.example.com::/srv/rdiff/test.example.com/test_me
     fi
@@ -112,7 +132,7 @@ describe 'rdiff_backup::rdiff_export',:type => :define do
     if [ "$1" != "--now" ]; then
         sleep $(( RANDOM %= 14 ))
     fi
-    rdiff-backup --no-eas --include \'/etc/httpd/not_this/but_this\' --exclude \'/etc/httpd/not_this\'  /etc/httpd rdiffbackup@backup.example.com::/srv/rdiff/test.example.com/test_me
+    rdiff-backup --no-eas --exclude-special-files --include-symbolic-links  --include \'/etc/httpd/not_this/but_this\' --exclude \'/etc/httpd/not_this\'  /etc/httpd rdiffbackup@backup.example.com::/srv/rdiff/test.example.com/test_me
     if [ $? == \'0\' ]; then
         rdiff-backup -v0 --force --remove-older-than 1Y2M3W4D5h6m7s rdiffbackup@backup.example.com::/srv/rdiff/test.example.com/test_me
     fi
@@ -132,7 +152,7 @@ describe 'rdiff_backup::rdiff_export',:type => :define do
     if [ "$1" != "--now" ]; then
         sleep $(( RANDOM %= 14 ))
     fi
-    rdiff-backup --no-eas --include \'/etc/httpd/not_this/but_this\' \'/etc/httpd/not_this_either/but_this\' --exclude \'/etc/httpd/not_this\' \'/not_this_either\' /etc/httpd /srv/rdiff/test.example.com/test_me
+    rdiff-backup --no-eas --exclude-special-files --include-symbolic-links  --include \'/etc/httpd/not_this/but_this\' \'/etc/httpd/not_this_either/but_this\' --exclude \'/etc/httpd/not_this\' \'/not_this_either\' /etc/httpd /srv/rdiff/test.example.com/test_me
     if [ $? == \'0\' ]; then
         rdiff-backup -v0 --force --remove-older-than 1Y2M3W4D5h6m7s /srv/rdiff/test.example.com/test_me
     fi
@@ -151,7 +171,7 @@ describe 'rdiff_backup::rdiff_export',:type => :define do
     if [ "$1" != "--now" ]; then
         sleep $(( RANDOM %= 1 ))
     fi
-    rdiff-backup --no-eas   /etc/httpd /srv/rdiff/test.example.com/test_me
+    rdiff-backup --no-eas --exclude-special-files --include-symbolic-links   /etc/httpd /srv/rdiff/test.example.com/test_me
     if [ $? == \'0\' ]; then
         rdiff-backup -v0 --force --remove-older-than 1Y2M3W4D5h6m7s /srv/rdiff/test.example.com/test_me
     fi
