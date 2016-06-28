@@ -1,3 +1,8 @@
+---
+language: ruby
+
+script: 'exec rake validate && bundle exec rake lint && SPEC_OPTS="--format documentation" bundle exec rake spec'
+
 matrix:
   fast_finish: true
   include:
