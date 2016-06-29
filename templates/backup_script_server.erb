@@ -8,4 +8,4 @@
     if [ $? == '0' ]; then
         rdiff-backup -v0 --force --remove-older-than <%= @rdiff_retention %> <%= @remote_path %>/<%= @fqdn %>/<%= @title %>
     fi
-) 200>/var/lock/rdiff_etc_run.lock
+    ) 200>/var/lock/rdiff_<%= @title %>_run.lock
