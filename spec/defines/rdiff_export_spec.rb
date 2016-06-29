@@ -74,7 +74,7 @@ describe 'rdiff_backup::rdiff_export',:type => :define do
     if [ $? == \'0\' ]; then
         rdiff-backup -v0 --force --remove-older-than 1Y2M3W4D5h6m7s rdiffbackup@backup.example.com::/srv/rdiff/test.example.com/test_me
     fi
-) 200>/var/lock/rdiff_etc_run.lock
+) 200>/var/lock/rdiff_test_me_run.lock
 ',
             'tag'     => 'rdiffbackuptag',
           ) }
@@ -96,7 +96,7 @@ describe 'rdiff_backup::rdiff_export',:type => :define do
     if [ $? == \'0\' ]; then
         rdiff-backup -v0 --force --remove-older-than 1Y2M3W4D5h6m7s rdiffbackup@backup.example.com::/srv/rdiff/test.example.com/test_me
     fi
-) 200>/var/lock/rdiff_etc_run.lock
+) 200>/var/lock/rdiff_test_me_run.lock
 ',)}
           end
           it 'with noeas, excludespecialfiles and includesymboliclinks as false' do
@@ -116,7 +116,7 @@ describe 'rdiff_backup::rdiff_export',:type => :define do
     if [ $? == \'0\' ]; then
         rdiff-backup -v0 --force --remove-older-than 1Y2M3W4D5h6m7s rdiffbackup@backup.example.com::/srv/rdiff/test.example.com/test_me
     fi
-) 200>/var/lock/rdiff_etc_run.lock
+) 200>/var/lock/rdiff_test_me_run.lock
 ',)}
           end
           it 'with includes and excludes as arrays' do
@@ -136,7 +136,7 @@ describe 'rdiff_backup::rdiff_export',:type => :define do
     if [ $? == \'0\' ]; then
         rdiff-backup -v0 --force --remove-older-than 1Y2M3W4D5h6m7s rdiffbackup@backup.example.com::/srv/rdiff/test.example.com/test_me
     fi
-) 200>/var/lock/rdiff_etc_run.lock
+) 200>/var/lock/rdiff_test_me_run.lock
 ',)}
           end
           it 'with includes and excludes as multi-element arrays' do
@@ -156,7 +156,7 @@ describe 'rdiff_backup::rdiff_export',:type => :define do
     if [ $? == \'0\' ]; then
         rdiff-backup -v0 --force --remove-older-than 1Y2M3W4D5h6m7s /srv/rdiff/test.example.com/test_me
     fi
-) 200>/var/lock/rdiff_etc_run.lock
+) 200>/var/lock/rdiff_test_me_run.lock
 ',)}
           end
           it  'with $rdiff_server == $::fqdn' do
@@ -175,7 +175,7 @@ describe 'rdiff_backup::rdiff_export',:type => :define do
     if [ $? == \'0\' ]; then
         rdiff-backup -v0 --force --remove-older-than 1Y2M3W4D5h6m7s /srv/rdiff/test.example.com/test_me
     fi
-) 200>/var/lock/rdiff_etc_run.lock
+) 200>/var/lock/rdiff_test_me_run.lock
 ',
             'tag'     => 'rdiffbackuptag',
           ) }
