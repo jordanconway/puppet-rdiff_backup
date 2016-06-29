@@ -1,3 +1,11 @@
+## 2016-06-29 - Version 0.3.1
+### Summary
+Bigfixes.
+#### Fixes
+- Made lockfile names unique.
+- Fixed issue with order of rdiff-backup parameters
+- Fixed some travis ci issues.
+
 ## 2016-06-28 - Version 0.3.0
 ### Summary
 Added includesymboliclinks excludespecialfiles and made them default true and tunable along with noeas.
