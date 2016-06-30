@@ -1,3 +1,9 @@
+## 2016-06-30 - Version 0.3.2
+### Summary
+Added pre_exclude parameter for forcing excludes before includes/excludes
+#### Features
+- New rdiff_export param: pre_exclude
+
 ## 2016-06-29 - Version 0.3.1
 ### Summary
 Bigfixes.
