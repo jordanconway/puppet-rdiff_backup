@@ -4,7 +4,7 @@
     if [ "$1" != "--now" ]; then
         sleep $(( RANDOM %= <%= @cron_jitter %> ))
     fi
-    rdiff-backup <%= @_noeas %> <%= @_includesymboliclinks %> <%= @_excludespecialfiles %> <%= @_include %> <%= @_exclude %> <%= @path %> <%= @rdiff_user %>@<%= @rdiff_server %>::<%= @remote_path %>/<%= @fqdn %>/<%= @title %>
+    rdiff-backup <%= @_noeas %> <%= @_includesymboliclinks %> <%= @_excludespecialfiles %> <%= @_pre_exclude %> <%= @_include %> <%= @_exclude %> <%= @path %> <%= @rdiff_user %>@<%= @rdiff_server %>::<%= @remote_path %>/<%= @fqdn %>/<%= @title %>
     if [ $? == '0' ]; then
         rdiff-backup -v0 --force --remove-older-than <%= @rdiff_retention %> <%= @rdiff_user %>@<%= @rdiff_server %>::<%= @remote_path %>/<%= @fqdn %>/<%= @title %>
     fi
