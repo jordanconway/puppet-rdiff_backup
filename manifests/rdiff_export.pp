@@ -6,6 +6,7 @@ define rdiff_backup::rdiff_export (
   $cron_hour = '1',
   $cron_minute = '0',
   $cron_jitter = 1,
+  $pre_exclude = undef,
   $include = undef,
   $exclude = undef,
   $rdiff_user = $::rdiff_backup::client::rdiff_user,
@@ -30,6 +31,14 @@ define rdiff_backup::rdiff_export (
   validate_bool($excludespecialfiles)
   validate_bool($noeas)
   include ::rdiff_backup::client
+
+  if is_array($pre_exclude) {
+    $_pre_exclude = join(suffix(prefix($pre_exclude, '--exclude \''), '\''), ' ')
+  } elsif $pre_exclude != undef and is_string($pre_exclude){
+    $_pre_exclude = "--exclude \'${pre_exclude}\'"
+  } else {
+    $_pre_exclude = ''
+  }
 
   if is_array($include) {
     $_include = join(suffix(prefix($include, '--include \''), '\''), ' ')

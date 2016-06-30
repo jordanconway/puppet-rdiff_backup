@@ -216,6 +216,9 @@ Option to add/remove --include-symbolic-links to backup symlinks, use with exclu
 #####`noeas`
 Option to add/remove --no-eas to disable backup of Extended Atributes. Type Boolean, Default value: true
 
+#####`pre_exclude`
+String of single or Array of multiple file/directory paths to exclude from the backup path explicitly ordered before other includes/excludes.. Type Array/String, Default value: undef
+
 #####`exclude`
 String of single or Array of multiple file/directory paths to exclude from the backup path. Type Array/String, Default value: undef
 
