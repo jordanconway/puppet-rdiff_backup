@@ -220,10 +220,10 @@ Option to add/remove --no-eas to disable backup of Extended Atributes. Type Bool
 String of single or Array of multiple file/directory paths to exclude from the backup path explicitly ordered before other includes/excludes.. Type Array/String, Default value: undef
 
 #####`exclude`
-String of single or Array of multiple file/directory paths to exclude from the backup path. Type Array/String, Default value: undef
+String of single or Array of multiple file/directory paths to exclude from the backup path Can be single files/directories, globs or absolute paths.. Type Array/String, Default value: undef
 
 #####`include`
-String of single or Array of multiple file/directory paths to include with the backup path.. Similar to exclude but include matched files instead. Unlike exclude, this option will also match parent directories. Type Array/String, Default value: undef
+String of single or Array of multiple file/directory paths to include with the backup path Can be single files/directories, globs or absolute paths. Similar to exclude but include matched files instead. Unlike exclude, this option will also match parent directories. Type Array/String, Default value: undef
 
 #####`rdiff_server`
 The rdiff-backup server that the backup will be sent to - this should not be changed. Type String, Default value: $::rdiff_backup::client::rdiff_server
