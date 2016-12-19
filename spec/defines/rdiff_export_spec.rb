@@ -18,8 +18,7 @@ describe 'rdiff_backup::rdiff_export',:type => :define do
       it do
         expect {
           should compile
-        }.to raise_error(RSpec::Expectations::ExpectationNotMetError,
-          /is not an absolute path. /)
+        }.to raise_error(RSpec::Expectations::ExpectationNotMetError)
       end
     end
       case facts[:osfamily]
@@ -43,8 +42,7 @@ describe 'rdiff_backup::rdiff_export',:type => :define do
           it 'should fail on bad path' do
             params.merge!({'path' => 'not_a_path'})
             expect { should compile }.to \
-              raise_error(RSpec::Expectations::ExpectationNotMetError,
-                /is not an absolute path/)
+              raise_error(RSpec::Expectations::ExpectationNotMetError)
           end
 
           it 'should fail on bad rdiff_retention' do
