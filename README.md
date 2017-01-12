@@ -142,8 +142,8 @@ rdiff_backup::rdiff_exports:
     exclude:
       - '/etc/export3/test'
     include:
-      - '/etc/export3/test/important_test
-      - '/etc/export3/test/jordanstest
+      - '/etc/export3/test/important_test'
+      - '/etc/export3/test/jordanstest'
     rdiff_retention: '5D'
     cron_hour: '3'
 ```
