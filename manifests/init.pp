@@ -44,6 +44,7 @@
 class rdiff_backup (
   $rdiffbackuptag = $rdiff_backup::params::rdiffbackuptag,
   $rdiff_user     = $rdiff_backup::params::rdiff_user,
+  $rdiff_group    = $rdiff_backup::params::rdiff_group,
   $remote_path    = $rdiff_backup::params::remote_path,
   $package        = $rdiff_backup::params::package,
 ) inherits rdiff_backup::params {
@@ -59,12 +60,14 @@ class rdiff_backup (
 
   class { 'rdiff_backup::server::user':
     rdiff_user => $rdiff_user
+    rdiff_user => $rdiff_group
   }
 
   class { 'rdiff_backup::server::install':
     remote_path => $remote_path,
     package     => $package,
     rdiff_user  => $rdiff_user,
+    rdiff_group  => $rdiff_group,
   }
 
   class {'rdiff_backup::server::import':
