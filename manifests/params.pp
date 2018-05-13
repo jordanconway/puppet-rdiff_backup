@@ -5,4 +5,5 @@ class rdiff_backup::params {
   $rdiff_server = "backup.${::domain}"
   $rdiffbackuptag = 'rdiffbackuptag'
   $rdiff_user = 'rdiffbackup'
+  $rdiff_group = 'root'
 }

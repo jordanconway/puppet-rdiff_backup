@@ -44,11 +44,13 @@
 class rdiff_backup (
   $rdiffbackuptag = $rdiff_backup::params::rdiffbackuptag,
   $rdiff_user     = $rdiff_backup::params::rdiff_user,
+  $rdiff_group    = $rdiff_backup::params::rdiff_group,
   $remote_path    = $rdiff_backup::params::remote_path,
   $package        = $rdiff_backup::params::package,
 ) inherits rdiff_backup::params {
   validate_string($rdiffbackuptag)
   validate_string($rdiff_user)
+  validate_string($rdiff_group)
   validate_string($package)
   validate_absolute_path($remote_path)
 
@@ -58,13 +60,15 @@ class rdiff_backup (
   anchor { 'rdiff_backup::end': }
 
   class { 'rdiff_backup::server::user':
-    rdiff_user => $rdiff_user
+    rdiff_user => $rdiff_user,
+    rdiff_group => $rdiff_group
   }
 
   class { 'rdiff_backup::server::install':
     remote_path => $remote_path,
     package     => $package,
     rdiff_user  => $rdiff_user,
+    rdiff_group  => $rdiff_group,
   }
 
   class {'rdiff_backup::server::import':
